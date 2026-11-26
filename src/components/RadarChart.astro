@@ -10,17 +10,17 @@ const { lfiMetrics, rnMetrics } = Astro.props;
 
 const axes = [
   {
-    label: 'Financement & Probité',
+    label: 'Financement',
     lfi: lfiMetrics.byCategoryAll.financement_probite,
     rn: rnMetrics.byCategoryAll.financement_probite,
   },
   {
-    label: 'Presse & Expression',
+    label: 'Presse / Expr.',
     lfi: lfiMetrics.byCategoryAll.presse_expression,
     rn: rnMetrics.byCategoryAll.presse_expression,
   },
   {
-    label: 'Ordre public & Biens',
+    label: 'Ordre public',
     lfi: lfiMetrics.byCategoryAll.ordre_public_biens,
     rn: rnMetrics.byCategoryAll.ordre_public_biens,
   },
@@ -30,7 +30,7 @@ const axes = [
     rn: rnMetrics.definitiveConvictions,
   },
   {
-    label: 'En cours / Sous recours',
+    label: 'En cours / Recours',
     lfi: lfiMetrics.ongoingCount + lfiMetrics.pendingConvictions,
     rn: rnMetrics.ongoingCount + rnMetrics.pendingConvictions,
   },
@@ -41,9 +41,9 @@ const maxAxis = Math.max(
   ...axes.flatMap((a) => [a.lfi, a.rn]),
 );
 
-const cx = 170;
-const cy = 155;
-const radius = 102;
+const cx = 230;
+const cy = 160;
+const radius = 92;
 
 function polarPoint(index: number, valueRatio: number): { x: number; y: number } {
   const angle = -Math.PI / 2 + (index * 2 * Math.PI) / axes.length;
@@ -81,7 +81,7 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
 
     <div class="radar-wrap">
       <svg
-        viewBox="0 0 340 310"
+        viewBox="0 0 460 320"
         class="radar-svg"
         role="img"
         aria-label="Graphique radar comparant le nombre de dossiers LFI et RN sur 5 axes : financement, presse, ordre public, condamnations définitives et dossiers en cours ou sous recours."

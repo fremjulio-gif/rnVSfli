@@ -2,6 +2,24 @@
 
 Toutes les mises à jour factuelles du dataset (`data/cases.yaml`) sont consignées ici de façon chronologique et sourcée.
 
+## 2026-11-26 — Audit complet 2010–2026 (v3.0, 34 fiches)
+
+### Camp Rassemblement National (RN, ex-FN) (+10 fiches)
+- `rn-assistants-ue-non-appelants-2025` : Volet des 13 co-prévenus n'ayant pas interjeté appel du jugement du 31/03/2025 (condamnations définitives) — communiqué CA Paris PDF & Public Sénat.
+- `rn-jmlp-occupation-2012` : Jean-Marie Le Pen — complicité de contestation de crime contre l'humanité (CA Paris 16/02/2012, 3 mois sursis, 10 000 € d'amende) — source primaire CEDH (`001-167242`) & Public Sénat.
+- `rn-jmlp-roms-oiseaux-2016` : Jean-Marie Le Pen — injure publique raciale envers les Roms (Cass. crim. mars 2016) — source primaire CEDH (`001-172508`).
+- `rn-jmlp-roms-nice-2017` : Jean-Marie Le Pen — provocation à la haine envers les Roms (CA Aix-en-Provence 27/02/2017, 5 000 € d'amende) — Public Sénat.
+- `rn-jmlp-injures-homophobes-2019` : Jean-Marie Le Pen — injures publiques homophobes (CA Paris 03/10/2019, 2 400 € d'amende, définitive) — Public Sénat & Deshoulières Avocats.
+- `rn-sanchez-provocation-haine-2013` : Julien Sanchez — provocation à la haine ou à la violence (CA Nîmes 2013, Cass. 2015, validée Grande Chambre CEDH 15/05/2023) — sources primaires CEDH (`001-224928`) & Défenseur des droits.
+- `rn-ravier-prise-illegale-2026` : Stéphane Ravier — prise illégale d'intérêts (CA Aix-en-Provence 10/02/2026, pourvoi annoncé, non définitif) — Poligraph & Maritima.
+- `rn-ravier-favoritisme-2026` : Stéphane Ravier — favoritisme (TJ Marseille 17/02/2026, non définitif) — Nice-Presse.
+- `rn-briois-diffamation-2019` : Steeve Briois — diffamation publique (TJ Béthune juillet 2019, appel interjeté) — Public Sénat.
+- `rn-rachline-relaxe-2026` : David Rachline — relaxe pour prise illégale d'intérêts (TJ Draguignan 27/01/2026) — Le Club des Juristes.
+
+### Camp La France insoumise (LFI / Front de Gauche) (+2 fiches)
+- `lfi-boyard-relaxe-hanouna-2026` : Louis Boyard — relaxe en diffamation (TJ Paris 21/01/2026) — Le Club des Juristes.
+- `lfi-guiraud-relaxe-habib-2026` : David Guiraud — relaxe en 1re instance (TJ Paris 15/01/2026, appel du parquet et partie civile) — Agence Anadolu.
+
 ## 2026-11-26 — Extension historique 2010–2026 (v2.0)
 
 ### Camp Rassemblement National (RN, ex-FN)

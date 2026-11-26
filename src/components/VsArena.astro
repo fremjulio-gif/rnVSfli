@@ -27,12 +27,13 @@ function countFighterCases(slug: string): number {
 <section class="vs-arena" aria-labelledby="arena-heading">
   <div class="vs-arena__backdrop" aria-hidden="true">
     <div class="vs-arena__split"></div>
+    <div class="vs-arena__stars"></div>
     <div class="vs-arena__floor"></div>
   </div>
 
   <div class="container vs-arena__inner">
     <div class="vs-arena__topmeta">
-      <span class="hero-badge">ARÈNE JUDICIAIRE 2010–2026 · RÉF. 26/11/2026</span>
+      <span class="hero-badge">ARCADE DATA · 2010–2026 · RÉF. 26/11/2026</span>
       <h1 id="arena-heading" class="visually-hidden">
         VERSUS — La France insoumise face au Rassemblement National (2010–2026)
       </h1>
@@ -44,7 +45,7 @@ function countFighterCases(slug: string): number {
         <!-- Côté LFI (Gauche) -->
         <div class="hud-side hud-side--lfi">
           <div class="hud-side__head">
-            <span class="hud-camp-tag hud-camp-tag--lfi">LFI / FDG</span>
+            <span class="hud-camp-tag hud-camp-tag--lfi">P1 · LFI / FDG</span>
             <span class="hud-pct hud-pct--lfi" id="hud-lfi-pct">{lfiMetrics.definitivePct}%</span>
           </div>
           <div class="hud-track hud-track--left" aria-hidden="true">
@@ -59,10 +60,10 @@ function countFighterCases(slug: string): number {
           </div>
         </div>
 
-        <!-- Horloge / Badge central -->
+        <!-- Compteur central -->
         <div class="hud-center-badge" aria-hidden="true">
           <span>2010</span>
-          <span class="hud-center-sep">—</span>
+          <span class="hud-center-sep">VS</span>
           <span>2026</span>
         </div>
 
@@ -70,7 +71,7 @@ function countFighterCases(slug: string): number {
         <div class="hud-side hud-side--rn">
           <div class="hud-side__head hud-side__head--rn">
             <span class="hud-pct hud-pct--rn" id="hud-rn-pct">{rnMetrics.definitivePct}%</span>
-            <span class="hud-camp-tag hud-camp-tag--rn">RN (ex-FN)</span>
+            <span class="hud-camp-tag hud-camp-tag--rn">P2 · RN (EX-FN)</span>
           </div>
           <div class="hud-track hud-track--right" aria-hidden="true">
             <div
@@ -101,7 +102,7 @@ function countFighterCases(slug: string): number {
           data-metric="pending"
           aria-pressed="false"
         >
-          ▲ Cond. sous recours (%)
+          ▲ Sous recours (%)
         </button>
         <button
           type="button"
@@ -117,132 +118,175 @@ function countFighterCases(slug: string): number {
           data-metric="ongoing"
           aria-pressed="false"
         >
-          ◎ Procédures en cours (%)
+          ◎ En cours (%)
         </button>
       </div>
       <p class="hud-caption" id="hud-metric-caption">
-        Indicateur affiché : part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive.
-        Aucun vainqueur ni score de gravité — cliquez sur un portrait pour ouvrir ses dossiers.
+        Part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive.
+        Cliquez sur un sprite pour consulter ses dossiers.
       </p>
     </div>
 
-    <!-- SCÈNE VS AVEC PORTRAITS GÉANTS + DÉPUTÉS CLIQUABLES -->
-    <div class="arena-stage">
-      <!-- GAUCHE : LFI (Mélenchon + 3 députés derrière) -->
-      <div class="arena-corner arena-corner--lfi">
-        <div class="allies-row allies-row--lfi" aria-label="Députés LFI liés aux dossiers">
-          {
-            lfiAllies.map((ally) => (
-              <button
-                type="button"
-                class="ally-fighter ally-fighter--lfi"
-                data-open-fighter={ally.slug}
-                title={`Voir les dossiers concernant ${ally.name}`}
-              >
+    <!-- SCÈNE VS : SILHOUETTES PIXEL-ART LIBRES + MÉDAILLON VS PIXEL -->
+    <div class="arena-duel-stage">
+      <!-- Leader LFI (Gauche) -->
+      <button
+        type="button"
+        class="sprite-hero sprite-hero--lfi"
+        data-open-fighter={lfiLeader.slug}
+        title={`Ouvrir les dossiers de ${lfiLeader.name}`}
+      >
+        <span class="sprite-hero__aura sprite-hero__aura--lfi" aria-hidden="true"></span>
+        <img
+          src={lfiLeader.image}
+          alt={`Sprite pixel-art de ${lfiLeader.name}`}
+          width="352"
+          height="424"
+          loading="eager"
+          decoding="sync"
+          class="pixel-sprite"
+        />
+        <span class="sprite-hero__pedestal sprite-hero__pedestal--lfi">
+          <span class="sprite-hero__tag">GAUCHE · LFI / FDG</span>
+          <strong>{lfiLeader.name}</strong>
+          <small>{countFighterCases(lfiLeader.slug)} dossier(s) · Voir →</small>
+        </span>
+      </button>
+
+      <!-- Médaillon VS Pixel-Art SVG sur-mesure -->
+      <div class="vs-emblem-center" aria-hidden="true">
+        <svg
+          width="92"
+          height="92"
+          viewBox="0 0 24 24"
+          shape-rendering="crispEdges"
+          class="vs-pixel-svg"
+        >
+          <!-- Cadre octogonal sombre -->
+          <rect x="4" y="1" width="16" height="22" fill="#0B0E17" />
+          <rect x="1" y="4" width="22" height="16" fill="#0B0E17" />
+          <rect x="2" y="2" width="20" height="20" fill="#141929" />
+          <!-- Bordure bicolore ambre/cyan -->
+          <rect x="4" y="1" width="8" height="1" fill="#F5B73B" />
+          <rect x="12" y="1" width="8" height="1" fill="#4CC9F0" />
+          <rect x="4" y="22" width="8" height="1" fill="#F5B73B" />
+          <rect x="12" y="22" width="8" height="1" fill="#4CC9F0" />
+          <rect x="1" y="4" width="1" height="16" fill="#F5B73B" />
+          <rect x="22" y="4" width="1" height="16" fill="#4CC9F0" />
+          <!-- Éclair diagonal -->
+          <rect x="12" y="3" width="2" height="4" fill="#F5B73B" />
+          <rect x="11" y="7" width="3" height="4" fill="#F2F5FA" />
+          <rect x="10" y="11" width="4" height="3" fill="#F2F5FA" />
+          <rect x="10" y="14" width="3" height="4" fill="#4CC9F0" />
+          <rect x="9" y="18" width="2" height="3" fill="#4CC9F0" />
+          <!-- Lettres pixel V et S -->
+          <rect x="4" y="6" width="2" height="7" fill="#F2F5FA" />
+          <rect x="8" y="6" width="2" height="7" fill="#F2F5FA" />
+          <rect x="5" y="13" width="2" height="3" fill="#F2F5FA" />
+          <rect x="7" y="13" width="2" height="3" fill="#F2F5FA" />
+          <rect x="6" y="16" width="2" height="2" fill="#F5B73B" />
+
+          <rect x="15" y="6" width="5" height="2" fill="#F2F5FA" />
+          <rect x="14" y="8" width="2" height="3" fill="#F2F5FA" />
+          <rect x="15" y="11" width="4" height="2" fill="#F2F5FA" />
+          <rect x="18" y="13" width="2" height="3" fill="#F2F5FA" />
+          <rect x="14" y="16" width="5" height="2" fill="#4CC9F0" />
+        </svg>
+        <span class="vs-emblem-year">2010 — 2026</span>
+      </div>
+
+      <!-- Leader RN (Droite) -->
+      <button
+        type="button"
+        class="sprite-hero sprite-hero--rn"
+        data-open-fighter={rnLeader.slug}
+        title={`Ouvrir les dossiers de ${rnLeader.name}`}
+      >
+        <span class="sprite-hero__aura sprite-hero__aura--rn" aria-hidden="true"></span>
+        <img
+          src={rnLeader.image}
+          alt={`Sprite pixel-art de ${rnLeader.name}`}
+          width="352"
+          height="432"
+          loading="eager"
+          decoding="sync"
+          class="pixel-sprite"
+        />
+        <span class="sprite-hero__pedestal sprite-hero__pedestal--rn">
+          <span class="sprite-hero__tag">DROITE · RN (EX-FN)</span>
+          <strong>{rnLeader.name}</strong>
+          <small>{countFighterCases(rnLeader.slug)} dossier(s) · Voir →</small>
+        </span>
+      </button>
+    </div>
+
+    <!-- CHARACTER SELECT RAIL : 3 DÉPUTÉS LFI | 3 ÉLUS RN SOUS LES LEADERS -->
+    <div class="roster-rail">
+      <div class="roster-group roster-group--lfi" role="group" aria-label="Députés LFI liés aux dossiers">
+        {
+          lfiAllies.map((ally) => (
+            <button
+              type="button"
+              class="roster-card roster-card--lfi"
+              data-open-fighter={ally.slug}
+              title={`Voir les dossiers concernant ${ally.name}`}
+            >
+              <span class="roster-card__thumb">
                 <img
                   src={ally.image}
                   alt={ally.name}
-                  width="180"
-                  height="220"
+                  width="120"
+                  height="140"
                   loading="eager"
                   decoding="async"
+                  class="pixel-sprite"
                 />
-                <span class="ally-fighter__plate">
-                  <strong>{ally.shortName}</strong>
-                  <span>{countFighterCases(ally.slug)} dossier(s)</span>
-                </span>
-              </button>
-            ))
-          }
-        </div>
-
-        <button
-          type="button"
-          class="leader-fighter leader-fighter--lfi"
-          data-open-fighter={lfiLeader.slug}
-          title={`Voir les dossiers concernant ${lfiLeader.name}`}
-        >
-          <img
-            src={lfiLeader.image}
-            alt={`Portrait officiel de ${lfiLeader.name}`}
-            width="480"
-            height="615"
-            loading="eager"
-            decoding="sync"
-          />
-          <span class="leader-fighter__plate leader-fighter__plate--lfi">
-            <span class="leader-fighter__tag">GAUCHE · LFI / FDG</span>
-            <strong>{lfiLeader.name}</strong>
-            <small>{countFighterCases(lfiLeader.slug)} dossier(s) · Cliquer pour ouvrir</small>
-          </span>
-        </button>
+              </span>
+              <span class="roster-card__info">
+                <strong>{ally.shortName}</strong>
+                <span>{countFighterCases(ally.slug)} dossier(s)</span>
+              </span>
+            </button>
+          ))
+        }
       </div>
 
-      <!-- CENTRE : MÉDAILLON VS CHROMÉ 90s -->
-      <div class="vs-medallion-wrap" aria-hidden="true">
-        <div class="vs-medallion" id="vs-medallion">
-          <span>VS</span>
-        </div>
-        <div class="vs-subpill">2010–2026</div>
-      </div>
-
-      <!-- DROITE : RN (Marine Le Pen + 3 élus derrière) -->
-      <div class="arena-corner arena-corner--rn">
-        <div class="allies-row allies-row--rn" aria-label="Élus RN liés aux dossiers">
-          {
-            rnAllies.map((ally) => (
-              <button
-                type="button"
-                class="ally-fighter ally-fighter--rn"
-                data-open-fighter={ally.slug}
-                title={`Voir les dossiers concernant ${ally.name}`}
-              >
+      <div class="roster-group roster-group--rn" role="group" aria-label="Élus RN liés aux dossiers">
+        {
+          rnAllies.map((ally) => (
+            <button
+              type="button"
+              class="roster-card roster-card--rn"
+              data-open-fighter={ally.slug}
+              title={`Voir les dossiers concernant ${ally.name}`}
+            >
+              <span class="roster-card__thumb">
                 <img
                   src={ally.image}
                   alt={ally.name}
-                  width="180"
-                  height="220"
+                  width="120"
+                  height="140"
                   loading="eager"
                   decoding="async"
+                  class="pixel-sprite"
                 />
-                <span class="ally-fighter__plate">
-                  <strong>{ally.shortName}</strong>
-                  <span>{countFighterCases(ally.slug)} dossier(s)</span>
-                </span>
-              </button>
-            ))
-          }
-        </div>
-
-        <button
-          type="button"
-          class="leader-fighter leader-fighter--rn"
-          data-open-fighter={rnLeader.slug}
-          title={`Voir les dossiers concernant ${rnLeader.name}`}
-        >
-          <img
-            src={rnLeader.image}
-            alt={`Portrait officiel de ${rnLeader.name}`}
-            width="480"
-            height="615"
-            loading="eager"
-            decoding="sync"
-          />
-          <span class="leader-fighter__plate leader-fighter__plate--rn">
-            <span class="leader-fighter__tag">DROITE · RN (EX-FN)</span>
-            <strong>{rnLeader.name}</strong>
-            <small>{countFighterCases(rnLeader.slug)} dossier(s) · Cliquer pour ouvrir</small>
-          </span>
-        </button>
+              </span>
+              <span class="roster-card__info">
+                <strong>{ally.shortName}</strong>
+                <span>{countFighterCases(ally.slug)} dossier(s)</span>
+              </span>
+            </button>
+          ))
+        }
       </div>
     </div>
 
     <div class="arena-cta-row">
       <a href="#dataviz-dashboard" class="arcade-btn arcade-btn--primary">
-        EXPLORER LES GRAPHIQUES 2010–2026
+        DATAVIZ &amp; FRISE 2010–2026
       </a>
       <a href="#explorer-rounds" class="arcade-btn">
-        TOUS LES DOSSIERS ({cases.length})
+        EXPLORER LES {cases.length} DOSSIERS
       </a>
       <a href="#procedures-en-cours" class="arcade-btn">
         PROCÉDURES EN COURS

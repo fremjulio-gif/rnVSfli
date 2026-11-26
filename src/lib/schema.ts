@@ -39,6 +39,8 @@ export const OFFICIAL_PRIMARY_DOMAINS = [
   'cnccfp.fr',
   'eppo.europa.eu',
   'conseil-constitutionnel.fr',
+  'hudoc.echr.coe.int',
+  'juridique.defenseurdesdroits.fr',
 ] as const;
 
 const IsoDateSchema = z
@@ -127,7 +129,16 @@ export const CaseSchema = z
       });
     }
 
-    if (item.est_definitif !== isDefinitifStatus) {
+    if (item.statut === 'relaxe') {
+      // Une relaxe peut être frappée d'appel par le parquet/partie civile (ex: est_definitif=false)
+      if (item.presomption_innocence !== !item.est_definitif) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ['presomption_innocence'],
+          message: `presomption_innocence doit être exactement !est_definitif.`,
+        });
+      }
+    } else if (item.est_definitif !== isDefinitifStatus) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['est_definitif'],

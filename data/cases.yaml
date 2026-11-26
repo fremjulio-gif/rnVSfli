@@ -511,6 +511,423 @@ cases:
         date_consultation: "2026-11-26"
     verified_at: "2026-11-26"
 
+  - id: rn-assistants-ue-non-appelants-2025
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "13 co-prévenus non appelants (dont anciens eurodéputés et assistants FN/RN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "13 prévenus condamnés en 1re instance n'ayant pas fait appel"
+        qualite: "Anciens eurodéputés et assistants parlementaires du FN/RN (volet distinct des 12 appelants)"
+        type: personne_physique
+    titre: "Assistants parlementaires FN/RN — Volet des 13 prévenus non appelants (2025)"
+    qualification_legale: "Détournement de fonds publics et recel de détournement de fonds publics"
+    resume_factuel: "Sur les 25 personnes et entités condamnées le 31 mars 2025 par le tribunal correctionnel de Paris dans l'affaire des assistants parlementaires du Front National, 13 prévenus n'ont pas interjeté appel (contrairement aux 12 appelants jugés le 7 juillet 2026), rendant leurs condamnations définitives."
+    juridiction: "Tribunal judiciaire de Paris (11e chambre correctionnelle)"
+    dates_cles:
+      - date: "2025-03-31"
+        libelle: "Jugement du tribunal correctionnel de Paris (25 condamnés au total, 1 relaxe)"
+      - date: "2025-04-11"
+        libelle: "Expiration des délais d'appel pour les 13 condamnés non appelants"
+    date_derniere_decision: "2025-03-31"
+    peine:
+      amende: "Peines d'emprisonnement avec sursis, amendes et inéligibilités individuelles prononcées le 31/03/2025"
+      note_recours: "Condamnations définitives pour les 13 prévenus n'ayant pas interjeté appel (distinctes du pourvoi des 12 appelants)."
+    references_judiciaires:
+      - "TJ Paris, 11e ch., 31 mars 2025 (rappelé dans CA Paris CP du 07/07/2026)"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.cours-appel.justice.fr/sites/default/files/2026-07/20260707%20-%20CA%20Paris%20-%20CP.pdf"
+        type: primaire
+        titre: "Communiqué de presse CA Paris du 7 juillet 2026 (rappel : 25 condamnés en 1re instance, 12 appelants)"
+        editeur: "Cour d'appel de Paris (justice.fr)"
+        date_publication: "2026-07-07"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/proces-rn-marine-le-pen-et-8-eurodeputes-reconnus-coupables-de-detournement-de-fonds-publics"
+        type: presse
+        titre: "Procès RN : jugement du 31 mars 2025"
+        editeur: "Public Sénat"
+        date_publication: "2025-03-31"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-jmlp-occupation-2012
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Marie Le Pen (alors député européen et président du FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Marie Le Pen"
+        qualite: "Député européen et dirigeant du Front National"
+        type: personne_physique
+    titre: "Complicité de contestation de crime contre l'humanité (« Occupation », Rivarol)"
+    qualification_legale: "Complicité de contestation de crimes contre l'humanité (loi du 29 juillet 1881, art. 24 bis)"
+    resume_factuel: "Poursuivi pour avoir déclaré à l'hebdomadaire Rivarol que l'Occupation allemande en France « n'a pas été particulièrement inhumaine », Jean-Marie Le Pen a été condamné par la cour d'appel de Paris sur renvoi de la Cour de cassation le 16 février 2012 à 3 mois de prison avec sursis et 10 000 € d'amende. Requête rejetée par la CEDH en 2016."
+    juridiction: "Cour d'appel de Paris (sur renvoi Cass.) — CEDH"
+    dates_cles:
+      - date: "2012-02-16"
+        libelle: "Arrêt de la cour d'appel de Paris (3 mois avec sursis, 10 000 € d'amende)"
+      - date: "2016-10-06"
+        libelle: "Décision d'irrecevabilité de la CEDH (requête n° 18788/09)"
+    date_derniere_decision: "2012-02-16"
+    peine:
+      prison: "3 mois d'emprisonnement avec sursis"
+      amende: "10 000 € d'amende"
+      note_recours: "Condamnation définitive — confirmée après examen CEDH."
+    references_judiciaires:
+      - "CEDH, Le Pen c. France, n° 18788/09"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://hudoc.echr.coe.int/eng?i=001-167242"
+        type: primaire
+        titre: "CEDH — Décision Le Pen c. France (requête n° 18788/09)"
+        editeur: "Cour européenne des droits de l'homme (HUDOC)"
+        date_publication: "2016-10"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/jean-marie-le-pen-fondateur-du-front-national-est-mort-a-96-ans"
+        type: presse
+        titre: "Jean-Marie Le Pen : rappel des condamnations définitives"
+        editeur: "Public Sénat"
+        date_publication: "2025-01"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-jmlp-roms-oiseaux-2016
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Marie Le Pen (alors député européen et président d'honneur du FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Marie Le Pen"
+        qualite: "Député européen et président d'honneur du FN"
+        type: personne_physique
+    titre: "Injure publique raciale envers les Roms (propos de 2012, cassation 2016)"
+    qualification_legale: "Injure publique envers un groupe de personnes en raison de leur origine ou appartenance ethnique"
+    resume_factuel: "Condamné en décembre 2013 puis en appel pour avoir déclaré en 2012 que les Roms étaient « comme les oiseaux, ils volent naturellement », Jean-Marie Le Pen a vu son pourvoi rejeté par la Cour de cassation en mars 2016. Sa requête a été déclarée irrecevable par la CEDH."
+    juridiction: "Cour de cassation — CEDH"
+    dates_cles:
+      - date: "2013-12-19"
+        libelle: "Condamnation en première instance"
+      - date: "2016-03-01"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2016-03-01"
+    peine:
+      amende: "Amende de 5 000 €"
+      note_recours: "Condamnation définitive (Cass. crim., mars 2016 ; CEDH irrecevable)."
+    references_judiciaires:
+      - "CEDH HUDOC 001-172508"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://hudoc.echr.coe.int/eng?i=001-172508"
+        type: primaire
+        titre: "CEDH — Décision Le Pen c. France (propos sur les Roms)"
+        editeur: "Cour européenne des droits de l'homme (HUDOC)"
+        date_publication: "2017-03"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-jmlp-roms-nice-2017
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Marie Le Pen (alors député européen et président d'honneur du FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Marie Le Pen"
+        qualite: "Député européen et président d'honneur du FN"
+        type: personne_physique
+    titre: "Provocation à la haine et à la discrimination envers les Roms (Nice, 2013)"
+    qualification_legale: "Provocation à la discrimination, à la haine ou à la violence raciale (loi du 29 juillet 1881)"
+    resume_factuel: "Poursuivi pour des propos prononcés en 2013 à Nice qualifiant la présence des Roms d'« urticante » et « odorante », Jean-Marie Le Pen a été condamné par la cour d'appel d'Aix-en-Provence le 27 février 2017 à 5 000 € d'amende."
+    juridiction: "Cour d'appel d'Aix-en-Provence"
+    dates_cles:
+      - date: "2017-02-27"
+        libelle: "Arrêt de la cour d'appel d'Aix-en-Provence (5 000 € d'amende)"
+    date_derniere_decision: "2017-02-27"
+    peine:
+      amende: "5 000 € d'amende"
+      note_recours: "Condamnation confirmée en appel (27 février 2017)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de cour d'appel de 2017 antérieur à l'open data ; documenté par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/jean-marie-le-pen-juge-en-appel-pour-des-propos-sur-les-roms-53766"
+        type: presse
+        titre: "Jean-Marie Le Pen jugé en appel pour des propos sur les Roms"
+        editeur: "Public Sénat"
+        date_publication: "2017-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-jmlp-injures-homophobes-2019
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Marie Le Pen (alors député européen FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Marie Le Pen"
+        qualite: "Député européen FN au moment des faits (2016)"
+        type: personne_physique
+    titre: "Injures publiques en raison de l'orientation sexuelle (2016–2019)"
+    qualification_legale: "Injures publiques envers un groupe de personnes à raison de leur orientation sexuelle"
+    resume_factuel: "Condamné le 28 novembre 2018 par le tribunal correctionnel de Paris puis confirmé le 3 octobre 2019 par la cour d'appel de Paris pour des propos tenus en 2016 sur son blog visant les personnes homosexuelles. Faute de pourvoi en cassation, la condamnation est devenue définitive."
+    juridiction: "Cour d'appel de Paris — après tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2018-11-28"
+        libelle: "Jugement du tribunal correctionnel de Paris"
+      - date: "2019-10-03"
+        libelle: "Arrêt confirmatif de la cour d'appel de Paris (condamnation définitive)"
+    date_derniere_decision: "2019-10-03"
+    peine:
+      amende: "2 400 € d'amende et dommages et intérêts aux associations parties civiles"
+      note_recours: "Condamnation définitive (absence de pourvoi en cassation)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt d'appel de 2019 non indexé en open data direct ; confirmé par Public Sénat et les avocats des parties civiles."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/jugement-mercredi-pour-jean-marie-le-pen-apres-ses-propos-sur-les-homosexuels"
+        type: presse
+        titre: "Jugement pour Jean-Marie Le Pen après ses propos sur les homosexuels"
+        editeur: "Public Sénat"
+        date_publication: "2018-11"
+        date_consultation: "2026-11-26"
+      - url: "https://www.deshoulieres-avocats.com/deshoulieres-avocats-obtient-la-condamnation-de-jean-marie-le-pen-pour-injures-homophobes/"
+        type: presse
+        titre: "Condamnation de Jean-Marie Le Pen pour injures homophobes confirmée le 3 octobre 2019"
+        editeur: "Deshoulières Avocats (conseil partie civile)"
+        date_publication: "2019-10"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-sanchez-provocation-haine-2013
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Julien Sanchez (cadre national RN, député européen RN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Julien Sanchez"
+        qualite: "Maire, cadre dirigeant et député européen RN"
+        type: personne_physique
+    titre: "Provocation à la haine ou à la violence (commentaires Facebook — arrêt CEDH Sanchez c. France)"
+    qualification_legale: "Provocation publique à la haine ou à la violence à l'égard d'un groupe en raison de sa religion (art. 24 al. 8 loi 1881 et art. 93-3 loi 1982)"
+    resume_factuel: "Condamné en 2013 (jugement correctionnel puis arrêt de la cour d'appel de Nîmes du 18 octobre 2013, pourvoi rejeté en cassation en 2015) pour n'avoir pas retiré promptement des commentaires islamophobes publiés par des tiers sur sa page Facebook durant une campagne électorale. Le 15 mai 2023, la Grande Chambre de la CEDH a validé cette condamnation (absence de violation de l'art. 10)."
+    juridiction: "Cour de cassation / CA Nîmes — validée par la CEDH (Grande Chambre)"
+    dates_cles:
+      - date: "2013-10-18"
+        libelle: "Arrêt de la cour d'appel de Nîmes confirmant la culpabilité"
+      - date: "2015-03-17"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+      - date: "2023-05-15"
+        libelle: "Arrêt de Grande Chambre de la CEDH (Sanchez c. France, n° 45581/15)"
+    date_derniere_decision: "2023-05-15"
+    peine:
+      amende: "3 000 € d'amende et 1 000 € de frais à la partie civile"
+      note_recours: "Condamnation définitive — validée par la Grande Chambre de la CEDH le 15 mai 2023."
+    references_judiciaires:
+      - "CEDH [GC], Sanchez c. France, 15 mai 2023, n° 45581/15"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://hudoc.echr.coe.int/eng?i=001-224928"
+        type: primaire
+        titre: "CEDH (Grande Chambre), Sanchez c. France, 15 mai 2023, n° 45581/15"
+        editeur: "Cour européenne des droits de l'homme (HUDOC)"
+        date_publication: "2023-05-15"
+        date_consultation: "2026-11-26"
+      - url: "https://juridique.defenseurdesdroits.fr/index.php?lvl=categ_see&id=4896&page=1&nbr_lignes=37&l_typdoc=&nb_per_page_custom=37"
+        type: primaire
+        titre: "Analyse juridique — CEDH, Grande Chambre, Sanchez c. France"
+        editeur: "Défenseur des droits"
+        date_publication: "2023-05"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-ravier-prise-illegale-2026
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_appel
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Stéphane Ravier (sénateur-maire FN au moment des faits, ex-RN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Stéphane Ravier"
+        qualite: "Sénateur des Bouches-du-Rhône et maire de secteur FN à l'époque des faits (2015)"
+        type: personne_physique
+    titre: "Prise illégale d'intérêts (embauche municipale, Marseille 2015)"
+    qualification_legale: "Prise illégale d'intérêts (art. 432-12 du code pénal)"
+    resume_factuel: "Poursuivi pour le recrutement de son fils en 2015 à la mairie des 13e et 14e arrondissements de Marseille alors qu'il en était maire FN, Stéphane Ravier a été condamné en mai 2024 puis confirmé en appel le 10 février 2026 par la cour d'appel d'Aix-en-Provence (son fils étant relaxé). Pourvoi en cassation annoncé."
+    juridiction: "Cour d'appel d'Aix-en-Provence — après TJ de Marseille"
+    dates_cles:
+      - date: "2024-05-29"
+        libelle: "Jugement du tribunal correctionnel de Marseille"
+      - date: "2026-02-10"
+        libelle: "Arrêt confirmatif de la cour d'appel d'Aix-en-Provence (pourvoi annoncé)"
+    date_derniere_decision: "2026-02-10"
+    peine:
+      prison: "6 mois d'emprisonnement avec sursis"
+      ineligibilite: "1 an d'inéligibilité"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : pourvoi en cassation annoncé (effet suspensif). Présumé innocent."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt d'appel du 10/02/2026 non localisé en accès direct sur Judilibre à la date de vérification."
+    sources:
+      - url: "https://poligraph.fr/affaires/condamnations?mandat=senateur&parti=non-inscrits"
+        type: presse
+        titre: "Suivi judiciaire — Stéphane Ravier (prise illégale d'intérêts et favoritisme)"
+        editeur: "Poligraph"
+        date_publication: "2026-02"
+        date_consultation: "2026-11-26"
+      - url: "https://maritima.fr/actualites/justice/marseille/1077/stephane-ravier-cinq-ans-dineligibilite-requis-contre-le-senateur-juge-pour-prise-illegale-dinterets"
+        type: presse
+        titre: "Procès de Stéphane Ravier pour prise illégale d'intérêts à Marseille"
+        editeur: "Maritima"
+        date_publication: "2024-04"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-ravier-favoritisme-2026
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Stéphane Ravier (sénateur-maire FN au moment des faits, ex-RN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Stéphane Ravier"
+        qualite: "Sénateur et maire de secteur FN à l'époque des faits (2016-2017)"
+        type: personne_physique
+    titre: "Favoritisme sur un marché public de site internet (Marseille, 2016-2017)"
+    qualification_legale: "Atteinte à la liberté d'accès et à l'égalité des candidats dans les marchés publics (art. 432-14 CP)"
+    resume_factuel: "Jugé pour fractionnement d'un marché public de rénovation de site internet en 2016-2017 à la mairie des 13e-14e arrondissements de Marseille, Stéphane Ravier a été condamné le 17 février 2026 par le tribunal correctionnel de Marseille. Jugement susceptible d'appel."
+    juridiction: "Tribunal correctionnel de Marseille"
+    dates_cles:
+      - date: "2026-02-17"
+        libelle: "Jugement du tribunal correctionnel de Marseille (non définitif)"
+    date_derniere_decision: "2026-02-17"
+    peine:
+      prison: "3 mois d'emprisonnement avec sursis"
+      amende: "5 000 € d'amende"
+      ineligibilite: "1 an d'inéligibilité"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : décision de première instance susceptible d'appel. Présumé innocent."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en open data direct."
+    sources:
+      - url: "https://nicepresse.com/ce-senateur-condamne-et-frappe-dineligibilite-en-region-paca-un-marche-public-dans-le-viseur/"
+        type: presse
+        titre: "Stéphane Ravier condamné pour favoritisme devant le tribunal de Marseille"
+        editeur: "Nice-Presse"
+        date_publication: "2026-02-17"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-briois-diffamation-2019
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Steeve Briois (vice-président RN, ex-eurodéputé FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Steeve Briois"
+        qualite: "Vice-président du RN, ancien député européen et maire d'Hénin-Beaumont"
+        type: personne_physique
+    titre: "Diffamation publique envers un agent municipal (Hénin-Beaumont, 2019)"
+    qualification_legale: "Diffamation publique (loi du 29 juillet 1881)"
+    resume_factuel: "Condamné en juillet 2019 par le tribunal correctionnel de Béthune à 1 000 € d'amende pour des propos tenus lors d'un conseil municipal en 2017 ; appel interjeté par sa défense."
+    juridiction: "Tribunal correctionnel de Béthune"
+    dates_cles:
+      - date: "2019-07-04"
+        libelle: "Jugement du tribunal correctionnel de Béthune (appel formé)"
+    date_derniere_decision: "2019-07-04"
+    peine:
+      amende: "1 000 € d'amende"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel annoncé ; présumé innocent faute de confirmation d'issue définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement de première instance non publié en open data."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/le-maire-rn-d-henin-beaumont-condamne-pour-diffamation-envers-un-agent-municipal"
+        type: presse
+        titre: "Le maire RN d'Hénin-Beaumont condamné pour diffamation envers un agent municipal"
+        editeur: "Public Sénat"
+        date_publication: "2019-07"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-rachline-relaxe-2026
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "David Rachline (vice-président RN, ex-sénateur FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "David Rachline"
+        qualite: "Vice-président du RN, ancien sénateur du Var (relaxé)"
+        type: personne_physique
+    titre: "Poursuites pour prise illégale d'intérêts (Fréjus) — Relaxe (2026)"
+    qualification_legale: "Prise illégale d'intérêts (art. 432-12 CP — relaxe)"
+    resume_factuel: "Poursuivi devant le tribunal correctionnel de Draguignan concernant sa nomination à la tête de deux sociétés d'économie mixte locales entre 2017 et 2020, David Rachline a été relaxé le 27 janvier 2026."
+    juridiction: "Tribunal correctionnel de Draguignan"
+    dates_cles:
+      - date: "2026-01-27"
+        libelle: "Jugement de relaxe prononcé par le tribunal correctionnel de Draguignan"
+    date_derniere_decision: "2026-01-27"
+    peine:
+      note_recours: "Relaxe prononcée le 27 janvier 2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en open data direct."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/frejus-david-rachline-relaxe-pour-prise-illegale-dinterets-13994/"
+        type: presse
+        titre: "Fréjus : David Rachline relaxé pour prise illégale d'intérêts"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-01-27"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
   # =========================================================================
   # CAMP LFI — LA FRANCE INSOUMISE / FRONT DE GAUCHE (2010-2026)
   # =========================================================================
@@ -1054,5 +1471,77 @@ cases:
         titre: "Procès de Rima Hassan pour apologie du terrorisme : l'audience renvoyée aux 19 et 20 octobre"
         editeur: "Agence Anadolu"
         date_publication: "2026-07"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-boyard-relaxe-hanouna-2026
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Louis Boyard (député LFI)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Louis Boyard"
+        qualite: "Député LFI du Val-de-Marne (relaxé)"
+        type: personne_physique
+    titre: "Poursuites en diffamation engagées par Cyril Hanouna (2022) — Relaxe (2026)"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881 — relaxe)"
+    resume_factuel: "Poursuivi par Cyril Hanouna à la suite d'une séquence télévisée de novembre 2022, le député LFI Louis Boyard a été relaxé le 21 janvier 2026 par la 17e chambre correctionnelle du tribunal judiciaire de Paris, le tribunal retenant le cadre du débat d'idées."
+    juridiction: "Tribunal judiciaire de Paris (17e chambre correctionnelle)"
+    dates_cles:
+      - date: "2026-01-21"
+        libelle: "Jugement de relaxe prononcé par le tribunal correctionnel de Paris"
+    date_derniere_decision: "2026-01-21"
+    peine:
+      note_recours: "Relaxe prononcée le 21 janvier 2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en open data direct."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/la-justice-a-prononce-la-relaxe-de-louis-boyard-dans-laffaire-de-diffamation-lopposant-a-cyril-hanouna-13832/"
+        type: presse
+        titre: "La justice a prononcé la relaxe de Louis Boyard dans l'affaire de diffamation l'opposant à Cyril Hanouna"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-01-21"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-guiraud-relaxe-habib-2026
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "David Guiraud (député LFI)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "David Guiraud"
+        qualite: "Député LFI du Nord (relaxé en 1re instance, appel du parquet)"
+        type: personne_physique
+    titre: "Poursuites pour injure publique (plainte Meyer Habib) — Relaxe en 1re instance (2026)"
+    qualification_legale: "Injure publique à caractère antisémite (relaxe en 1re instance ; appel interjeté)"
+    resume_factuel: "Poursuivi sur plainte de l'ancien député Meyer Habib après un échange à l'Assemblée nationale, David Guiraud a été relaxé le 15 janvier 2026 par le tribunal correctionnel de Paris, les juges retenant une critique politique. Le parquet et la partie civile ont interjeté appel."
+    juridiction: "Tribunal correctionnel de Paris — appel en cours"
+    dates_cles:
+      - date: "2026-01-15"
+        libelle: "Jugement de relaxe en première instance (appel du parquet et de la partie civile)"
+    date_derniere_decision: "2026-01-15"
+    peine:
+      note_recours: "RELAXE EN 1re INSTANCE FRAPPÉE D'APPEL : présumé innocent dans l'attente de l'arrêt d'appel."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en open data direct."
+    sources:
+      - url: "https://www.aa.com.tr/fr/politique/david-guiraud-relax%C3%A9-le-tribunal-donne-raison-%C3%A0-la-critique-politique-contre-meyer-habib/3800635"
+        type: presse
+        titre: "David Guiraud relaxé : le tribunal donne raison à la critique politique contre Meyer Habib"
+        editeur: "Agence Anadolu"
+        date_publication: "2026-01-15"
         date_consultation: "2026-11-26"
     verified_at: "2026-11-26"

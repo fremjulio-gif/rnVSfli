@@ -1,0 +1,794 @@
+reference_date: "2026-11-26"
+cases:
+  # =========================================================================
+  # CAMP RN — RASSEMBLEMENT NATIONAL (EX-FRONT NATIONAL)
+  # =========================================================================
+  - id: rn-kits-campagne-2012
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_morale_et_physique
+    entite_principale: "Rassemblement National (ex-Front National, personne morale)"
+    personnes_et_entites:
+      - nom: "Rassemblement National (ex-Front National)"
+        qualite: "Parti politique (personne morale)"
+        type: personne_morale
+      - nom: "Micro-parti Jeanne"
+        qualite: "Association de financement (personne morale)"
+        type: personne_morale
+      - nom: "Société Riwal"
+        qualite: "Prestataire de communication (personne morale)"
+        type: personne_morale
+      - nom: "Frédéric Chatillon et co-prévenus (dont cadres et trésorier)"
+        qualite: "Dirigeants de prestataires et responsables du parti"
+        type: personne_physique
+    titre: "Affaire dite des « kits de campagne » (législatives 2012)"
+    qualification_legale: "Recel d'abus de biens sociaux (parti RN) ; escroquerie, complicité et recel (législatives de 2012)"
+    resume_factuel: "Condamnation relative au système de financement et de facturation de kits électoraux standardisés fournis aux candidats du Front National lors des élections législatives de 2012 via le micro-parti Jeanne et la société Riwal. Par arrêt du 19 juin 2024, la chambre criminelle de la Cour de cassation a rejeté les pourvois et confirmé la condamnation du Rassemblement National (personne morale) pour recel d'abus de biens sociaux."
+    juridiction: "Cour de cassation (chambre criminelle) — après TJ de Paris et CA de Paris"
+    dates_cles:
+      - date: "2020-06-16"
+        libelle: "Jugement du tribunal correctionnel de Paris (relaxe d'escroquerie pour le parti, condamnation pour recel d'abus de biens sociaux)"
+      - date: "2023-03-15"
+        libelle: "Arrêt de la cour d'appel de Paris"
+      - date: "2024-06-19"
+        libelle: "Arrêt de rejet de la Cour de cassation (pourvoi n° 23-82.194, publié au Bulletin) rendant les condamnations définitives"
+    date_derniere_decision: "2024-06-19"
+    peine:
+      amende: "250 000 € d'amende prononcés contre le parti (personne morale) ; amendes et peines de prison avec sursis/interdictions de gestion pour des co-prévenus"
+      note_recours: "Condamnation définitive — voies de recours internes épuisées (Cass. crim., 19 juin 2024)."
+    references_judiciaires:
+      - "Pourvoi n° 23-82.194 (Cass. crim., 19 juin 2024)"
+      - "ECLI:FR:CCASS:2024:CR00817"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/juri/id/JURITEXT000049774995/"
+        type: primaire
+        titre: "Cour de cassation, chambre criminelle, 19 juin 2024, n° 23-82.194"
+        editeur: "Légifrance"
+        date_publication: "2024-06-19"
+        date_consultation: "2026-11-26"
+      - url: "https://www.courdecassation.fr/publications/bulletin-des-arrets-de-la-chambre-criminelle/numero-6-juin-2024/crimes-et-delits-flagrants"
+        type: primaire
+        titre: "Bulletin des arrêts de la chambre criminelle n° 6 — Juin 2024"
+        editeur: "Cour de cassation"
+        date_publication: "2024-06"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/les-coulisses-suspectes-du-financement-du-fn-devant-le-tribunal-correctionnel-de"
+        type: presse
+        titre: "Les coulisses suspectes du financement du FN devant le tribunal correctionnel"
+        editeur: "Public Sénat"
+        date_publication: "2019-11"
+        date_consultation: "2026-11-26"
+      - url: "https://www.rts.ch/info/monde/10900531-amende-requise-contre-le-fn-pour-escroquerie-aux-kits-de-campagne.html"
+        type: presse
+        titre: "Amende requise contre le FN pour escroquerie aux kits de campagne"
+        editeur: "RTS Info"
+        date_publication: "2019-11"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-assistants-parlementaires-ue
+    camp: RN
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_appel
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale_et_physique
+    entite_principale: "Rassemblement National (personne morale) et 11 prévenus appelants (dont Marine Le Pen)"
+    personnes_et_entites:
+      - nom: "Rassemblement National (ex-Front National)"
+        qualite: "Parti politique (personne morale)"
+        type: personne_morale
+      - nom: "Marine Le Pen"
+        qualite: "Ex-députée européenne et ex-présidente du parti (députée nationale)"
+        type: personne_physique
+      - nom: "Louis Aliot, Nicolas Bay, Bruno Gollnisch, Fernand Le Rachinel"
+        qualite: "Ex-députés européens condamnés pour détournement de fonds publics"
+        type: personne_physique
+      - nom: "Wallerand de Saint-Just, Nicolas Crochet"
+        qualite: "Ex-trésorier et tiers-payant (complicité)"
+        type: personne_physique
+      - nom: "Catherine Griset, Timothée Houssin, Guillaume L'Huillier, Julien Odoul"
+        qualite: "Ex-assistants parlementaires (recel)"
+        type: personne_physique
+    titre: "Affaire dite des « assistants parlementaires du Front National »"
+    qualification_legale: "Détournement de fonds publics (art. 432-15 CP), complicité (art. 121-7 CP) et recel / recel habituel par personne morale (art. 321-1, 321-2, 131-38 CP)"
+    resume_factuel: "Procédure portant sur l'emploi d'assistants rémunérés sur les crédits du Parlement européen entre 2004 et 2016 (28 contrats retenus en appel ; préjudice évalué à 2,8 M€ pour le Parlement européen, partie civile). Le 7 juillet 2026, la cour d'appel de Paris a confirmé la culpabilité des 12 appelants (avec relaxes partielles sur certaines périodes) tout en aménageant les peines de première instance. 13 pourvois en cassation ont été formés ; le parquet général n'a pas formé de pourvoi."
+    juridiction: "Cour d'appel de Paris (pôle 2, ch. 12) — pourvois en cours devant la Cour de cassation"
+    dates_cles:
+      - date: "2025-03-31"
+        libelle: "Jugement du tribunal correctionnel de Paris (25 condamnés, 1 relaxe ; Marine Le Pen condamnée à 4 ans dont 2 fermes, 100 000 € et 5 ans d'inéligibilité avec exécution provisoire)"
+      - date: "2025-10-15"
+        libelle: "Décision du Conseil d'État confirmant que seule une condamnation définitive met fin au mandat d'un député européen (Nicolas Bay et Catherine Griset)"
+      - date: "2026-07-07"
+        libelle: "Arrêt de la cour d'appel de Paris (n° RG 25/02203, arrêt n° 26/58) confirmant la culpabilité et aménageant les peines"
+      - date: "2026-07-15"
+        libelle: "Le parquet général renonce à former un pourvoi en cassation"
+      - date: "2026-10-15"
+        libelle: "Dépôt des mémoires en cassation (13 pourvois) ; audience sur les QPC annoncée pour le 16/12/2026 (postérieure au 26/11/2026)"
+    date_derniere_decision: "2026-07-07"
+    peine:
+      prison: "Marine Le Pen : 3 ans dont 2 ans avec sursis (1 an ferme aménagé sous détention à domicile sous surveillance électronique). Co-prévenus appelants : de 6 mois à 3 ans avec sursis."
+      amende: "Marine Le Pen : 100 000 €. Rassemblement National (personne morale) : 2 000 000 € dont 1 000 000 € avec sursis et confiscation en valeur d'1 000 000 € saisi. Co-prévenus : de 5 000 € à 70 000 €."
+      ineligibilite: "Marine Le Pen : 45 mois dont 30 mois avec sursis (les 15 mois fermes jugés déjà exécutés depuis le 31/03/2025). Co-prévenus : de 1 à 2 ans (avec ou sans sursis)."
+      execution_provisoire: "Non reconduite en appel ; les 15 mois fermes d'inéligibilité de Marine Le Pen sont considérés par la cour d'appel comme déjà exécutés au titre de l'exécution provisoire du 31/03/2025."
+      autres: "Indemnisation du préjudice financier du Parlement européen (2,8 M€ évalués par la cour d'appel)."
+      note_recours: "CONDAMNATION NON DÉFINITIVE : 13 pourvois en cassation formés (effet suspensif des peines). Le parquet général n'a pas formé de pourvoi (15/07/2026). Audience QPC prévue le 16/12/2026 (postérieure à la date de référence du 26/11/2026). Présumés innocents."
+    references_judiciaires:
+      - "CA Paris, pôle 2, ch. 12, 7 juillet 2026, n° RG 25/02203, arrêt n° 26/58"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.cours-appel.justice.fr/sites/default/files/2026-07/20260707%20-%20CA%20Paris%20-%20CP.pdf"
+        type: primaire
+        titre: "Communiqué de presse de la cour d'appel de Paris — Arrêt du 7 juillet 2026"
+        editeur: "Cour d'appel de Paris (justice.fr)"
+        date_publication: "2026-07-07"
+        date_consultation: "2026-11-26"
+      - url: "https://www.conseil-etat.fr/actualites/ineligibilite-avec-execution-provisoire-seule-une-condamnation-definitive-met-fin-au-mandat-d-un-depute-europeen"
+        type: primaire
+        titre: "Inéligibilité avec exécution provisoire : seule une condamnation définitive met fin au mandat d'un député européen"
+        editeur: "Conseil d'État"
+        date_publication: "2025-10"
+        date_consultation: "2026-11-26"
+      - url: "https://lcp.fr/actualites/pourvoi-de-marine-le-pen-la-cour-de-cassation-pourrait-etre-en-mesure-de-se-prononcer"
+        type: presse
+        titre: "Pourvoi de Marine Le Pen : la Cour de cassation pourrait se prononcer au plus tard début avril 2027"
+        editeur: "LCP - Assemblée nationale"
+        date_publication: "2026-07-08"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/en-bref/affaire-des-assistants-parlementaires-du-fn-le-parquet-renonce-a-un-pourvoi-en-cassation-16990/"
+        type: presse
+        titre: "Affaire des assistants parlementaires du FN : le parquet renonce à un pourvoi en cassation"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-07-16"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/droit/affaire-des-assistants-parlementaires-du-fn-la-defense-de-marine-le-pen-devoile-ses-arguments-a-la-cour-de-cassation-18085/"
+        type: presse
+        titre: "La défense de Marine Le Pen dévoile ses arguments à la Cour de cassation (audience QPC le 16 décembre)"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-10-28"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/proces-rn-marine-le-pen-et-8-eurodeputes-reconnus-coupables-de-detournement-de-fonds-publics"
+        type: presse
+        titre: "Procès RN : jugement de première instance du 31 mars 2025"
+        editeur: "Public Sénat"
+        date_publication: "2025-03-31"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-le-pen-diffamation-cimade
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Marine Le Pen (députée RN, candidate présidentielle 2022)"
+    personnes_et_entites:
+      - nom: "Marine Le Pen"
+        qualite: "Candidate à l'élection présidentielle de 2022 / Députée RN"
+        type: personne_physique
+    titre: "Diffamation publique envers l'association La Cimade"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881)"
+    resume_factuel: "Condamnation pour des propos tenus en janvier 2022 sur BFMTV accusant l'association La Cimade d'organiser « la filière d'immigration clandestine en provenance des Comores » à Mayotte. Le 16 décembre 2025, la chambre criminelle de la Cour de cassation a rejeté le pourvoi de Marine Le Pen, confirmant l'arrêt d'appel du 11 septembre 2024."
+    juridiction: "Cour de cassation (chambre criminelle) — après CA de Paris et TJ de Paris"
+    dates_cles:
+      - date: "2023-10-01"
+        libelle: "Condamnation en première instance"
+      - date: "2024-09-11"
+        libelle: "Confirmation par la cour d'appel de Paris (500 € d'amende avec sursis)"
+      - date: "2025-12-16"
+        libelle: "Rejet du pourvoi par la chambre criminelle de la Cour de cassation"
+    date_derniere_decision: "2025-12-16"
+    peine:
+      amende: "500 € d'amende avec sursis"
+      note_recours: "Condamnation définitive — pourvoi rejeté le 16 décembre 2025."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "L'arrêt de rejet du 16/12/2025 n'a pas été localisé en accès public direct sur Judilibre/Légifrance à la date de vérification ; décision confirmée par Le Club des Juristes et le communiqué de la partie civile."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/marine-le-pen-definitivement-condamnee-pour-diffamation-envers-la-cimade-13397/"
+        type: presse
+        titre: "Marine Le Pen définitivement condamnée pour diffamation envers la Cimade"
+        editeur: "Le Club des Juristes"
+        date_publication: "2025-12-17"
+        date_consultation: "2026-11-26"
+      - url: "https://www.lacimade.org/diffamation-a-lencontre-de-la-cimade-marine-le-pen-definitivement-condamnee/"
+        type: presse
+        titre: "Diffamation à l'encontre de La Cimade : Marine Le Pen définitivement condamnée"
+        editeur: "La Cimade (partie civile)"
+        date_publication: "2025-12-16"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-jacobelli-outrage-belhaddad
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Laurent Jacobelli (député RN)"
+    personnes_et_entites:
+      - nom: "Laurent Jacobelli"
+        qualite: "Député RN de la Moselle, porte-parole du parti"
+        type: personne_physique
+    titre: "Outrage envers un parlementaire et diffamation non publique (Hayange, 2023)"
+    qualification_legale: "Outrage envers une personne chargée d'une mission de service public / parlementaire et diffamation non publique (relaxe sur le chef d'injure à raison de l'origine)"
+    resume_factuel: "À la suite d'une altercation filmée le 13 octobre 2023 à Hayange avec le député Belkhir Belhaddad, le tribunal correctionnel de Thionville a relaxé Laurent Jacobelli du chef d'injure non publique à raison de l'origine mais l'a condamné le 2 septembre 2025 pour outrage envers un parlementaire et diffamation non publique. Appel annoncé par la partie civile."
+    juridiction: "Tribunal correctionnel de Thionville"
+    dates_cles:
+      - date: "2023-10-13"
+        libelle: "Altercation à Hayange (Moselle)"
+      - date: "2025-09-02"
+        libelle: "Jugement du tribunal correctionnel de Thionville (appel annoncé par la partie civile)"
+    date_derniere_decision: "2025-09-02"
+    peine:
+      amende: "300 € d'amende avec sursis"
+      autres: "150 € de dommages et intérêts"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel annoncé par la partie civile (et relaxe partielle sur l'injure à raison de l'origine). Présumé innocent jusqu'à décision définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en accès open data direct."
+    sources:
+      - url: "https://moselle.tv/affaire-belhaddad-jacobelli-le-depute-rn-condamne-pour-outrage-et-diffamation-non-publique/"
+        type: presse
+        titre: "Affaire Belhaddad-Jacobelli : le député RN condamné pour outrage et diffamation non-publique"
+        editeur: "Moselle TV"
+        date_publication: "2025-09-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-enquete-campagne-2022
+    camp: RN
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale_et_physique
+    entite_principale: "Compte de campagne présidentielle 2022 de Marine Le Pen (information judiciaire)"
+    personnes_et_entites:
+      - nom: "Campagne présidentielle 2022 de Marine Le Pen"
+        qualite: "Compte de campagne visé par un signalement CNCCFP"
+        type: personne_morale
+      - nom: "Marine Le Pen"
+        qualite: "Candidate en 2022 (aucune mise en examen confirmée au 26/11/2026)"
+        type: personne_physique
+    titre: "Information judiciaire sur le financement de la campagne présidentielle de 2022"
+    qualification_legale: "Prêt d'une personne morale à un candidat en campagne électorale et acceptation, détournement de biens publics, escroquerie au préjudice d'une personne publique, faux et usage de faux"
+    resume_factuel: "À la suite d'un signalement de la CNCCFP (décision relative au compte de campagne publiée au JORF le 24 février 2023), le parquet de Paris a ouvert le 2 juillet 2024 une information judiciaire contre X. La défense de Marine Le Pen conteste ces griefs."
+    juridiction: "Tribunal judiciaire de Paris (information judiciaire)"
+    dates_cles:
+      - date: "2022-12-14"
+        libelle: "Décision CNCCFP relative au compte de campagne de Marine Le Pen (publiée au JORF le 24/02/2023)"
+      - date: "2024-07-02"
+        libelle: "Ouverture d'une information judiciaire par le parquet de Paris (rendue publique le 09/07/2024)"
+    date_derniere_decision: "2024-07-02"
+    peine:
+      note_recours: "PROCÉDURE EN COURS — PRÉSUMÉS INNOCENTS : aucune mise en examen ni renvoi confirmé au 26/11/2026."
+    references_judiciaires:
+      - "JORFTEXT000047219688 (Décision CNCCFP du 14/12/2022)"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047219688"
+        type: primaire
+        titre: "Décision CNCCFP du 14 décembre 2022 relative au compte de campagne de Mme Marine Le Pen"
+        editeur: "Légifrance (Journal officiel)"
+        date_publication: "2023-02-24"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/soupcons-de-financement-illegal-la-campagne-presidentielle-de-marine-le-pen-en-2022-visee-par-une-enquete-sur-ses-comptes"
+        type: presse
+        titre: "Soupçons de financement illégal : la campagne présidentielle de Marine Le Pen en 2022 visée par une enquête"
+        editeur: "Public Sénat"
+        date_publication: "2024-07-09"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/en-bref/ouverture-dune-information-judiciaire-sur-le-financement-de-la-campagne-de-marine-le-pen-en-2022-6528/"
+        type: presse
+        titre: "Ouverture d'une information judiciaire sur le financement de la campagne de Marine Le Pen en 2022"
+        editeur: "Le Club des Juristes"
+        date_publication: "2024-07-09"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-enquete-eppo-groupe-id
+    camp: RN
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale
+    entite_principale: "Ancien groupe parlementaire européen Identité et Démocratie (ID, 2019-2024)"
+    personnes_et_entites:
+      - nom: "Groupe Identité et Démocratie (ID)"
+        qualite: "Ancien groupe politique au Parlement européen réunissant notamment les eurodéputés RN"
+        type: personne_morale
+    titre: "Enquête du Parquet européen (EPPO) sur l'ancien groupe Identité et Démocratie"
+    qualification_legale: "Soupçons d'utilisation irrégulière de fonds du Parlement européen (contrats et subventions, législature 2019-2024)"
+    resume_factuel: "Enquête ouverte en juillet 2025 par le Parquet européen (EPPO) à la suite d'un signalement des services financiers du Parlement européen portant sur environ 4,3 M€ de dépenses litigieuses attribuées à l'ancien groupe ID (auquel participaient les eurodéputés RN ainsi que d'autres délégations nationales). Des perquisitions coordonnées ont été menées en 2026."
+    juridiction: "Parquet européen (EPPO)"
+    dates_cles:
+      - date: "2025-07-08"
+        libelle: "Ouverture d'enquête du Parquet européen révélée suite au signalement du Parlement européen"
+      - date: "2026-06-01"
+        libelle: "Perquisitions coordonnées menées en Europe dans le cadre de la procédure EPPO"
+    date_derniere_decision: "2025-07-08"
+    peine:
+      note_recours: "PROCÉDURE EN COURS — PRÉSUMÉS INNOCENTS : phase d'enquête, aucune condamnation ni mise en cause individuelle définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Enquête du Parquet européen (EPPO) sans communiqué nominatif public sur eppo.europa.eu ; confirmée par Public Sénat et Le Club des Juristes."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/affaires-judiciaires-du-rn-quelles-sont-les-regles-dutilisation-de-largent-public-du-parlement-europeen"
+        type: presse
+        titre: "Affaires judiciaires du RN : quelles sont les règles d'utilisation de l'argent public du Parlement européen ?"
+        editeur: "Public Sénat"
+        date_publication: "2025-08-08"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/justice/le-rn-et-ses-allies-vises-par-une-enquete-au-parlement-europeen-coup-de-projecteur-sur-le-parquet-europeen-11607/"
+        type: presse
+        titre: "Le RN et ses alliés visés par une enquête au Parlement européen"
+        editeur: "Le Club des Juristes"
+        date_publication: "2025-07-18"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-enquete-secret-enquete-2026
+    camp: RN
+    categorie: ordre_public_biens
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale_et_physique
+    entite_principale: "Information judiciaire sur des soupçons de fuites vers le Rassemblement National"
+    personnes_et_entites:
+      - nom: "Rassemblement National (siège perquisitionné)"
+        qualite: "Parti politique concerné par les perquisitions de novembre 2026"
+        type: personne_morale
+    titre: "Information judiciaire pour violation du secret professionnel et du secret de l'enquête"
+    qualification_legale: "Violation du secret professionnel, violation du secret de l'enquête et recel de ces délits"
+    resume_factuel: "Le parquet de Paris a ouvert le 27 juillet 2026 une information judiciaire relative à des soupçons de fuites d'informations confidentielles sur des enquêtes en cours visant le Rassemblement National. Le siège du parti et le ministère de l'Intérieur ont fait l'objet de perquisitions en novembre 2026."
+    juridiction: "Tribunal judiciaire de Paris (information judiciaire)"
+    dates_cles:
+      - date: "2026-07-27"
+        libelle: "Ouverture de l'information judiciaire par le parquet de Paris"
+      - date: "2026-11-09"
+        libelle: "Perquisition au siège du Rassemblement National"
+    date_derniere_decision: "2026-11-09"
+    peine:
+      note_recours: "PROCÉDURE EN COURS — PRÉSUMÉS INNOCENTS : instruction ouverte au 26/11/2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Instruction couverte par le secret de l'instruction (art. 11 CPP) ; ouverture confirmée par le parquet de Paris cité par LCP."
+    sources:
+      - url: "https://lcp.fr/actualites/fuites-sur-des-enquetes-mettant-en-cause-le-rn-un-prefet-convoque-par-laurent-nunez"
+        type: presse
+        titre: "Fuites sur des enquêtes mettant en cause le RN : un préfet convoqué par Laurent Nuñez"
+        editeur: "LCP - Assemblée nationale"
+        date_publication: "2026-11-20"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  # =========================================================================
+  # CAMP LFI — LA FRANCE INSOUMISE
+  # =========================================================================
+  - id: lfi-perquisition-bobigny-2019
+    camp: LFI
+    categorie: ordre_public_biens
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Luc Mélenchon et responsables nationaux de LFI"
+    personnes_et_entites:
+      - nom: "Jean-Luc Mélenchon"
+        qualite: "Alors député et président du groupe LFI"
+        type: personne_physique
+      - nom: "Manuel Bompard"
+        qualite: "Alors eurodéputé LFI"
+        type: personne_physique
+      - nom: "Bastien Lachaud"
+        qualite: "Député LFI"
+        type: personne_physique
+      - nom: "Bernard Pignerol, Muriel Rozenfeld"
+        qualite: "Responsable associatif et attachée de presse LFI"
+        type: personne_physique
+      - nom: "Alexis Corbière (relaxé)"
+        qualite: "Député LFI (relaxé par le tribunal)"
+        type: personne_physique
+    titre: "Incidents lors de la perquisition au siège de La France insoumise (octobre 2018)"
+    qualification_legale: "Rébellion, provocation directe à la rébellion et actes d'intimidation envers des magistrats et dépositaires de l'autorité publique"
+    resume_factuel: "À la suite des incidents survenus le 16 octobre 2018 lors d'une perquisition au siège de LFI, le tribunal correctionnel de Bobigny a condamné le 9 décembre 2019 Jean-Luc Mélenchon à trois mois d'emprisonnement avec sursis et 8 000 € d'amende, ainsi que quatre co-prévenus à des amendes de 2 000 € à 7 000 € (Alexis Corbière étant relaxé). Aucun appel n'ayant été interjeté, la décision est définitive."
+    juridiction: "Tribunal correctionnel de Bobigny"
+    dates_cles:
+      - date: "2018-10-16"
+        libelle: "Perquisition au siège de La France insoumise"
+      - date: "2019-12-09"
+        libelle: "Jugement du tribunal correctionnel de Bobigny (absence d'appel annoncée le jour même)"
+    date_derniere_decision: "2019-12-09"
+    peine:
+      prison: "Jean-Luc Mélenchon : 3 mois d'emprisonnement avec sursis"
+      amende: "Jean-Luc Mélenchon : 8 000 € ; Manuel Bompard, Bastien Lachaud, Bernard Pignerol et Muriel Rozenfeld : de 2 000 € à 7 000 € ; Alexis Corbière : relaxé"
+      note_recours: "Condamnation définitive — aucun appel interjeté."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de 2019 antérieur au déploiement de l'open data des juridictions du fond ; confirmé par la presse parlementaire et juridique."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/melenchon-condamne-a-trois-mois-avec-sursis-pour-la-perquisition-houleuse-a-lfi"
+        type: presse
+        titre: "Mélenchon condamné à trois mois avec sursis pour la perquisition houleuse à LFI"
+        editeur: "Public Sénat"
+        date_publication: "2019-12-09"
+        date_consultation: "2026-11-26"
+      - url: "https://www.rts.ch/info/monde/10930461-prison-avec-sursis-pour-jeanluc-melenchon-apres-son-coup-de-sang.html"
+        type: presse
+        titre: "Prison avec sursis pour Jean-Luc Mélenchon après son coup de sang"
+        editeur: "RTS Info"
+        date_publication: "2019-12-09"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/archives-cdj/proces-de-jean-luc-melenchon-les-actes-dintimidation-rebellion-et-provocation-envers-lautorite-judiciaire-sous-la-loupe-de-la-justice-2544/"
+        type: presse
+        titre: "Procès de Jean-Luc Mélenchon : les actes d'intimidation, rébellion et provocation"
+        editeur: "Le Club des Juristes"
+        date_publication: "2019-09-18"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-diouara-diffamation-2026
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: condamne_appel
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Aly Diouara (député LFI)"
+    personnes_et_entites:
+      - nom: "Aly Diouara"
+        qualite: "Député LFI de Seine-Saint-Denis"
+        type: personne_physique
+    titre: "Diffamation publique envers Oumarou Doucouré (municipales de La Courneuve)"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881)"
+    resume_factuel: "À la suite d'un communiqué diffusé en février 2026 durant la campagne municipale à La Courneuve, le tribunal correctionnel de Paris a condamné Aly Diouara le 9 mars 2026 pour diffamation publique envers Oumarou Doucouré (relaxe envers Stéphane Troussel). Le 11 juin 2026, la cour d'appel de Paris a confirmé la culpabilité et l'amende de 500 € avec sursis, ramenant les dommages et intérêts à 1 € symbolique."
+    juridiction: "Cour d'appel de Paris — après tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2026-03-09"
+        libelle: "Jugement du tribunal correctionnel de Paris (500 € amende sursis, 3 000 € dommages et intérêts)"
+      - date: "2026-06-11"
+        libelle: "Arrêt de la cour d'appel de Paris confirmant la culpabilité et réduisant les dommages et intérêts à 1 €"
+    date_derniere_decision: "2026-06-11"
+    peine:
+      amende: "500 € d'amende avec sursis"
+      autres: "1 € symbolique de dommages et intérêts"
+      note_recours: "CONDAMNATION EN APPEL : un pourvoi en cassation ayant été évoqué après l'arrêt du 11/06/2026 sans confirmation officielle d'épuisement des recours, le dossier est traité comme non définitif par prudence."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de la cour d'appel de Paris du 11/06/2026 non localisé en accès open data direct à la date de vérification."
+    sources:
+      - url: "https://poligraph.fr/affaires/aly-diouara-diffamation-envers-oumarou-doucoure-municipales-de-la-courneuve"
+        type: presse
+        titre: "Aly Diouara — Diffamation envers Oumarou Doucouré (municipales de La Courneuve)"
+        editeur: "Poligraph"
+        date_publication: "2026-06"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-taurinya-diffamation-2025
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Andrée Taurinya (députée LFI)"
+    personnes_et_entites:
+      - nom: "Andrée Taurinya"
+        qualite: "Députée LFI de la Loire"
+        type: personne_physique
+    titre: "Diffamation publique envers Gerbert Rambaud (législatives 2024)"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881)"
+    resume_factuel: "Condamnée le 5 mai 2025 par le tribunal correctionnel de Saint-Étienne pour un message publié sur le réseau social X le 4 juillet 2024 visant un candidat de Debout la France. La députée a annoncé interjeter appel de cette décision."
+    juridiction: "Tribunal correctionnel de Saint-Étienne"
+    dates_cles:
+      - date: "2024-07-04"
+        libelle: "Publication du message litigieux sur X"
+      - date: "2025-05-05"
+        libelle: "Jugement du tribunal correctionnel de Saint-Étienne (appel annoncé)"
+    date_derniere_decision: "2025-05-05"
+    peine:
+      amende: "2 000 € d'amende avec sursis"
+      autres: "Environ 4 500 € au titre des intérêts civils"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel annoncé par la députée ; présumée innocente jusqu'à décision définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en accès open data direct."
+    sources:
+      - url: "https://poligraph.fr/affaires/andree-taurinya-condamnation-d-andree-taurinya-pour-diffamation-envers-gerbert-rambaud"
+        type: presse
+        titre: "Condamnation d'Andrée Taurinya pour diffamation envers Gerbert Rambaud"
+        editeur: "Poligraph"
+        date_publication: "2025-05"
+        date_consultation: "2026-11-26"
+      - url: "https://42info.fr/la-deputee-lfi-andree-taurinya-face-a-la-justice-pour-diffamation/"
+        type: presse
+        titre: "La députée LFI Andrée Taurinya face à la justice pour diffamation"
+        editeur: "42info"
+        date_publication: "2025-05"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-panot-apologie-classement-2025
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: non_lieu
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Mathilde Panot (députée et présidente du groupe LFI)"
+    personnes_et_entites:
+      - nom: "Mathilde Panot"
+        qualite: "Députée et présidente du groupe parlementaire LFI"
+        type: personne_physique
+    titre: "Enquête pour apologie du terrorisme — classement sans suite (2025)"
+    qualification_legale: "Apologie du terrorisme (qualification visée lors de l'enquête préliminaire — classée sans suite)"
+    resume_factuel: "Auditionnée en avril 2024 dans le cadre d'une enquête préliminaire ouverte à la suite d'un communiqué du groupe parlementaire LFI publié après les attaques du 7 octobre 2023. La procédure a été classée sans suite en janvier 2025, sans poursuite devant un tribunal."
+    juridiction: "Parquet de Paris (classement sans suite)"
+    dates_cles:
+      - date: "2024-04-30"
+        libelle: "Audition par la police judiciaire dans le cadre de l'enquête préliminaire"
+      - date: "2025-01-15"
+        libelle: "Classement sans suite de la procédure annoncé en janvier 2025"
+    date_derniere_decision: "2025-01-15"
+    peine:
+      note_recours: "Classement sans suite — aucune poursuite engagée ni condamnation."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Les avis de classement sans suite du parquet ne sont pas publiés en open data."
+    sources:
+      - url: "https://poligraph.fr/affaires/mathilde-panot-enquete-pour-apologie-du-terrorisme-visant-mathilde-panot-classee-sans-suite"
+        type: presse
+        titre: "Enquête pour apologie du terrorisme visant Mathilde Panot classée sans suite"
+        editeur: "Poligraph"
+        date_publication: "2025-01"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/convocation-de-mathilde-panot-pourquoi-les-poursuites-pour-apologie-du-terrorisme-sont-en-hausse"
+        type: presse
+        titre: "Convocation de Mathilde Panot : pourquoi les poursuites pour apologie du terrorisme sont en hausse"
+        editeur: "Public Sénat"
+        date_publication: "2024-04"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-delogu-violences-lycee-2025
+    camp: LFI
+    categorie: ordre_public_biens
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Sébastien Delogu (député LFI)"
+    personnes_et_entites:
+      - nom: "Sébastien Delogu"
+        qualite: "Député LFI des Bouches-du-Rhône"
+        type: personne_physique
+    titre: "Violences volontaires aggravées devant le lycée Saint-Exupéry (Marseille, 2023)"
+    qualification_legale: "Violences volontaires aggravées (sur personnels de l'Éducation nationale)"
+    resume_factuel: "Condamné le 14 février 2025 par le tribunal correctionnel de Marseille pour des faits survenus le 10 mars 2023 en marge d'un blocus contre la réforme des retraites devant le lycée Saint-Exupéry. Le député conteste les faits et a interjeté appel immédiatement."
+    juridiction: "Tribunal correctionnel de Marseille"
+    dates_cles:
+      - date: "2023-03-10"
+        libelle: "Altercation devant le lycée Saint-Exupéry à Marseille"
+      - date: "2025-02-14"
+        libelle: "Jugement du tribunal correctionnel de Marseille (appel interjeté)"
+    date_derniere_decision: "2025-02-14"
+    peine:
+      amende: "5 000 € d'amende"
+      autres: "Dommages et intérêts et frais de justice aux parties civiles"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel interjeté dès le prononcé ; présumé innocent jusqu'à décision définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en accès open data direct."
+    sources:
+      - url: "https://gomet.net/le-depute-sebastien-delogu-lfi-condamne/"
+        type: presse
+        titre: "Le député Sébastien Delogu (LFI) condamné à 5 000 euros d'amende"
+        editeur: "Gomet'"
+        date_publication: "2025-02-14"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-chikirou-le-media-2026
+    camp: LFI
+    categorie: ordre_public_biens
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Sophia Chikirou (députée LFI)"
+    personnes_et_entites:
+      - nom: "Sophia Chikirou"
+        qualite: "Députée LFI de Paris (faits de 2018 relatifs à la direction du Média)"
+        type: personne_physique
+    titre: "Dossier « Le Média » (vol de formules de chèques / relaxe sur tentative d'escroquerie)"
+    qualification_legale: "Vol (soustraction de formules de chèques) ; relaxe du chef de tentative d'escroquerie"
+    resume_factuel: "Jugée le 12 mai 2026 devant la 13e chambre correctionnelle du tribunal judiciaire de Paris pour des faits datant de juillet 2018 lors de son départ de la webtélé Le Média. Le 8 juin 2026, le tribunal l'a relaxée du chef de tentative d'escroquerie mais l'a condamnée pour vol de formules de chèques. Sophia Chikirou a interjeté appel."
+    juridiction: "Tribunal judiciaire de Paris (13e chambre correctionnelle)"
+    dates_cles:
+      - date: "2026-05-12"
+        libelle: "Audience correctionnelle devant le tribunal judiciaire de Paris"
+      - date: "2026-06-08"
+        libelle: "Jugement de première instance : relaxe sur tentative d'escroquerie, condamnation pour vol (appel interjeté)"
+    date_derniere_decision: "2026-06-08"
+    peine:
+      amende: "8 000 € d'amende dont 4 000 € avec sursis (et relaxe pour tentative d'escroquerie)"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel interjeté par Sophia Chikirou ; présumée innocente jusqu'à décision définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance non publié en accès open data direct."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/justice/sophia-chikirou-devant-la-justice-la-deputee-lfi-jugee-pour-tentative-descroquerie-15765/"
+        type: presse
+        titre: "Sophia Chikirou devant la justice : la députée LFI jugée pour tentative d'escroquerie"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-05"
+        date_consultation: "2026-11-26"
+      - url: "https://poligraph.fr/affaires/sophia-chikirou-sophia-chikirou-escroquerie-dans-l-affaire-le-media"
+        type: presse
+        titre: "Sophia Chikirou — Affaire Le Média"
+        editeur: "Poligraph"
+        date_publication: "2026-06"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-enquete-comptes-campagne-2017
+    camp: LFI
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: mis_en_examen
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale_et_physique
+    entite_principale: "Sophia Chikirou, Bastien Lachaud, Marie-Pierre Oprandi et L'Ère du peuple"
+    personnes_et_entites:
+      - nom: "Sophia Chikirou"
+        qualite: "Députée LFI, ex-directrice de communication (mise en examen)"
+        type: personne_physique
+      - nom: "Bastien Lachaud"
+        qualite: "Député LFI, ex-trésorier (mis en examen)"
+        type: personne_physique
+      - nom: "Marie-Pierre Oprandi"
+        qualite: "Mandataire financière de la campagne 2017 (mise en examen)"
+        type: personne_physique
+      - nom: "Association L'Ère du peuple"
+        qualite: "Association prestataire (personne morale mise en examen)"
+        type: personne_morale
+    titre: "Information judiciaire sur les comptes de la campagne présidentielle 2017"
+    qualification_legale: "Escroquerie aggravée, abus de biens sociaux, recel d'abus de confiance et prêt illégal de main-d'œuvre (qualifications visées à l'instruction)"
+    resume_factuel: "Ouverte en 2018 après un signalement de la CNCCFP (décision publiée au JORF le 13 février 2018), l'instruction porte sur des soupçons de surfacturations de prestations lors de la campagne présidentielle de 2017. L'information judiciaire a été clôturée le 7 mai 2026 avec quatre mises en examen (Jean-Luc Mélenchon n'étant pas mis en examen), le dossier étant transmis au parquet de Paris pour réquisitions."
+    juridiction: "Tribunal judiciaire de Paris (instruction clôturée — attente réquisitions et ordonnance de règlement)"
+    dates_cles:
+      - date: "2017-12-21"
+        libelle: "Décision CNCCFP relative au compte de campagne de Jean-Luc Mélenchon (publiée au JORF le 13/02/2018)"
+      - date: "2018-04-01"
+        libelle: "Ouverture de l'enquête par le parquet de Paris"
+      - date: "2024-09-24"
+        libelle: "Mise en examen de Sophia Chikirou"
+      - date: "2026-05-07"
+        libelle: "Clôture de l'information judiciaire (quatre mises en examen ; dossier transmis au parquet)"
+    date_derniere_decision: "2026-05-07"
+    peine:
+      note_recours: "PROCÉDURE EN COURS — PRÉSUMÉS INNOCENTS : la clôture de l'instruction ne constitue ni un renvoi devant un tribunal ni un non-lieu."
+    references_judiciaires:
+      - "JORFTEXT000036593789 (Décision CNCCFP du 21/12/2017)"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000036593789"
+        type: primaire
+        titre: "Décision CNCCFP du 21 décembre 2017 relative au compte de campagne de M. Jean-Luc Mélenchon"
+        editeur: "Légifrance (Journal officiel)"
+        date_publication: "2018-02-13"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/en-bref/quatre-mises-en-examen-dans-laffaire-des-comptes-de-campagnes-de-lfi-de-2017-16141/"
+        type: presse
+        titre: "Quatre mises en examen dans l'affaire des comptes de campagne de LFI de 2017"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-06-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-enquete-assistants-ue-2018
+    camp: LFI
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Assistants parlementaires européens LFI (législature 2009-2017)"
+    personnes_et_entites:
+      - nom: "Jean-Luc Mélenchon (non mis en examen)"
+        qualite: "Ex-député européen (aucune mise en examen prononcée)"
+        type: personne_physique
+      - nom: "Deux anciens collaborateurs parlementaires"
+        qualite: "Placés sous le statut de témoin assisté"
+        type: personne_physique
+    titre: "Information judiciaire sur les assistants parlementaires européens (clôturée sans mise en examen)"
+    qualification_legale: "Détournement de fonds publics et blanchiment (qualifications visées à l'ouverture de l'information judiciaire)"
+    resume_factuel: "Ouverte en novembre 2018 à la suite d'un signalement de 2017, l'information judiciaire sur les assistants parlementaires européens liés à Jean-Luc Mélenchon a été clôturée en mai 2026 sans aucune mise en examen de l'ancien eurodéputé (deux anciens collaborateurs étant restés témoins assistés), dans l'attente de l'ordonnance de règlement définitive."
+    juridiction: "Tribunal judiciaire de Paris (instruction clôturée sans mise en examen)"
+    dates_cles:
+      - date: "2018-11-01"
+        libelle: "Ouverture de l'information judiciaire par le parquet de Paris"
+      - date: "2026-05-26"
+        libelle: "Clôture de l'information judiciaire sans mise en examen de Jean-Luc Mélenchon"
+    date_derniere_decision: "2026-05-26"
+    peine:
+      note_recours: "PROCÉDURE EN COURS (CLÔTURÉE SANS MISE EN EXAMEN) — PRÉSUMÉS INNOCENTS : dossier transmis au parquet pour réquisitions définitives (non-lieu ou renvoi)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Actes d'instruction couverts par le secret de l'instruction (art. 11 CPP) ; clôture sans mise en examen confirmée par Le Club des Juristes et Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/les-deux-enquetes-visant-melenchon-et-lfi-confiees-a-des-juges-d-instruction"
+        type: presse
+        titre: "Les deux enquêtes visant Mélenchon et LFI confiées à des juges d'instruction"
+        editeur: "Public Sénat"
+        date_publication: "2018-11"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/en-bref/quatre-mises-en-examen-dans-laffaire-des-comptes-de-campagnes-de-lfi-de-2017-16141/"
+        type: presse
+        titre: "Clôture de l'enquête assistants parlementaires sans aucune mise en examen"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-06-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-hassan-apologie-terrorisme-2026
+    camp: LFI
+    categorie: presse_expression
+    section: procedures_en_cours
+    statut: renvoye
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Rima Hassan (eurodéputée LFI)"
+    personnes_et_entites:
+      - nom: "Rima Hassan"
+        qualite: "Députée européenne LFI"
+        type: personne_physique
+    titre: "Poursuites pour apologie du terrorisme (publication sur X de mars 2026)"
+    qualification_legale: "Apologie publique d'un acte de terrorisme (qualification poursuivie devant le tribunal correctionnel)"
+    resume_factuel: "À la suite d'une publication sur le réseau social X du 26 mars 2026 et d'une garde à vue le 2 avril 2026, Rima Hassan a comparu les 19 et 20 octobre 2026 devant la 10e chambre correctionnelle du tribunal judiciaire de Paris. Au 26 novembre 2026, l'affaire est en délibéré (jugement fixé au 30 novembre 2026)."
+    juridiction: "Tribunal judiciaire de Paris (10e chambre correctionnelle)"
+    dates_cles:
+      - date: "2026-04-02"
+        libelle: "Garde à vue et poursuites devant le tribunal correctionnel"
+      - date: "2026-10-19"
+        libelle: "Audience correctionnelle les 19 et 20 octobre 2026 (délibéré fixé au 30/11/2026, postérieur au 26/11/2026)"
+    date_derniere_decision: "2026-10-19"
+    peine:
+      note_recours: "PROCÉDURE EN COURS (EN DÉLIBÉRÉ) — PRÉSUMÉE INNOCENTE : aucun jugement rendu à la date de référence du 26/11/2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Affaire en délibéré au 26/11/2026 (jugement attendu le 30/11/2026)."
+    sources:
+      - url: "https://www.aa.com.tr/fr/france/proc%C3%A8s-de-rima-hassan-pour-apologie-du-terrorisme-l-audience-renvoy%C3%A9e-aux-19-et-20-octobre/3989532"
+        type: presse
+        titre: "Procès de Rima Hassan pour apologie du terrorisme : l'audience renvoyée aux 19 et 20 octobre"
+        editeur: "Agence Anadolu"
+        date_publication: "2026-07"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"

@@ -1,244 +1,92 @@
 ---
-import type { CampMetrics } from '../lib/data';
-
-interface Props {
-  lfiMetrics: CampMetrics;
-  rnMetrics: CampMetrics;
-}
-
-const { lfiMetrics, rnMetrics } = Astro.props;
-
-const axes = [
-  {
-    lines: ['Financement', '& probité'],
-    lfi: lfiMetrics.byCategoryAll.financement_probite,
-    rn: rnMetrics.byCategoryAll.financement_probite,
-  },
-  {
-    lines: ['Presse &', 'expression'],
-    lfi: lfiMetrics.byCategoryAll.presse_expression,
-    rn: rnMetrics.byCategoryAll.presse_expression,
-  },
-  {
-    lines: ['Ordre public', '& biens'],
-    lfi: lfiMetrics.byCategoryAll.ordre_public_biens,
-    rn: rnMetrics.byCategoryAll.ordre_public_biens,
-  },
-  {
-    lines: ['Condamnations', 'définitives'],
-    lfi: lfiMetrics.definitiveConvictions,
-    rn: rnMetrics.definitiveConvictions,
-  },
-  {
-    lines: ['En cours ou', 'sous recours'],
-    lfi: lfiMetrics.ongoingCount + lfiMetrics.pendingConvictions,
-    rn: rnMetrics.ongoingCount + rnMetrics.pendingConvictions,
-  },
+const axesLines = [
+  ['Financement', '& probité'],
+  ['Presse &', 'expression'],
+  ['Ordre public', '& biens'],
+  ['Condamnations', 'définitives'],
+  ['En cours ou', 'sous recours'],
 ];
-
-const maxAxis = Math.max(
-  1,
-  ...axes.flatMap((a) => [a.lfi, a.rn]),
-);
-
 const cx = 270;
 const cy = 170;
 const radius = 90;
-
-function polarPoint(index: number, valueRatio: number): { x: number; y: number } {
-  const angle = -Math.PI / 2 + (index * 2 * Math.PI) / axes.length;
-  const r = radius * valueRatio;
-  return {
-    x: Number((cx + r * Math.cos(angle)).toFixed(1)),
-    y: Number((cy + r * Math.sin(angle)).toFixed(1)),
-  };
+function polar(i: number, r: number) {
+  const a = -Math.PI / 2 + (i * 2 * Math.PI) / axesLines.length;
+  return { x: +(cx + radius * r * Math.cos(a)).toFixed(1), y: +(cy + radius * r * Math.sin(a)).toFixed(1) };
 }
-
-function buildPolygon(values: number[]): string {
-  return values
-    .map((v, i) => {
-      const pt = polarPoint(i, v / maxAxis);
-      return `${pt.x},${pt.y}`;
-    })
-    .join(' ');
-}
-
-const lfiPoly = buildPolygon(axes.map((a) => a.lfi));
-const rnPoly = buildPolygon(axes.map((a) => a.rn));
 const rings = [0.25, 0.5, 0.75, 1];
-
-const totalLfi = Math.max(1, lfiMetrics.totalCases);
-const totalRn = Math.max(1, rnMetrics.totalCases);
 ---
 
 <div class="dataviz-grid">
-  <!-- RADAR MULTI-AXES -->
   <section class="pixel-frame dataviz-card" aria-labelledby="radar-heading">
     <div class="dataviz-card__head">
       <span class="section-kicker">GRAPHIQUE COMPARATIF · 2010–2026</span>
-      <h3 id="radar-heading" class="dataviz-card__title">
-        Répartition des dossiers par thème et statut
-      </h3>
+      <h3 id="radar-heading" class="dataviz-card__title">Répartition des dossiers par thème et statut</h3>
     </div>
 
-    <div class="radar-wrap">
-      <svg
-        viewBox="0 0 540 340"
-        class="radar-svg"
-        role="img"
-        aria-label="Graphique comparant le nombre de dossiers LFI et RN sur 5 critères : financement et probité, presse et expression, ordre public et biens, condamnations définitives, et dossiers en cours ou sous recours."
-      >
-        {
-          rings.map((ratio) => (
-            <polygon
-              points={axes
-                .map((_, i) => {
-                  const pt = polarPoint(i, ratio);
-                  return `${pt.x},${pt.y}`;
-                })
-                .join(' ')}
-              fill="none"
-              stroke="rgba(184, 197, 220, 0.25)"
-              stroke-width="1"
-            />
-          ))
-        }
-
-        {
-          axes.map((axis, i) => {
-            const edge = polarPoint(i, 1);
-            const labelPt = polarPoint(i, 1.24);
-            const anchor =
-              labelPt.x < cx - 18 ? 'end' : labelPt.x > cx + 18 ? 'start' : 'middle';
-            const firstY = i === 0 ? labelPt.y - 12 : labelPt.y - 4;
-            return (
-              <g>
-                <line
-                  x1={cx}
-                  y1={cy}
-                  x2={edge.x}
-                  y2={edge.y}
-                  stroke="rgba(184, 197, 220, 0.35)"
-                  stroke-width="1"
-                />
-                <text
-                  x={labelPt.x}
-                  y={firstY}
-                  text-anchor={anchor}
-                  fill="#F2F5FA"
-                  font-size="12.5"
-                  font-weight="700"
-                  font-family="Atkinson Hyperlegible, system-ui, sans-serif"
-                >
-                  <tspan x={labelPt.x} dy="0">{axis.lines[0]}</tspan>
-                  <tspan x={labelPt.x} dy="15">{axis.lines[1]}</tspan>
-                </text>
-              </g>
-            );
-          })
-        }
-
-        <polygon
-          points={lfiPoly}
-          fill="rgba(245, 183, 59, 0.24)"
-          stroke="#F5B73B"
-          stroke-width="2.5"
-        />
-        <polygon
-          points={rnPoly}
-          fill="rgba(76, 201, 240, 0.22)"
-          stroke="#4CC9F0"
-          stroke-width="2.5"
-        />
-
-        {
-          axes.map((axis, i) => {
-            const pLfi = polarPoint(i, axis.lfi / maxAxis);
-            const pRn = polarPoint(i, axis.rn / maxAxis);
-            return (
-              <g>
-                <circle cx={pLfi.x} cy={pLfi.y} r="4" fill="#F5B73B" />
-                <circle cx={pRn.x} cy={pRn.y} r="4" fill="#4CC9F0" />
-              </g>
-            );
-          })
-        }
+    <div id="radar-duel-view" class="radar-wrap">
+      <svg viewBox="0 0 540 340" class="radar-svg" role="img" aria-label="Graphique radar comparant les deux partis du duel sur 5 critères.">
+        {rings.map((r) => (
+          <polygon points={axesLines.map((_, i) => { const p = polar(i, r); return `${p.x},${p.y}`; }).join(' ')} fill="none" stroke="rgba(184,197,220,0.25)" />
+        ))}
+        {axesLines.map((lines, i) => {
+          const e = polar(i, 1);
+          const l = polar(i, 1.24);
+          const anchor = l.x < cx - 18 ? 'end' : l.x > cx + 18 ? 'start' : 'middle';
+          const y0 = i === 0 ? l.y - 12 : l.y - 4;
+          return (
+            <g>
+              <line x1={cx} y1={cy} x2={e.x} y2={e.y} stroke="rgba(184,197,220,0.35)" />
+              <text x={l.x} y={y0} text-anchor={anchor} fill="#F2F5FA" font-size="12.5" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">
+                <tspan x={l.x} dy="0">{lines[0]}</tspan>
+                <tspan x={l.x} dy="15">{lines[1]}</tspan>
+              </text>
+            </g>
+          );
+        })}
+        <polygon id="radar-left-poly" points="" fill="rgba(245,183,59,0.24)" stroke="#F5B73B" stroke-width="2.5" />
+        <polygon id="radar-right-poly" points="" fill="rgba(76,201,240,0.22)" stroke="#4CC9F0" stroke-width="2.5" />
+        <g id="radar-dots"></g>
       </svg>
-
       <div class="radar-legend">
-        <span class="legend-chip legend-chip--lfi">■ LFI / ex-FdG ({lfiMetrics.totalCases} dossiers)</span>
-        <span class="legend-chip legend-chip--rn">■ RN / ex-FN ({rnMetrics.totalCases} dossiers)</span>
+        <span class="legend-chip legend-chip--lfi" id="radar-legend-left">—</span>
+        <span class="legend-chip legend-chip--rn" id="radar-legend-right">—</span>
       </div>
-      <p class="radar-help">
-        Plus la forme s'étend vers un sommet, plus le nombre de dossiers recensés dans ce domaine est élevé.
-      </p>
+      <p class="radar-help">Plus la forme s'étend vers un sommet, plus le nombre de dossiers recensés dans ce domaine est élevé.</p>
+    </div>
+
+    <div id="radar-global-view" hidden>
+      <div class="table-scroll">
+        <table class="data-table global-compare-table">
+          <caption class="visually-hidden">Nombre de dossiers par bloc politique et par critère</caption>
+          <thead>
+            <tr>
+              <th scope="col">Bloc</th>
+              <th scope="col">Financement & probité</th>
+              <th scope="col">Presse & expression</th>
+              <th scope="col">Ordre public & biens</th>
+              <th scope="col">Condamnations définitives</th>
+              <th scope="col">En cours ou sous recours</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody id="global-compare-body"></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
-  <!-- BARRES EMPILÉES & PERSONNE MORALE VS PHYSIQUE -->
   <section class="pixel-frame dataviz-card" aria-labelledby="bars-heading">
     <div class="dataviz-card__head">
       <span class="section-kicker">RÉPARTITION DÉTAILLÉE · STATUTS ET ENTITÉS</span>
-      <h3 id="bars-heading" class="dataviz-card__title">
-        Décisions, recours et entités concernées
-      </h3>
+      <h3 id="bars-heading" class="dataviz-card__title">Décisions, recours et entités concernées</h3>
     </div>
-
-    <div class="stacked-block">
-      <div class="stacked-label-row">
-        <strong style="color: var(--camp-lfi);">La France insoumise ({lfiMetrics.totalCases} dossiers)</strong>
-        <span>Définitives : {lfiMetrics.definitiveConvictions} · Sous recours : {lfiMetrics.pendingConvictions} · Relaxes/Classés : {lfiMetrics.clearedCount} · En cours : {lfiMetrics.ongoingCount}</span>
-      </div>
-      <div class="stacked-bar" aria-label="Répartition par statut LFI">
-        <span class="seg seg--def" style={`width: ${(lfiMetrics.definitiveConvictions / totalLfi) * 100}%`} title={`Condamnations définitives : ${lfiMetrics.definitiveConvictions}`}></span>
-        <span class="seg seg--pend" style={`width: ${(lfiMetrics.pendingConvictions / totalLfi) * 100}%`} title={`Condamnations sous recours : ${lfiMetrics.pendingConvictions}`}></span>
-        <span class="seg seg--clear" style={`width: ${(lfiMetrics.clearedCount / totalLfi) * 100}%`} title={`Relaxes ou classements : ${lfiMetrics.clearedCount}`}></span>
-        <span class="seg seg--ong" style={`width: ${(lfiMetrics.ongoingCount / totalLfi) * 100}%`} title={`Procédures en cours : ${lfiMetrics.ongoingCount}`}></span>
-      </div>
-
-      <div class="stacked-label-row" style="margin-top: 0.9rem;">
-        <strong style="color: var(--camp-rn);">Rassemblement National ({rnMetrics.totalCases} dossiers)</strong>
-        <span>Définitives : {rnMetrics.definitiveConvictions} · Sous recours : {rnMetrics.pendingConvictions} · Relaxes/Classés : {rnMetrics.clearedCount} · En cours : {rnMetrics.ongoingCount}</span>
-      </div>
-      <div class="stacked-bar" aria-label="Répartition par statut RN">
-        <span class="seg seg--def" style={`width: ${(rnMetrics.definitiveConvictions / totalRn) * 100}%`} title={`Condamnations définitives : ${rnMetrics.definitiveConvictions}`}></span>
-        <span class="seg seg--pend" style={`width: ${(rnMetrics.pendingConvictions / totalRn) * 100}%`} title={`Condamnations sous recours : ${rnMetrics.pendingConvictions}`}></span>
-        <span class="seg seg--clear" style={`width: ${(rnMetrics.clearedCount / totalRn) * 100}%`} title={`Relaxes ou classements : ${rnMetrics.clearedCount}`}></span>
-        <span class="seg seg--ong" style={`width: ${(rnMetrics.ongoingCount / totalRn) * 100}%`} title={`Procédures en cours : ${rnMetrics.ongoingCount}`}></span>
-      </div>
-
-      <div class="seg-legend">
-        <span><i class="swatch swatch--def"></i> Condamnation définitive</span>
-        <span><i class="swatch swatch--pend"></i> Condamnation sous recours</span>
-        <span><i class="swatch swatch--clear"></i> Relaxe ou classement</span>
-        <span><i class="swatch swatch--ong"></i> Procédure en cours</span>
-      </div>
+    <div class="stacked-block" id="stacked-bars"></div>
+    <div class="seg-legend">
+      <span><i class="swatch swatch--def"></i> Condamnation définitive</span>
+      <span><i class="swatch swatch--pend"></i> Condamnation sous recours</span>
+      <span><i class="swatch swatch--clear"></i> Relaxe ou classement</span>
+      <span><i class="swatch swatch--ong"></i> Procédure en cours</span>
     </div>
-
-    <div class="entity-split-grid">
-      <div class="entity-split-box">
-        <div class="entity-split-box__title" style="color: var(--camp-lfi);">LFI — QUI EST VISÉ ?</div>
-        <div class="entity-split-row">
-          <span>Impliquant le parti (personne morale)</span>
-          <strong>{lfiMetrics.moraleInvolvedCount}</strong>
-        </div>
-        <div class="entity-split-row">
-          <span>Un élu ou dirigeant seul (personne physique)</span>
-          <strong>{lfiMetrics.physiqueOnlyCount}</strong>
-        </div>
-      </div>
-
-      <div class="entity-split-box">
-        <div class="entity-split-box__title" style="color: var(--camp-rn);">RN — QUI EST VISÉ ?</div>
-        <div class="entity-split-row">
-          <span>Impliquant le parti (personne morale)</span>
-          <strong>{rnMetrics.moraleInvolvedCount}</strong>
-        </div>
-        <div class="entity-split-row">
-          <span>Un élu ou dirigeant seul (personne physique)</span>
-          <strong>{rnMetrics.physiqueOnlyCount}</strong>
-        </div>
-      </div>
-    </div>
+    <div class="entity-split-grid" id="entity-split"></div>
   </section>
 </div>

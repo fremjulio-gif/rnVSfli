@@ -2,6 +2,49 @@
 
 Toutes les mises à jour factuelles du dataset (`data/cases.yaml`) sont consignées ici de façon chronologique et sourcée.
 
+## 2026-11-26 — Extension multi-partis 6 blocs (v5.0, 65 fiches)
+
+Extension du périmètre aux 6 grands blocs parlementaires (`RN`, `LFI`, `LR`, `CENTRE`, `PS`, `ECOLO`) avec inclusion symétrique des anciens présidents, Premiers ministres et ministres (y compris CJR) sur 2010–2026 :
+
+### Les Républicains (LR, ex-UMP) (+12 fiches)
+- `lr-sarkozy-bismuth-2024` : Nicolas Sarkozy — corruption et trafic d'influence (Cass. crim. 18/12/2024, n° 23-83.178, définitive) — Légifrance & Le Club des Juristes.
+- `lr-sarkozy-bygmalion-2025` : Nicolas Sarkozy — financement illégal de campagne 2012 (Cass. crim. 26/11/2025, définitive ; confusion rejetée 09/03/2026) — Le Club des Juristes & Public Sénat.
+- `lr-sarkozy-libye-2025` : Nicolas Sarkozy — financement libyen présumé 2007 (TJ Paris 25/09/2025, appel en cours) — Transparency France & Blog Jus Politicum.
+- `lr-fillon-emplois-fictifs-2026` : François Fillon — détournement de fonds publics (Cass. crim. 24/04/2024, CA Paris 17/06/2025, désistement fév. 2026, définitive) — Légifrance, Le Club des Juristes & LCP.
+- `lr-gueant-primes-liquide-2019` : Claude Guéant — complicité/recel de détournement de fonds publics (Cass. 16/01/2019, définitive) — Public Sénat.
+- `lr-gueant-sondages-elysee-2025` : Claude Guéant — favoritisme, sondages de l'Élysée (CA Paris 04/11/2025, pourvoi annoncé) — Le Club des Juristes.
+- `lr-balkany-fraude-blanchiment-2021` : Patrick Balkany — fraude fiscale et blanchiment aggravé (Cass. 2021, définitive) — Public Sénat.
+- `lr-lagarde-tapie-cjr-2016` : Christine Lagarde — négligence devant la CJR, dispense de peine (19/12/2016, définitive) — Le Club des Juristes.
+- `lr-woerth-bettencourt-relaxe-2015` : Éric Woerth — relaxe totale (TJ Bordeaux 28/05/2015) — RTS & Poligraph.
+- `lr-dati-renault-nissan-2026` : Rachida Dati — procès en délibéré pour début 2027 (présumée innocente) — LCP.
+- `lr-wauquiez-enquete-pnf-2024` : Laurent Wauquiez — enquête préliminaire PNF élargie déc. 2024 (présumé innocent) — La Gazette France.
+- `lr-ciotti-enquete-nice-2024` : Éric Ciotti — enquête préliminaire parquet de Nice (présumé innocent) — Le Club des Juristes.
+
+### Centre / Macronistes (Renaissance, MoDem, Horizons) (+8 fiches)
+- `centre-modem-assistants-ue-2024` : MoDem/UDF (personnes morales), cadres et F. Bayrou relaxé (TJ Paris 05/02/2024, appel automne 2026, délibéré 17/12/2026) — Public Sénat, Le Club des Juristes & La Gazette France.
+- `centre-griset-patrimoine-2023` : Alain Griset — déclaration incomplète à la HATVP (CA Paris 04/01/2023, définitive) — Public Sénat & Poligraph.
+- `centre-dussopt-favoritisme-2026` : Olivier Dussopt — favoritisme, arrêt d'appel cassé et renvoyé par la Cour de cassation (03/06/2026, présumé innocent) — Kohen Avocats & Le Club des Juristes.
+- `centre-dupond-moretti-cjr-2023` : Éric Dupond-Moretti — relaxe devant la CJR (29/11/2023) — Le Club des Juristes & Public Sénat.
+- `centre-buzyn-philippe-veran-cjr-2025` : Édouard Philippe, Agnès Buzyn et Olivier Véran — non-lieu général de la CJR (juillet 2025) — Le Club des Juristes.
+- `centre-ferrand-mutuelles-2022` : Richard Ferrand — prescription confirmée en cassation (05/10/2022) — Anticor.
+- `centre-philippe-le-havre-2026` : Édouard Philippe — information judiciaire PNF / Cité numérique du Havre (présumé innocent) — LCP & Public Sénat.
+- `centre-solere-mise-en-examen-2019` : Thierry Solère — mises en examen à Nanterre (présumé innocent) — Public Sénat.
+
+### Parti socialiste (PS) (+6 fiches)
+- `ps-cahuzac-fraude-fiscale-2018` : Jérôme Cahuzac — fraude fiscale et blanchiment (CA Paris 15/05/2018, définitive) — Public Sénat.
+- `ps-thevenoud-fraude-fiscale-2019` : Thomas Thévenoud — fraude fiscale (Cass. 12/09/2019, définitive) — Public Sénat.
+- `ps-andrieux-subventions-2016` : Sylvie Andrieux — détournement de fonds publics (Cass. 09/11/2016, définitive) — Gomet'.
+- `ps-urvoas-secret-cjr-2019` : Jean-Jacques Urvoas — violation du secret professionnel devant la CJR (30/09/2019, définitive) — Public Sénat.
+- `ps-guerini-marches-2024` : Jean-Noël Guérini — prise illégale d'intérêts et favoritisme (Cass. crim. 13/03/2024, n° 22-83.689, définitive) — Légifrance & Anticor.
+- `ps-cambadelis-irfm-2025` : Jean-Christophe Cambadélis — détournement de frais de mandat IRFM (CA Paris mai 2025, classé non définitif par prudence) — Agence Anadolu & Anticor.
+
+### Les Écologistes (ex-EELV) (+5 fiches)
+- `ecolo-place-outrages-2018` : Jean-Vincent Placé — violences et outrages (TJ Paris 10/09/2018, définitive) — Imaz Press.
+- `ecolo-bove-diffamation-2018` : José Bové — diffamation publique (TGI Paris 16/10/2018, définitive) — Bladi.net.
+- `ecolo-jadot-relaxe-totalenergies-2025` : Yannick Jadot — relaxe en diffamation (TJ Paris 06/06/2025) — Public Sénat.
+- `ecolo-baupin-prescription-2017` : Denis Baupin — classement pour prescription (06/03/2017) et relaxe des médias/accusatrices (19/04/2019) — Public Sénat.
+- `ecolo-bayou-classement-2025` : Julien Bayou — classement sans suite pour absence d'infraction (20/02/2025) — Public Sénat.
+
 ## 2026-11-26 — Audit complet 2010–2026 (v3.0, 34 fiches)
 
 ### Camp Rassemblement National (RN, ex-FN) (+10 fiches)

@@ -8,7 +8,7 @@ const dict = getDict('fr');
 <BaseLayout
   currentPath="/methodologie"
   title="Méthodologie & Sources — VERSUS"
-  description="Périmètre strict 2010–2026, règles de sourcing primaire, calcul des pourcentages et journal des exclusions."
+  description="Périmètre symétrique 2010–2026 sur 6 blocs politiques, règles de sourcing primaire, calcul des pourcentages et journal des exclusions."
 >
   <div class="container prose-page">
     <h1 class="prose-page-title">
@@ -16,25 +16,43 @@ const dict = getDict('fr');
     </h1>
 
     <section class="pixel-frame prose-card">
-      <h2>1. Période 2010–2026 et périmètre symétrique</h2>
+      <h2>1. Période 2010–2026 et périmètre symétrique sur 6 blocs politiques</h2>
       <p>
         À la date de référence du <strong>{dict.site.referenceDate}</strong>, le comparateur couvre
-        une fenêtre symétrique de <strong>2010 à 2026</strong> :
+        une fenêtre symétrique de <strong>2010 à 2026</strong> pour les 6 grands blocs politiques
+        représentés au Parlement :
       </p>
       <ul>
         <li>
-          <strong>Côté Rassemblement National (RN, ex-Front National) :</strong> depuis l'accession
-          de Marine Le Pen à la présidence du FN (janvier 2011) jusqu'au 26/11/2026, incluant les
-          dossiers liés à l'ancien nom Front National (FN → RN en 2018).
+          <strong>La France insoumise (LFI) :</strong> Parti de Gauche / Front de Gauche (2010–2015)
+          puis La France insoumise (créée en 2016) jusqu'au 26/11/2026.
         </li>
         <li>
-          <strong>Côté La France insoumise (LFI) :</strong> depuis la période Parti de Gauche /
-          Front de Gauche (2010–2015) autour de Jean-Luc Mélenchon puis la création de LFI (février
-          2016) jusqu'au 26/11/2026.
+          <strong>Rassemblement National (RN) :</strong> Front National (présidence Marine Le Pen
+          dès janvier 2011) puis Rassemblement National (renommé en 2018) jusqu'au 26/11/2026.
         </li>
         <li>
-          <strong>Acteurs inclus :</strong> le parti ou mouvement (personne morale), ses dirigeants
-          nationaux et ses élus nationaux ou européens (députés, sénateurs, députés européens).
+          <strong>Les Républicains (LR) :</strong> UMP (2010–2015) puis Les Républicains (2015–2026).
+        </li>
+        <li>
+          <strong>Centre / Macronistes :</strong> Renaissance (ex-En Marche / LREM), MoDem (et ex-UDF
+          pour les dossiers européens conjoints), Horizons et personnalités de la majorité
+          présidentielle depuis 2017 (le parti précis est indiqué sur chaque fiche).
+        </li>
+        <li>
+          <strong>Parti socialiste (PS) :</strong> Parti socialiste et membres des gouvernements et
+          groupes parlementaires PS sur 2010–2026.
+        </li>
+        <li>
+          <strong>Les Écologistes :</strong> Europe Écologie Les Verts (EELV, créé en 2010) puis Les
+          Écologistes jusqu'au 26/11/2026.
+        </li>
+        <li>
+          <strong>Acteurs inclus de manière symétrique :</strong> le parti (personne morale), ses
+          dirigeants nationaux, ses parlementaires nationaux et européens (députés, sénateurs,
+          eurodéputés), ainsi que les anciens présidents de la République, Premiers ministres et
+          ministres (y compris devant la Cour de justice de la République — CJR) pour les partis
+          ayant gouverné.
         </li>
         <li>
           <strong>Faits privés :</strong> exclus par défaut, sauf condamnation définitive liée à la
@@ -44,10 +62,10 @@ const dict = getDict('fr');
     </section>
 
     <section class="pixel-frame prose-card">
-      <h2>2. Calcul des pourcentages affichés en haut du comparateur</h2>
+      <h2>2. Calcul des pourcentages et précaution de lecture entre partis</h2>
       <p>
         L'indicateur en pourcentage affiché en haut de la page rapporte le nombre de dossiers d'une
-        étape judiciaire donnée au nombre total de dossiers recensés dans le périmètre pour ce camp
+        étape judiciaire donnée au nombre total de dossiers recensés dans le périmètre pour ce bloc
         sur 2010–2026 (avec le ratio exact affiché juste en dessous).
       </p>
       <ul>
@@ -57,9 +75,15 @@ const dict = getDict('fr');
           (condamnations définitives, sous recours, relaxes ou classements, procédures en cours).
         </li>
         <li>
-          <strong>Séparation juridique :</strong> un pourvoi en cassation ou un appel est suspensif
-          des peines (hors exécution provisoire spécifique) ; toute personne non définitivement
-          condamnée reste présumée innocente.
+          <strong>Effet d'exercice du pouvoir et d'ancienneté :</strong> les partis ayant exercé des
+          responsabilités gouvernementales nationales ou disposant d'un historique institutionnel
+          plus long ne sont pas exposés aux mêmes types de contentieux (CJR, marchés publics) que
+          des mouvements créés plus récemment.
+        </li>
+        <li>
+          <strong>Présomption d'innocence :</strong> un pourvoi en cassation ou un appel est
+          suspensif des peines (hors exécution provisoire spécifique) ; toute personne non
+          définitivement condamnée reste présumée innocente.
         </li>
       </ul>
     </section>
@@ -74,9 +98,10 @@ const dict = getDict('fr');
           des droits).
         </li>
         <li>
-          <strong>Sources de presse de référence :</strong> médias parlementaires et juridiques
-          (LCP, Public Sénat, Le Club des Juristes, RTS, presse nationale ou régionale) lorsque la
-          décision correctionnelle ou l'acte d'instruction n'est pas publié en accès libre.
+          <strong>Sources de presse et veille juridique de référence :</strong> médias parlementaires
+          et juridiques (LCP, Public Sénat, Le Club des Juristes, RTS, Anticor, Poligraph,
+          Transparency International France, presse nationale ou régionale) lorsque la décision
+          correctionnelle ou l'acte d'instruction n'est pas publié en accès libre.
         </li>
       </ul>
     </section>
@@ -87,7 +112,7 @@ const dict = getDict('fr');
         <table class="data-table">
           <thead>
             <tr>
-              <th>Camp</th>
+              <th>Bloc</th>
               <th>Dossier ou personne</th>
               <th>Motif d'exclusion du périmètre principal</th>
             </tr>
@@ -114,14 +139,14 @@ const dict = getDict('fr');
               <td>Faits relevant de la vie privée.</td>
             </tr>
             <tr>
-              <td>RN</td>
-              <td>Élus locaux (maires, conseillers régionaux/départementaux) sans mandat national/européen</td>
-              <td>Périmètre limité aux partis, dirigeants nationaux et parlementaires nationaux/européens.</td>
+              <td>Tous blocs</td>
+              <td>Élus uniquement municipaux ou locaux sans mandat national/européen ni fonction ministérielle</td>
+              <td>Périmètre limité aux partis, dirigeants nationaux, parlementaires nationaux/européens et membres du gouvernement ou chefs d'État.</td>
             </tr>
             <tr>
-              <td>RN / LFI</td>
-              <td>Polémiques médiatiques sans procédure judiciaire avérée</td>
-              <td>Seules les procédures judiciaires vérifiables entrent dans la base de données.</td>
+              <td>Tous blocs</td>
+              <td>Polémiques médiatiques ou décisions antérieures à 2010</td>
+              <td>Fenêtre temporelle 2010–2026 et exigence d'une procédure judiciaire avérée et sourcée.</td>
             </tr>
           </tbody>
         </table>

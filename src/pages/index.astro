@@ -6,22 +6,24 @@ import TimelineChart from '../components/TimelineChart.astro';
 import CaseExplorer from '../components/CaseExplorer.astro';
 import CaseModal from '../components/CaseModal.astro';
 import {
-  FIGHTERS_ROSTER,
+  PARTIES_BY_CAMP,
+  PARTIES_ROSTER,
   buildIssueReportUrl,
-  computeCampMetrics,
+  computeAllCampMetrics,
   loadDataset,
+  sortCasesByRecentDate,
 } from '../lib/data';
 import { formatDateFr, getDict } from '../i18n';
 
 const dataset = loadDataset();
 const dict = getDict('fr');
+const allMetrics = computeAllCampMetrics(dataset.cases);
+const sortedCases = sortCasesByRecentDate(dataset.cases);
 
-const lfiMetrics = computeCampMetrics(dataset.cases, 'LFI');
-const rnMetrics = computeCampMetrics(dataset.cases, 'RN');
-
-// Prépare les données sérialisées pour l'interactivité client (HUD %, frise, vue liste, modale)
-const clientCases = dataset.cases.map((c) => ({
+const clientCases = sortedCases.map((c) => ({
   ...c,
+  campShort: PARTIES_BY_CAMP[c.camp].shortName,
+  campFull: PARTIES_BY_CAMP[c.camp].fullName,
   statutLabel: dict.statuts[c.statut].label,
   statutPlain: dict.statuts[c.statut].plain,
   statutGlyph: dict.statuts[c.statut].glyph,
@@ -40,21 +42,27 @@ const clientCases = dataset.cases.map((c) => ({
   reportUrl: buildIssueReportUrl(c, dict.site.repoIssuesUrl),
 }));
 
+const tabDefinitions: Record<string, string> = {
+  financement_probite: dict.categories.financement_probite.definition,
+  presse_expression: dict.categories.presse_expression.definition,
+  ordre_public_biens: dict.categories.ordre_public_biens.definition,
+  procedures_en_cours:
+    'Enquêtes, informations judiciaires, mises en examen et affaires renvoyées avant jugement. Elles sont présentées à part et ne constituent pas des condamnations.',
+};
+
 const clientPayload = {
-  metrics: {
-    LFI: lfiMetrics,
-    RN: rnMetrics,
-  },
-  fighters: FIGHTERS_ROSTER,
+  parties: PARTIES_ROSTER,
+  metrics: allMetrics,
   cases: clientCases,
+  tabDefinitions,
 };
 ---
 
 <BaseLayout currentPath="/">
-  <!-- 1. ARÈNE VS PLEIN CADRE (MÉLENCHON + DÉPUTÉS VS LE PEN + DÉPUTÉS + % HUD) -->
-  <VsArena lfiMetrics={lfiMetrics} rnMetrics={rnMetrics} cases={dataset.cases} />
+  <!-- 1. ARÈNE MULTI-PARTIS (MODE DUEL LIBRE OU VUE GLOBALE 6 PARTIS) -->
+  <VsArena totalCases={dataset.cases.length} />
 
-  <!-- REPÈRES DE LECTURE POUR TOUS + GLOSSAIRE JURIDIQUE EN FRANÇAIS SIMPLE -->
+  <!-- REPÈRES DE LECTURE + GLOSSAIRE JURIDIQUE -->
   <section class="intro-guide-wrap" aria-labelledby="guide-heading">
     <div class="container">
       <div class="disclaimer-banner" role="note" aria-label="Avertissement juridique">
@@ -97,7 +105,7 @@ const clientPayload = {
     </div>
   </section>
 
-  <!-- 2. TABLEAU DE BORD DATAVIZ (RADAR + BARRES EMPILÉES + FRISE / LISTE 2010–2026) -->
+  <!-- 2. TABLEAU DE BORD DATAVIZ (RADAR / TABLEAU 6 PARTIS + BARRES EMPILÉES + FRISE / LISTE) -->
   <section id="dataviz-dashboard" class="section-block" aria-labelledby="dataviz-heading">
     <div class="container">
       <header class="section-header">
@@ -106,21 +114,19 @@ const clientPayload = {
           Profils comparés et chronologie 2010–2026
         </h2>
         <p class="section-desc">
-          Période étudiée de façon symétrique des deux côtés : présidence de Marine Le Pen dès
-          janvier 2011 pour le FN devenu RN ; Parti de Gauche et Front de Gauche (2010–2015) puis
-          LFI (créée en 2016) autour de Jean-Luc Mélenchon.
+          Période symétrique 2010–2026 appliquée aux 6 grands blocs parlementaires (partis,
+          dirigeants, parlementaires nationaux/européens et membres du gouvernement, y compris CJR).
         </p>
       </header>
 
-      <RadarChart lfiMetrics={lfiMetrics} rnMetrics={rnMetrics} />
-      <TimelineChart cases={dataset.cases} />
+      <RadarChart />
+      <TimelineChart />
     </div>
   </section>
 
   <!-- 3. EXPLORATEUR PAR THÈMES + SECTION SÉPARÉE PROCÉDURES EN COURS -->
-  <CaseExplorer cases={dataset.cases} />
+  <CaseExplorer />
 
-  <!-- Ancre directe vers l'onglet Procédures en cours -->
   <div id="procedures-en-cours" class="visually-hidden" aria-hidden="true"></div>
 
   <!-- 4. ÉCRAN FINAL NEUTRE -->
@@ -146,9 +152,45 @@ const clientPayload = {
   <script>
     import { arcadeSynth } from '../scripts/sound';
 
+    type Camp = 'LFI' | 'RN' | 'LR' | 'CENTRE' | 'PS' | 'ECOLO';
+    type MetricKey = 'definitive' | 'pending' | 'cleared' | 'ongoing';
+
+    interface PartyProfile {
+      camp: Camp;
+      shortName: string;
+      fullName: string;
+      former: string;
+      figureName: string;
+      figureRole: string;
+      image: string;
+    }
+
+    interface CampMetric {
+      camp: Camp;
+      totalCases: number;
+      definitiveConvictions: number;
+      definitivePct: number;
+      pendingConvictions: number;
+      pendingPct: number;
+      clearedCount: number;
+      clearedPct: number;
+      ongoingCount: number;
+      ongoingPct: number;
+      moraleInvolvedCount: number;
+      physiqueOnlyCount: number;
+      byCategoryAll: {
+        financement_probite: number;
+        presse_expression: number;
+        ordre_public_biens: number;
+      };
+    }
+
     interface ClientCase {
       id: string;
-      camp: 'LFI' | 'RN';
+      camp: Camp;
+      campShort: string;
+      campFull: string;
+      parti_precis?: string;
       categorie: string;
       categorieLabel: string;
       section: string;
@@ -162,6 +204,7 @@ const clientPayload = {
       qualification_legale: string;
       resume_factuel: string;
       juridiction: string;
+      date_derniere_decision: string;
       dateDisplay: string;
       verifiedDisplay: string;
       datesFormatted: { date: string; libelle: string }[];
@@ -173,7 +216,6 @@ const clientPayload = {
         autres?: string;
         note_recours: string;
       } | null;
-      references_judiciaires: string[];
       confirmation_primaire: string;
       motif_absence_source_primaire?: string;
       sourcesFormatted: {
@@ -184,35 +226,25 @@ const clientPayload = {
         date_publication: string;
         consulted: string;
       }[];
-      fighter_slugs: string[];
       reportUrl: string;
-    }
-
-    interface CampMetric {
-      totalCases: number;
-      definitiveConvictions: number;
-      definitivePct: number;
-      pendingConvictions: number;
-      pendingPct: number;
-      clearedCount: number;
-      clearedPct: number;
-      ongoingCount: number;
-      ongoingPct: number;
-    }
-
-    interface Fighter {
-      slug: string;
-      camp: 'LFI' | 'RN';
-      name: string;
-      role: string;
     }
 
     const rawJson = document.getElementById('versus-payload')?.textContent ?? '{}';
     const payload = JSON.parse(rawJson) as {
-      metrics: { LFI: CampMetric; RN: CampMetric };
-      fighters: Fighter[];
+      parties: PartyProfile[];
+      metrics: Record<Camp, CampMetric>;
       cases: ClientCase[];
+      tabDefinitions: Record<string, string>;
     };
+
+    const VALID_CAMPS: Camp[] = ['LFI', 'RN', 'LR', 'CENTRE', 'PS', 'ECOLO'];
+    const partiesByCamp = Object.fromEntries(
+      payload.parties.map((p) => [p.camp, p]),
+    ) as Record<Camp, PartyProfile>;
+
+    function isCamp(v: string | null): v is Camp {
+      return v !== null && VALID_CAMPS.includes(v as Camp);
+    }
 
     function escapeHtml(text: string): string {
       return text
@@ -223,21 +255,37 @@ const clientPayload = {
         .replaceAll("'", '&#39;');
     }
 
-    function formatDossierRecense(count: number): string {
-      return count <= 1 ? `${count} dossier recensé` : `${count} dossiers recensés`;
+    function formatDossiers(n: number): string {
+      return n <= 1 ? `${n} dossier` : `${n} dossiers`;
     }
 
-    // 1. HUD % switcher
-    const hudLfiPct = document.getElementById('hud-lfi-pct');
-    const hudRnPct = document.getElementById('hud-rn-pct');
-    const hudLfiBar = document.getElementById('hud-lfi-bar');
-    const hudRnBar = document.getElementById('hud-rn-bar');
-    const hudLfiRatio = document.getElementById('hud-lfi-ratio');
-    const hudRnRatio = document.getElementById('hud-rn-ratio');
-    const hudCaption = document.getElementById('hud-metric-caption');
+    const params = new URLSearchParams(window.location.search);
+    const paramLeft = params.get('a')?.toUpperCase() ?? null;
+    const paramRight = params.get('b')?.toUpperCase() ?? null;
+    const initialLeft: Camp = isCamp(paramLeft) ? paramLeft : 'LFI';
+    let initialRight: Camp = isCamp(paramRight) ? paramRight : 'RN';
+    if (initialRight === initialLeft) {
+      initialRight = initialLeft === 'RN' ? 'LFI' : 'RN';
+    }
+
+    const state: {
+      mode: 'duel' | 'all';
+      left: Camp;
+      right: Camp;
+      metric: MetricKey;
+      activeTab: string;
+      timelineView: 'graph' | 'list';
+    } = {
+      mode: params.get('mode') === 'all' ? 'all' : 'duel',
+      left: initialLeft,
+      right: initialRight,
+      metric: 'definitive',
+      activeTab: 'financement_probite',
+      timelineView: 'graph',
+    };
 
     const metricMeta: Record<
-      string,
+      MetricKey,
       { caption: string; pick: (m: CampMetric) => { count: number; pct: number } }
     > = {
       definitive: {
@@ -247,7 +295,7 @@ const clientPayload = {
       },
       pending: {
         caption:
-          'Part des condamnations prononcées en 1re instance ou en appel qui font l’objet d’un recours (ou sont encore susceptibles de recours) : les personnes restent présumées innocentes.',
+          'Part des condamnations prononcées en 1re instance ou en appel faisant l’objet d’un recours (ou susceptibles de recours) : les personnes restent présumées innocentes.',
         pick: (m) => ({ count: m.pendingConvictions, pct: m.pendingPct }),
       },
       cleared: {
@@ -262,39 +310,686 @@ const clientPayload = {
       },
     };
 
-    document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const key = btn.dataset.metric ?? 'definitive';
-        const spec = metricMeta[key] ?? metricMeta.definitive;
-        const lfiVal = spec.pick(payload.metrics.LFI);
-        const rnVal = spec.pick(payload.metrics.RN);
+    // Références DOM
+    const modeDuelBtn = document.getElementById('mode-duel-btn') as HTMLButtonElement | null;
+    const modeAllBtn = document.getElementById('mode-all-btn') as HTMLButtonElement | null;
+    const duelPickerPanel = document.getElementById('duel-picker-panel');
+    const pickerLeft = document.getElementById('picker-left') as HTMLSelectElement | null;
+    const pickerRight = document.getElementById('picker-right') as HTMLSelectElement | null;
+    const pickerSwap = document.getElementById('picker-swap') as HTMLButtonElement | null;
 
-        document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((b) => {
-          b.setAttribute('aria-pressed', String(b === btn));
-        });
+    const arenaDuelHud = document.getElementById('arena-duel-hud');
+    const hudLeftName = document.getElementById('hud-left-name');
+    const hudLeftPct = document.getElementById('hud-left-pct');
+    const hudLeftBar = document.getElementById('hud-left-bar');
+    const hudLeftRatio = document.getElementById('hud-left-ratio');
+    const hudRightName = document.getElementById('hud-right-name');
+    const hudRightPct = document.getElementById('hud-right-pct');
+    const hudRightBar = document.getElementById('hud-right-bar');
+    const hudRightRatio = document.getElementById('hud-right-ratio');
+    const hudCaption = document.getElementById('hud-metric-caption');
 
-        if (hudLfiPct) hudLfiPct.textContent = `${lfiVal.pct}%`;
-        if (hudRnPct) hudRnPct.textContent = `${rnVal.pct}%`;
-        if (hudLfiBar) hudLfiBar.style.transform = `scaleX(${lfiVal.pct / 100})`;
-        if (hudRnBar) hudRnBar.style.transform = `scaleX(${rnVal.pct / 100})`;
-        if (hudLfiRatio)
-          hudLfiRatio.textContent = `${lfiVal.count} sur ${payload.metrics.LFI.totalCases} dossiers recensés`;
-        if (hudRnRatio)
-          hudRnRatio.textContent = `${rnVal.count} sur ${payload.metrics.RN.totalCases} dossiers recensés`;
-        if (hudCaption) hudCaption.textContent = spec.caption;
+    const arenaDuelView = document.getElementById('arena-duel-view');
+    const arenaGlobalView = document.getElementById('arena-global-view');
+    const globalPartiesGrid = document.getElementById('global-parties-grid');
 
-        arcadeSynth.play('uiConfirm');
-        arcadeSynth.vibrate(10);
-      });
-    });
+    const stageLeft = document.getElementById('stage-left') as HTMLButtonElement | null;
+    const stageLeftImg = document.getElementById('stage-left-img') as HTMLImageElement | null;
+    const stageLeftTag = document.getElementById('stage-left-tag');
+    const stageLeftFigure = document.getElementById('stage-left-figure');
+    const stageLeftCount = document.getElementById('stage-left-count');
 
-    // 2. Modale dossier complet
+    const stageRight = document.getElementById('stage-right') as HTMLButtonElement | null;
+    const stageRightImg = document.getElementById('stage-right-img') as HTMLImageElement | null;
+    const stageRightTag = document.getElementById('stage-right-tag');
+    const stageRightFigure = document.getElementById('stage-right-figure');
+    const stageRightCount = document.getElementById('stage-right-count');
+
+    const radarDuelView = document.getElementById('radar-duel-view');
+    const radarGlobalView = document.getElementById('radar-global-view');
+    const radarLeftPoly = document.getElementById('radar-left-poly');
+    const radarRightPoly = document.getElementById('radar-right-poly');
+    const radarDots = document.getElementById('radar-dots');
+    const radarLegendLeft = document.getElementById('radar-legend-left');
+    const radarLegendRight = document.getElementById('radar-legend-right');
+    const globalCompareBody = document.getElementById('global-compare-body');
+    const stackedBarsEl = document.getElementById('stacked-bars');
+    const entitySplitEl = document.getElementById('entity-split');
+
+    const cCamp = document.getElementById('chart-filter-camp') as HTMLSelectElement | null;
+    const cStatut = document.getElementById('chart-filter-statut') as HTMLSelectElement | null;
+    const cCat = document.getElementById('chart-filter-cat') as HTMLSelectElement | null;
+    const cCount = document.getElementById('chart-visible-count');
+    const timelineSvgHost = document.getElementById('timeline-svg-host');
+    const timelineHoverBanner = document.getElementById('timeline-hover-banner');
+    const timelineListView = document.getElementById('timeline-list-view');
+    const btnViewGraph = document.getElementById('timeline-view-graph') as HTMLButtonElement | null;
+    const btnViewList = document.getElementById('timeline-view-list') as HTMLButtonElement | null;
+    const panelGraph = document.getElementById('timeline-graph-panel');
+
+    const explorerPanel = document.getElementById('explorer-panel');
+    const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.round-tab-btn'));
+
     const modal = document.getElementById('dossier-modal') as HTMLDialogElement | null;
     const modalTitle = document.getElementById('modal-title');
     const modalKicker = document.getElementById('modal-kicker');
     const modalBody = document.getElementById('modal-body');
     const modalClose = document.getElementById('modal-close-btn');
 
+    function syncUrl() {
+      const next = new URL(window.location.href);
+      if (state.mode === 'all') {
+        next.searchParams.set('mode', 'all');
+        next.searchParams.delete('a');
+        next.searchParams.delete('b');
+      } else {
+        next.searchParams.delete('mode');
+        next.searchParams.set('a', state.left);
+        next.searchParams.set('b', state.right);
+      }
+      try {
+        window.history.replaceState({}, '', next.toString());
+      } catch {}
+    }
+
+    // 1. Rendu Arène VS / Vue globale
+    function renderArena() {
+      const isAll = state.mode === 'all';
+      const spec = metricMeta[state.metric];
+
+      modeDuelBtn?.setAttribute('aria-pressed', String(!isAll));
+      modeAllBtn?.setAttribute('aria-pressed', String(isAll));
+
+      if (duelPickerPanel) duelPickerPanel.hidden = isAll;
+      if (arenaDuelHud) arenaDuelHud.hidden = isAll;
+      if (arenaDuelView) arenaDuelView.hidden = isAll;
+      if (arenaGlobalView) arenaGlobalView.hidden = !isAll;
+
+      if (pickerLeft) pickerLeft.value = state.left;
+      if (pickerRight) pickerRight.value = state.right;
+
+      document.querySelectorAll<HTMLButtonElement>('.quick-duel-btn').forEach((btn) => {
+        const active =
+          !isAll &&
+          btn.dataset.quickLeft === state.left &&
+          btn.dataset.quickRight === state.right;
+        btn.setAttribute('aria-pressed', String(active));
+      });
+
+      document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((btn) => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.metric === state.metric));
+      });
+      if (hudCaption) hudCaption.textContent = spec.caption;
+
+      const pL = partiesByCamp[state.left];
+      const pR = partiesByCamp[state.right];
+      const mL = payload.metrics[state.left];
+      const mR = payload.metrics[state.right];
+      const vL = spec.pick(mL);
+      const vR = spec.pick(mR);
+
+      if (hudLeftName) hudLeftName.textContent = `${pL.fullName} (${pL.shortName})`;
+      if (hudLeftPct) hudLeftPct.textContent = `${vL.pct}%`;
+      if (hudLeftBar) hudLeftBar.style.transform = `scaleX(${vL.pct / 100})`;
+      if (hudLeftRatio) hudLeftRatio.textContent = `${vL.count} sur ${mL.totalCases} dossiers recensés`;
+
+      if (hudRightName) hudRightName.textContent = `${pR.fullName} (${pR.shortName})`;
+      if (hudRightPct) hudRightPct.textContent = `${vR.pct}%`;
+      if (hudRightBar) hudRightBar.style.transform = `scaleX(${vR.pct / 100})`;
+      if (hudRightRatio) hudRightRatio.textContent = `${vR.count} sur ${mR.totalCases} dossiers recensés`;
+
+      if (stageLeft) {
+        stageLeft.dataset.openParty = pL.camp;
+        stageLeft.title = `Lire les ${mL.totalCases} dossiers recensés pour ${pL.fullName}`;
+      }
+      if (stageLeftImg) {
+        stageLeftImg.src = pL.image;
+        stageLeftImg.alt = `Portrait pixel-art de ${pL.figureName} (${pL.fullName})`;
+      }
+      if (stageLeftTag) stageLeftTag.textContent = pL.fullName;
+      if (stageLeftFigure) stageLeftFigure.textContent = pL.figureName;
+      if (stageLeftCount) stageLeftCount.textContent = `${formatDossiers(mL.totalCases)} · Cliquer →`;
+
+      if (stageRight) {
+        stageRight.dataset.openParty = pR.camp;
+        stageRight.title = `Lire les ${mR.totalCases} dossiers recensés pour ${pR.fullName}`;
+      }
+      if (stageRightImg) {
+        stageRightImg.src = pR.image;
+        stageRightImg.alt = `Portrait pixel-art de ${pR.figureName} (${pR.fullName})`;
+      }
+      if (stageRightTag) stageRightTag.textContent = pR.fullName;
+      if (stageRightFigure) stageRightFigure.textContent = pR.figureName;
+      if (stageRightCount) stageRightCount.textContent = `${formatDossiers(mR.totalCases)} · Cliquer →`;
+
+      if (globalPartiesGrid) {
+        globalPartiesGrid.innerHTML = payload.parties
+          .map((p) => {
+            const m = payload.metrics[p.camp];
+            const val = spec.pick(m);
+            return `
+              <article class="pixel-frame global-party-card">
+                <div class="global-party-card__top">
+                  <div class="global-party-card__avatar">
+                    <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.figureName)}" width="86" height="96" class="pixel-sprite" />
+                  </div>
+                  <div class="global-party-card__id">
+                    <h3 class="global-party-card__name">${escapeHtml(p.fullName)}</h3>
+                    <p class="global-party-card__sub">${escapeHtml(p.former)}</p>
+                  </div>
+                  <div class="global-party-card__pct">${val.pct}%</div>
+                </div>
+                <div class="global-party-bar" aria-hidden="true">
+                  <div class="global-party-bar__fill" style="width:${val.pct}%"></div>
+                </div>
+                <div class="global-party-card__ratio">
+                  ${val.count} sur ${m.totalCases} dossiers recensés · Figure : ${escapeHtml(p.figureName)}
+                </div>
+                <div class="global-party-card__actions">
+                  <button type="button" class="arcade-btn arcade-btn--sm" data-open-party="${p.camp}">
+                    Lire les dossiers (${m.totalCases})
+                  </button>
+                  <button type="button" class="arcade-btn arcade-btn--sm" data-launch-duel="${p.camp}">
+                    Mettre en duel →
+                  </button>
+                </div>
+              </article>
+            `;
+          })
+          .join('');
+      }
+    }
+
+    // 2. Rendu Radar / Tableau 6 partis + Barres empilées + Entités
+    function polarPoint(index: number, valueRatio: number): { x: number; y: number } {
+      const cx = 270;
+      const cy = 170;
+      const radius = 90;
+      const angle = -Math.PI / 2 + (index * 2 * Math.PI) / 5;
+      const r = radius * valueRatio;
+      return {
+        x: Number((cx + r * Math.cos(angle)).toFixed(1)),
+        y: Number((cy + r * Math.sin(angle)).toFixed(1)),
+      };
+    }
+
+    function getAxisValues(m: CampMetric): number[] {
+      return [
+        m.byCategoryAll.financement_probite,
+        m.byCategoryAll.presse_expression,
+        m.byCategoryAll.ordre_public_biens,
+        m.definitiveConvictions,
+        m.ongoingCount + m.pendingConvictions,
+      ];
+    }
+
+    function renderCharts() {
+      const isAll = state.mode === 'all';
+      if (radarDuelView) radarDuelView.hidden = isAll;
+      if (radarGlobalView) radarGlobalView.hidden = !isAll;
+
+      if (!isAll) {
+        const mL = payload.metrics[state.left];
+        const mR = payload.metrics[state.right];
+        const pL = partiesByCamp[state.left];
+        const pR = partiesByCamp[state.right];
+        const vL = getAxisValues(mL);
+        const vR = getAxisValues(mR);
+        const maxAxis = Math.max(1, ...vL, ...vR);
+
+        const polyL = vL
+          .map((v, i) => {
+            const pt = polarPoint(i, v / maxAxis);
+            return `${pt.x},${pt.y}`;
+          })
+          .join(' ');
+        const polyR = vR
+          .map((v, i) => {
+            const pt = polarPoint(i, v / maxAxis);
+            return `${pt.x},${pt.y}`;
+          })
+          .join(' ');
+
+        radarLeftPoly?.setAttribute('points', polyL);
+        radarRightPoly?.setAttribute('points', polyR);
+
+        if (radarDots) {
+          radarDots.innerHTML = vL
+            .map((v, i) => {
+              const p1 = polarPoint(i, v / maxAxis);
+              const p2 = polarPoint(i, vR[i] / maxAxis);
+              return `<circle cx="${p1.x}" cy="${p1.y}" r="4" fill="#F5B73B" /><circle cx="${p2.x}" cy="${p2.y}" r="4" fill="#4CC9F0" />`;
+            })
+            .join('');
+        }
+        if (radarLegendLeft) {
+          radarLegendLeft.textContent = `■ ${pL.shortName} (${formatDossiers(mL.totalCases)})`;
+        }
+        if (radarLegendRight) {
+          radarLegendRight.textContent = `■ ${pR.shortName} (${formatDossiers(mR.totalCases)})`;
+        }
+      } else if (globalCompareBody) {
+        globalCompareBody.innerHTML = payload.parties
+          .map((p) => {
+            const m = payload.metrics[p.camp];
+            return `
+              <tr>
+                <td><strong>${escapeHtml(p.fullName)}</strong></td>
+                <td>${m.byCategoryAll.financement_probite}</td>
+                <td>${m.byCategoryAll.presse_expression}</td>
+                <td>${m.byCategoryAll.ordre_public_biens}</td>
+                <td><strong>${m.definitiveConvictions}</strong></td>
+                <td>${m.ongoingCount + m.pendingConvictions}</td>
+                <td><strong>${m.totalCases}</strong></td>
+              </tr>
+            `;
+          })
+          .join('');
+      }
+
+      const activeCamps: Camp[] = isAll ? VALID_CAMPS : [state.left, state.right];
+
+      if (stackedBarsEl) {
+        stackedBarsEl.innerHTML = activeCamps
+          .map((camp, idx) => {
+            const p = partiesByCamp[camp];
+            const m = payload.metrics[camp];
+            const tot = Math.max(1, m.totalCases);
+            const labelColor =
+              !isAll && idx === 0
+                ? 'var(--camp-lfi)'
+                : !isAll && idx === 1
+                  ? 'var(--camp-rn)'
+                  : 'var(--ink-primary)';
+            return `
+              <div class="stacked-party-group">
+                <div class="stacked-label-row">
+                  <strong style="color:${labelColor};">${escapeHtml(p.fullName)} (${m.totalCases})</strong>
+                  <span>Définitives : ${m.definitiveConvictions} · Recours : ${m.pendingConvictions} · Relaxes/Classés : ${m.clearedCount} · En cours : ${m.ongoingCount}</span>
+                </div>
+                <div class="stacked-bar" aria-label="Répartition par statut ${escapeHtml(p.fullName)}">
+                  <span class="seg seg--def" style="width:${(m.definitiveConvictions / tot) * 100}%" title="Condamnations définitives : ${m.definitiveConvictions}"></span>
+                  <span class="seg seg--pend" style="width:${(m.pendingConvictions / tot) * 100}%" title="Sous recours : ${m.pendingConvictions}"></span>
+                  <span class="seg seg--clear" style="width:${(m.clearedCount / tot) * 100}%" title="Relaxes ou classements : ${m.clearedCount}"></span>
+                  <span class="seg seg--ong" style="width:${(m.ongoingCount / tot) * 100}%" title="Procédures en cours : ${m.ongoingCount}"></span>
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+      }
+
+      if (entitySplitEl) {
+        entitySplitEl.innerHTML = activeCamps
+          .map((camp, idx) => {
+            const p = partiesByCamp[camp];
+            const m = payload.metrics[camp];
+            const titleColor =
+              !isAll && idx === 0
+                ? 'var(--camp-lfi)'
+                : !isAll && idx === 1
+                  ? 'var(--camp-rn)'
+                  : 'var(--ink-primary)';
+            return `
+              <div class="entity-split-box">
+                <div class="entity-split-box__title" style="color:${titleColor};">${escapeHtml(p.shortName.toUpperCase())} — QUI EST VISÉ ?</div>
+                <div class="entity-split-row">
+                  <span>Impliquant le parti (personne morale)</span>
+                  <strong>${m.moraleInvolvedCount}</strong>
+                </div>
+                <div class="entity-split-row">
+                  <span>Un élu ou ministre seul (personne physique)</span>
+                  <strong>${m.physiqueOnlyCount}</strong>
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+      }
+    }
+
+    // 3. Rendu Frise chronologique (SVG 2 pistes ou 6 pistes + Vue liste)
+    function yearToX(isoDate: string): number {
+      const minYear = 2010;
+      const maxYear = 2026;
+      const leftPad = 88;
+      const rightPad = 955;
+      const y = Number(isoDate.slice(0, 4));
+      const m = Number(isoDate.slice(5, 7)) || 6;
+      const dec = Math.max(minYear, Math.min(maxYear + 0.95, y + (m - 1) / 12));
+      const ratio = (dec - minYear) / (maxYear + 1 - minYear);
+      return Math.round(leftPad + ratio * (rightPad - leftPad));
+    }
+
+    function getFilteredTimelineCases(): ClientCase[] {
+      const campVal = cCamp?.value ?? (state.mode === 'all' ? 'ALL' : 'DUEL');
+      const stVal = cStatut?.value ?? 'ALL';
+      const catVal = cCat?.value ?? 'ALL';
+
+      return payload.cases.filter((c) => {
+        const matchCamp =
+          campVal === 'ALL'
+            ? true
+            : campVal === 'DUEL'
+              ? c.camp === state.left || c.camp === state.right
+              : c.camp === campVal;
+        const matchSt = stVal === 'ALL' || c.statut === stVal;
+        const matchCat = catVal === 'ALL' || c.categorie === catVal;
+        return matchCamp && matchSt && matchCat;
+      });
+    }
+
+    function renderTimeline() {
+      const filtered = getFilteredTimelineCases();
+      const campVal = cCamp?.value ?? (state.mode === 'all' ? 'ALL' : 'DUEL');
+      const totalPool =
+        campVal === 'DUEL'
+          ? payload.cases.filter((c) => c.camp === state.left || c.camp === state.right).length
+          : campVal === 'ALL'
+            ? payload.cases.length
+            : payload.cases.filter((c) => c.camp === campVal).length;
+
+      if (cCount) {
+        cCount.textContent = `${filtered.length} / ${totalPool} ${filtered.length <= 1 ? 'dossier' : 'dossiers'}`;
+      }
+
+      if (timelineSvgHost) {
+        const useDuelSvg = campVal === 'DUEL' && state.mode === 'duel';
+        const ticks = [2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026];
+
+        if (useDuelSvg) {
+          const pL = partiesByCamp[state.left];
+          const pR = partiesByCamp[state.right];
+          const buckets: Record<string, number> = {};
+          const nodesHtml = filtered
+            .slice()
+            .sort((a, b) => a.date_derniere_decision.localeCompare(b.date_derniere_decision))
+            .map((c) => {
+              const isLeft = c.camp === state.left;
+              const year = c.date_derniere_decision.slice(0, 4);
+              const key = `${c.camp}-${year}`;
+              const idx = buckets[key] ?? 0;
+              buckets[key] = idx + 1;
+              const colShift = Math.floor(idx / 5) * 14;
+              const rowStep = idx % 5;
+              const baseY = isLeft ? 128 : 228;
+              const offset = isLeft ? -(rowStep * 22) : rowStep * 22;
+              const x = Math.min(966, yearToX(c.date_derniere_decision) + colShift);
+              const y = Math.max(30, Math.min(326, baseY + offset));
+              const color = isLeft ? '#F5B73B' : '#4CC9F0';
+              const isDef = c.statut === 'condamnation_definitive';
+              const isCleared =
+                c.statut === 'relaxe' || c.statut === 'non_lieu' || c.statut === 'prescription';
+              const isOngoing = c.section === 'procedures_en_cours';
+              const shape = isDef
+                ? `<rect x="${x - 8}" y="${y - 8}" width="16" height="16" fill="${color}" stroke="#0B0E17" stroke-width="2" />`
+                : isCleared
+                  ? `<circle cx="${x}" cy="${y}" r="8.5" fill="#0B0E17" stroke="${color}" stroke-width="2.5" />`
+                  : isOngoing
+                    ? `<circle cx="${x}" cy="${y}" r="8.5" fill="rgba(11,14,23,0.85)" stroke="${color}" stroke-width="2.2" stroke-dasharray="3 2" />`
+                    : `<polygon points="${x},${y - 9} ${x + 9},${y} ${x},${y + 9} ${x - 9},${y}" fill="${color}" stroke="#0B0E17" stroke-width="2" />`;
+              const tip = `${c.dateDisplay} · ${c.campShort} · ${c.statutLabel} — ${c.titre}`;
+              return `<g class="timeline-node" tabindex="0" role="button" data-open-case="${escapeHtml(c.id)}" data-tip="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${shape}</g>`;
+            })
+            .join('');
+
+          const ticksHtml = ticks
+            .map((yr) => {
+              const tx = yearToX(`${yr}-01-01`);
+              return `<g><line x1="${tx}" y1="170" x2="${tx}" y2="186" stroke="#B8C5DC" stroke-width="1.5" /><text x="${tx}" y="182" text-anchor="middle" fill="#F2F5FA" font-size="11.5" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif" style="paint-order:stroke;stroke:#0B0E17;stroke-width:5px;">${yr}</text></g>`;
+            })
+            .join('');
+
+          timelineSvgHost.innerHTML = `
+            <svg viewBox="0 0 1000 365" class="timeline-svg" role="img" aria-label="Frise chronologique 2010–2026 : ${escapeHtml(pL.fullName)} en haut et ${escapeHtml(pR.fullName)} en bas">
+              <rect x="80" y="16" width="898" height="142" fill="rgba(245,183,59,0.05)" stroke="rgba(245,183,59,0.25)" />
+              <rect x="80" y="198" width="898" height="142" fill="rgba(76,201,240,0.05)" stroke="rgba(76,201,240,0.25)" />
+              <text x="12" y="92" fill="#F5B73B" font-size="12.5" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">${escapeHtml(pL.shortName)}</text>
+              <text x="12" y="274" fill="#4CC9F0" font-size="12.5" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">${escapeHtml(pR.shortName)}</text>
+              <line x1="80" y1="178" x2="978" y2="178" stroke="#B8C5DC" stroke-width="2" />
+              ${ticksHtml}
+              ${nodesHtml}
+            </svg>
+          `;
+        } else {
+          const lanes: Camp[] =
+            campVal !== 'ALL' && campVal !== 'DUEL' && isCamp(campVal) ? [campVal] : VALID_CAMPS;
+          const laneH = 74;
+          const topMargin = 38;
+          const svgH = topMargin + lanes.length * laneH + 24;
+          const buckets: Record<string, number> = {};
+
+          const lanesBg = lanes
+            .map((camp, i) => {
+              const p = partiesByCamp[camp];
+              const yTop = topMargin + i * laneH;
+              const yMid = yTop + laneH / 2 + 4;
+              const tint = i % 2 === 0 ? 'rgba(245,183,59,0.05)' : 'rgba(76,201,240,0.05)';
+              const stroke = i % 2 === 0 ? 'rgba(245,183,59,0.24)' : 'rgba(76,201,240,0.24)';
+              const txtCol = i % 2 === 0 ? '#F5B73B' : '#4CC9F0';
+              return `<rect x="80" y="${yTop}" width="898" height="${laneH - 6}" fill="${tint}" stroke="${stroke}" /><text x="8" y="${yMid}" fill="${txtCol}" font-size="12" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">${escapeHtml(p.shortName)}</text>`;
+            })
+            .join('');
+
+          const ticksHtml = ticks
+            .map((yr) => {
+              const tx = yearToX(`${yr}-01-01`);
+              return `<g><line x1="${tx}" y1="${topMargin - 6}" x2="${tx}" y2="${svgH - 18}" stroke="rgba(184,197,220,0.16)" stroke-dasharray="3 3" /><text x="${tx}" y="22" text-anchor="middle" fill="#F2F5FA" font-size="11.5" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">${yr}</text></g>`;
+            })
+            .join('');
+
+          const nodesHtml = filtered
+            .slice()
+            .sort((a, b) => a.date_derniere_decision.localeCompare(b.date_derniere_decision))
+            .map((c) => {
+              const laneIdx = lanes.indexOf(c.camp);
+              if (laneIdx === -1) return '';
+              const year = c.date_derniere_decision.slice(0, 4);
+              const key = `${c.camp}-${year}`;
+              const idx = buckets[key] ?? 0;
+              buckets[key] = idx + 1;
+              const colShift = Math.floor(idx / 3) * 14;
+              const rowStep = idx % 3;
+              const yTop = topMargin + laneIdx * laneH;
+              const x = Math.min(966, yearToX(c.date_derniere_decision) + colShift);
+              const y = yTop + 16 + rowStep * 18;
+              const color = laneIdx % 2 === 0 ? '#F5B73B' : '#4CC9F0';
+              const isDef = c.statut === 'condamnation_definitive';
+              const isCleared =
+                c.statut === 'relaxe' || c.statut === 'non_lieu' || c.statut === 'prescription';
+              const isOngoing = c.section === 'procedures_en_cours';
+              const shape = isDef
+                ? `<rect x="${x - 7}" y="${y - 7}" width="14" height="14" fill="${color}" stroke="#0B0E17" stroke-width="1.8" />`
+                : isCleared
+                  ? `<circle cx="${x}" cy="${y}" r="7.5" fill="#0B0E17" stroke="${color}" stroke-width="2.2" />`
+                  : isOngoing
+                    ? `<circle cx="${x}" cy="${y}" r="7.5" fill="rgba(11,14,23,0.85)" stroke="${color}" stroke-width="2" stroke-dasharray="3 2" />`
+                    : `<polygon points="${x},${y - 8} ${x + 8},${y} ${x},${y + 8} ${x - 8},${y}" fill="${color}" stroke="#0B0E17" stroke-width="1.8" />`;
+              const tip = `${c.dateDisplay} · ${c.campShort} · ${c.statutLabel} — ${c.titre}`;
+              return `<g class="timeline-node" tabindex="0" role="button" data-open-case="${escapeHtml(c.id)}" data-tip="${escapeHtml(tip)}" aria-label="${escapeHtml(tip)}">${shape}</g>`;
+            })
+            .join('');
+
+          timelineSvgHost.innerHTML = `
+            <svg viewBox="0 0 1000 ${svgH}" class="timeline-svg" role="img" aria-label="Frise chronologique 2010–2026 pour les blocs politiques sélectionnés">
+              ${ticksHtml}
+              ${lanesBg}
+              ${nodesHtml}
+            </svg>
+          `;
+        }
+      }
+
+      if (timelineListView) {
+        if (filtered.length === 0) {
+          timelineListView.innerHTML =
+            '<p class="empty-slot">Aucun dossier ne correspond aux filtres sélectionnés.</p>';
+        } else {
+          timelineListView.innerHTML = filtered
+            .map((c) => {
+              const sideClass =
+                state.mode === 'duel' && c.camp === state.left
+                  ? 'timeline-list-item--lfi'
+                  : state.mode === 'duel' && c.camp === state.right
+                    ? 'timeline-list-item--rn'
+                    : 'timeline-list-item--neutral';
+              const preciseBadge = c.parti_precis
+                ? `<span class="entity-pill">${escapeHtml(c.parti_precis)}</span>`
+                : '';
+              return `
+                <article class="timeline-list-item ${sideClass}">
+                  <div class="timeline-list-item__meta">
+                    <span class="entity-pill">${escapeHtml(c.dateDisplay)}</span>
+                    <span class="camp-pill">${escapeHtml(c.campShort)}</span>
+                    ${preciseBadge}
+                    <span class="status-badge status-badge--${c.statutTone}">
+                      <span aria-hidden="true">${escapeHtml(c.statutGlyph)}</span>
+                      <span>${escapeHtml(c.statutLabel)}</span>
+                    </span>
+                  </div>
+                  <div class="timeline-list-item__main">
+                    <h4 class="timeline-list-item__title">${escapeHtml(c.titre)}</h4>
+                    <p class="timeline-list-item__sub">
+                      <strong>${escapeHtml(c.entite_principale)}</strong> · ${escapeHtml(c.juridiction)}
+                    </p>
+                  </div>
+                  <button type="button" class="arcade-btn arcade-btn--sm timeline-list-item__btn" data-open-case="${escapeHtml(c.id)}">
+                    Lire le dossier →
+                  </button>
+                </article>
+              `;
+            })
+            .join('');
+        }
+      }
+    }
+
+    // 4. Rendu Explorateur par thèmes (Duel 2 colonnes ou Vue globale)
+    function getTabCases(tabKey: string, pool: ClientCase[]): ClientCase[] {
+      if (tabKey === 'procedures_en_cours') {
+        return pool.filter((c) => c.section === 'procedures_en_cours');
+      }
+      return pool.filter((c) => c.section === 'decisions' && c.categorie === tabKey);
+    }
+
+    function renderCompactCard(c: ClientCase, frameVariant: 'lfi' | 'rn' | 'neutral'): string {
+      const frameClass =
+        frameVariant === 'lfi'
+          ? 'pixel-frame pixel-frame--lfi compact-case'
+          : frameVariant === 'rn'
+            ? 'pixel-frame pixel-frame--rn compact-case'
+            : 'pixel-frame compact-case';
+      const sourceText =
+        c.confirmation_primaire === 'confirme'
+          ? 'Décision officielle vérifiée'
+          : `Presse et institutions (${c.sourcesFormatted.length} ${c.sourcesFormatted.length <= 1 ? 'source' : 'sources'})`;
+      const partyBadge =
+        frameVariant === 'neutral'
+          ? `<span class="camp-pill">${escapeHtml(c.campShort)}</span>`
+          : '';
+      const preciseTag = c.parti_precis
+        ? `<span class="entity-pill">${escapeHtml(c.parti_precis)}</span>`
+        : '';
+
+      return `
+        <article class="${frameClass}">
+          <div class="case-card__top">
+            <span class="status-badge status-badge--${c.statutTone}">
+              <span aria-hidden="true">${escapeHtml(c.statutGlyph)}</span>
+              <span>${escapeHtml(c.statutLabel)}</span>
+            </span>
+            <span class="entity-pill">${escapeHtml(c.dateDisplay)}</span>
+          </div>
+          ${partyBadge || preciseTag ? `<div class="case-card__subtags">${partyBadge}${preciseTag}</div>` : ''}
+          <h3 class="compact-case__title">${escapeHtml(c.titre)}</h3>
+          <p class="compact-case__sub">
+            <strong>${escapeHtml(c.entite_principale)}</strong> · ${escapeHtml(c.juridiction)}
+          </p>
+          <div class="compact-case__actions">
+            <span class="compact-case__src-pill">${escapeHtml(sourceText)}</span>
+            <button type="button" class="arcade-btn arcade-btn--sm" data-open-case="${escapeHtml(c.id)}">
+              Lire le dossier complet →
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderExplorer() {
+      const pool =
+        state.mode === 'all'
+          ? payload.cases
+          : payload.cases.filter((c) => c.camp === state.left || c.camp === state.right);
+
+      tabBtns.forEach((btn) => {
+        const key = btn.dataset.tabTarget ?? '';
+        btn.setAttribute('aria-selected', String(key === state.activeTab));
+        const countEl = document.getElementById(`tab-count-${key}`);
+        if (countEl) {
+          countEl.textContent = `(${getTabCases(key, pool).length})`;
+        }
+      });
+
+      if (!explorerPanel) return;
+      const items = getTabCases(state.activeTab, pool);
+      const def = payload.tabDefinitions[state.activeTab] ?? '';
+
+      if (state.mode === 'duel') {
+        const pL = partiesByCamp[state.left];
+        const pR = partiesByCamp[state.right];
+        const leftItems = items.filter((c) => c.camp === state.left);
+        const rightItems = items.filter((c) => c.camp === state.right);
+
+        explorerPanel.innerHTML = `
+          <div class="round-def-banner" role="note">
+            <strong>De quoi s'agit-il ?</strong> ${escapeHtml(def)}
+          </div>
+          <div class="duel-grid">
+            <div>
+              <div class="camp-column-header camp-column-header--lfi">
+                <span class="camp-column-header__name">${escapeHtml(pL.fullName)} (${escapeHtml(pL.shortName)})</span>
+                <span>${formatDossiers(leftItems.length)}</span>
+              </div>
+              <div class="cases-stack">
+                ${
+                  leftItems.length > 0
+                    ? leftItems.map((c) => renderCompactCard(c, 'lfi')).join('')
+                    : `<div class="empty-slot">Aucun dossier recensé dans ce thème pour ${escapeHtml(pL.fullName)} au 26/11/2026.</div>`
+                }
+              </div>
+            </div>
+            <div>
+              <div class="camp-column-header camp-column-header--rn">
+                <span class="camp-column-header__name">${escapeHtml(pR.fullName)} (${escapeHtml(pR.shortName)})</span>
+                <span>${formatDossiers(rightItems.length)}</span>
+              </div>
+              <div class="cases-stack">
+                ${
+                  rightItems.length > 0
+                    ? rightItems.map((c) => renderCompactCard(c, 'rn')).join('')
+                    : `<div class="empty-slot">Aucun dossier recensé dans ce thème pour ${escapeHtml(pR.fullName)} au 26/11/2026.</div>`
+                }
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        explorerPanel.innerHTML = `
+          <div class="round-def-banner" role="note">
+            <strong>De quoi s'agit-il ?</strong> ${escapeHtml(def)}
+          </div>
+          <div class="duel-grid">
+            ${
+              items.length > 0
+                ? items.map((c) => renderCompactCard(c, 'neutral')).join('')
+                : '<div class="empty-slot">Aucun dossier recensé dans ce thème au 26/11/2026.</div>'
+            }
+          </div>
+        `;
+      }
+    }
+
+    // 5. Modale (dossier unique ou tous les dossiers d'un parti)
     function renderCaseHtml(c: ClientCase): string {
       const peineParts: string[] = [];
       if (c.peine) {
@@ -324,6 +1019,8 @@ const clientPayload = {
         )
         .join('');
 
+      const campLabel = c.parti_precis ? `${c.campFull} — ${c.parti_precis}` : c.campFull;
+
       return `
         <article class="modal-case-item" data-camp="${c.camp}">
           <div class="case-card__top">
@@ -331,7 +1028,7 @@ const clientPayload = {
               <span aria-hidden="true">${escapeHtml(c.statutGlyph)}</span>
               <span>${escapeHtml(c.statutLabel)}</span>
             </span>
-            <span class="entity-pill">${escapeHtml(c.camp)} · ${escapeHtml(c.categorieLabel)}</span>
+            <span class="entity-pill">${escapeHtml(campLabel)} · ${escapeHtml(c.categorieLabel)}</span>
           </div>
           <div class="modal-status-help">
             <strong>En clair :</strong> ${escapeHtml(c.statutPlain)}
@@ -364,7 +1061,7 @@ const clientPayload = {
     function openCaseModal(caseId: string) {
       const found = payload.cases.find((c) => c.id === caseId);
       if (!found || !modal || !modalBody || !modalTitle || !modalKicker) return;
-      modalKicker.textContent = `${found.camp} · ${found.categorieLabel}`;
+      modalKicker.textContent = `${found.campFull} · ${found.categorieLabel}`;
       modalTitle.textContent = found.titre;
       modalBody.innerHTML = renderCaseHtml(found);
       arcadeSynth.play('roundTransition');
@@ -372,20 +1069,198 @@ const clientPayload = {
       modal.showModal();
     }
 
-    function openFighterModal(slug: string) {
-      const fighter = payload.fighters.find((f) => f.slug === slug);
-      if (!fighter || !modal || !modalBody || !modalTitle || !modalKicker) return;
-      const list = payload.cases.filter((c) => c.fighter_slugs.includes(slug));
-      modalKicker.textContent = `${fighter.camp} · ${fighter.role}`;
-      modalTitle.textContent = `${fighter.name} — ${formatDossierRecense(list.length)}`;
+    function openPartyModal(camp: Camp) {
+      const party = partiesByCamp[camp];
+      if (!party || !modal || !modalBody || !modalTitle || !modalKicker) return;
+      const list = payload.cases.filter((c) => c.camp === camp);
+      modalKicker.textContent = `${party.former} · 2010–2026`;
+      modalTitle.textContent = `${party.fullName} — ${formatDossiers(list.length)} recensé${list.length > 1 ? 's' : ''}`;
       modalBody.innerHTML =
-        list.length > 0
+        `<p style="margin:0; font-size:0.94rem; color:var(--ink-muted);">Dossiers recensés pour l'ensemble du bloc (parti, dirigeants, parlementaires et ministres).</p>` +
+        (list.length > 0
           ? list.map(renderCaseHtml).join('')
-          : '<p>Aucun dossier lié dans le périmètre retenu.</p>';
+          : '<p>Aucun dossier recensé dans le périmètre retenu.</p>');
       arcadeSynth.play('roundTransition');
       arcadeSynth.vibrate(14);
       modal.showModal();
     }
+
+    function renderAll() {
+      syncUrl();
+      renderArena();
+      renderCharts();
+      renderTimeline();
+      renderExplorer();
+    }
+
+    modeDuelBtn?.addEventListener('click', () => {
+      state.mode = 'duel';
+      if (cCamp) cCamp.value = 'DUEL';
+      renderAll();
+      arcadeSynth.play('uiConfirm');
+    });
+
+    modeAllBtn?.addEventListener('click', () => {
+      state.mode = 'all';
+      if (cCamp) cCamp.value = 'ALL';
+      renderAll();
+      arcadeSynth.play('uiConfirm');
+    });
+
+    pickerLeft?.addEventListener('change', () => {
+      const next = pickerLeft.value as Camp;
+      if (next === state.right) {
+        state.right = state.left;
+      }
+      state.left = next;
+      state.mode = 'duel';
+      if (cCamp) cCamp.value = 'DUEL';
+      renderAll();
+      arcadeSynth.play('uiSelect');
+    });
+
+    pickerRight?.addEventListener('change', () => {
+      const next = pickerRight.value as Camp;
+      if (next === state.left) {
+        state.left = state.right;
+      }
+      state.right = next;
+      state.mode = 'duel';
+      if (cCamp) cCamp.value = 'DUEL';
+      renderAll();
+      arcadeSynth.play('uiSelect');
+    });
+
+    pickerSwap?.addEventListener('click', () => {
+      const tmp = state.left;
+      state.left = state.right;
+      state.right = tmp;
+      renderAll();
+      arcadeSynth.play('uiSelect');
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.quick-duel-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const a = btn.dataset.quickLeft;
+        const b = btn.dataset.quickRight;
+        if (isCamp(a ?? null) && isCamp(b ?? null) && a !== b) {
+          state.left = a as Camp;
+          state.right = b as Camp;
+          state.mode = 'duel';
+          if (cCamp) cCamp.value = 'DUEL';
+          renderAll();
+          arcadeSynth.play('uiConfirm');
+        }
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.metric = (btn.dataset.metric as MetricKey) ?? 'definitive';
+        renderArena();
+        arcadeSynth.play('uiConfirm');
+        arcadeSynth.vibrate(10);
+      });
+    });
+
+    btnViewGraph?.addEventListener('click', () => {
+      state.timelineView = 'graph';
+      if (panelGraph) panelGraph.hidden = false;
+      if (timelineListView) timelineListView.hidden = true;
+      btnViewGraph.setAttribute('aria-pressed', 'true');
+      btnViewList?.setAttribute('aria-pressed', 'false');
+      arcadeSynth.play('uiSelect');
+    });
+
+    btnViewList?.addEventListener('click', () => {
+      state.timelineView = 'list';
+      if (panelGraph) panelGraph.hidden = true;
+      if (timelineListView) timelineListView.hidden = false;
+      btnViewGraph?.setAttribute('aria-pressed', 'false');
+      btnViewList.setAttribute('aria-pressed', 'true');
+      arcadeSynth.play('uiSelect');
+    });
+
+    [cCamp, cStatut, cCat].forEach((sel) => {
+      sel?.addEventListener('change', () => {
+        renderTimeline();
+        arcadeSynth.play('filterTick');
+      });
+    });
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tabTarget;
+        if (!target) return;
+        state.activeTab = target;
+        renderExplorer();
+        arcadeSynth.play('uiSelect');
+      });
+    });
+
+    document.querySelectorAll('a[href="#procedures-en-cours"]').forEach((link) => {
+      link.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        state.activeTab = 'procedures_en_cours';
+        renderExplorer();
+        document.getElementById('explorer-rounds')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    document.addEventListener('click', (ev) => {
+      const target = ev.target as Element | null;
+      if (!target) return;
+
+      const openCaseEl = target.closest<HTMLElement | SVGElement>('[data-open-case]');
+      if (openCaseEl) {
+        const id = openCaseEl.getAttribute('data-open-case');
+        if (id) openCaseModal(id);
+        return;
+      }
+
+      const openPartyEl = target.closest<HTMLElement>('[data-open-party]');
+      if (openPartyEl) {
+        const camp = openPartyEl.getAttribute('data-open-party');
+        if (isCamp(camp)) openPartyModal(camp);
+        return;
+      }
+
+      const launchDuelEl = target.closest<HTMLElement>('[data-launch-duel]');
+      if (launchDuelEl) {
+        const camp = launchDuelEl.getAttribute('data-launch-duel');
+        if (isCamp(camp)) {
+          state.left = camp;
+          state.right = camp === 'RN' ? 'LFI' : 'RN';
+          state.mode = 'duel';
+          if (cCamp) cCamp.value = 'DUEL';
+          renderAll();
+          arcadeSynth.play('uiConfirm');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    });
+
+    document.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Enter' && ev.key !== ' ') return;
+      const target = ev.target as Element | null;
+      if (target && target.classList.contains('timeline-node')) {
+        ev.preventDefault();
+        const id = target.getAttribute('data-open-case');
+        if (id) openCaseModal(id);
+      }
+    });
+
+    timelineSvgHost?.addEventListener('mouseover', (ev) => {
+      const node = (ev.target as Element | null)?.closest('.timeline-node');
+      const tip = node?.getAttribute('data-tip');
+      if (tip && timelineHoverBanner) timelineHoverBanner.textContent = tip;
+    });
+
+    timelineSvgHost?.addEventListener('focusin', (ev) => {
+      const node = (ev.target as Element | null)?.closest('.timeline-node');
+      const tip = node?.getAttribute('data-tip');
+      if (tip && timelineHoverBanner) timelineHoverBanner.textContent = tip;
+    });
 
     modalClose?.addEventListener('click', () => {
       modal?.close();
@@ -396,149 +1271,7 @@ const clientPayload = {
       if (e.target === modal) modal.close();
     });
 
-    document.querySelectorAll<HTMLElement>('[data-open-case]').forEach((el) => {
-      const handler = () => {
-        const id = el.dataset.openCase;
-        if (id) openCaseModal(id);
-      };
-      el.addEventListener('click', handler);
-      if (el.tagName !== 'BUTTON') {
-        el.addEventListener('keydown', (ev: KeyboardEvent) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            handler();
-          }
-        });
-      }
-    });
-
-    document.querySelectorAll<HTMLButtonElement>('[data-open-fighter]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const slug = btn.dataset.openFighter;
-        if (slug) openFighterModal(slug);
-      });
-    });
-
-    // 3. Frise SVG + Vue liste facile à lire : survol, bascule de vue et filtres synchronisés
-    const hoverBanner = document.getElementById('timeline-hover-banner');
-    const cCamp = document.getElementById('chart-filter-camp') as HTMLSelectElement | null;
-    const cStatut = document.getElementById('chart-filter-statut') as HTMLSelectElement | null;
-    const cCat = document.getElementById('chart-filter-cat') as HTMLSelectElement | null;
-    const cCount = document.getElementById('chart-visible-count');
-    const nodes = Array.from(document.querySelectorAll<SVGGElement>('.timeline-node'));
-    const listItems = Array.from(document.querySelectorAll<HTMLElement>('.timeline-list-item'));
-    const listEmpty = document.getElementById('timeline-list-empty');
-    const btnViewGraph = document.getElementById('timeline-view-graph') as HTMLButtonElement | null;
-    const btnViewList = document.getElementById('timeline-view-list') as HTMLButtonElement | null;
-    const panelGraph = document.getElementById('timeline-graph-panel');
-    const panelList = document.getElementById('timeline-list-view');
-
-    function setTimelineView(mode: 'graph' | 'list') {
-      const isList = mode === 'list';
-      if (panelGraph) panelGraph.hidden = isList;
-      if (panelList) panelList.hidden = !isList;
-      btnViewGraph?.setAttribute('aria-pressed', String(!isList));
-      btnViewList?.setAttribute('aria-pressed', String(isList));
-    }
-
-    btnViewGraph?.addEventListener('click', () => {
-      setTimelineView('graph');
-      arcadeSynth.play('uiSelect');
-      arcadeSynth.vibrate(8);
-    });
-
-    btnViewList?.addEventListener('click', () => {
-      setTimelineView('list');
-      arcadeSynth.play('uiSelect');
-      arcadeSynth.vibrate(8);
-    });
-
-    nodes.forEach((node) => {
-      const showTip = () => {
-        if (hoverBanner && node.dataset.tip) {
-          hoverBanner.textContent = node.dataset.tip;
-        }
-      };
-      node.addEventListener('mouseenter', showTip);
-      node.addEventListener('focus', showTip);
-    });
-
-    function matchesTimelineFilters(el: Element): boolean {
-      const camp = cCamp?.value ?? 'ALL';
-      const st = cStatut?.value ?? 'ALL';
-      const cat = cCat?.value ?? 'ALL';
-      const ds = (el as HTMLElement | SVGElement).dataset;
-      return (
-        (camp === 'ALL' || ds.camp === camp) &&
-        (st === 'ALL' || ds.statut === st) &&
-        (cat === 'ALL' || ds.categorie === cat)
-      );
-    }
-
-    function filterChart() {
-      let visible = 0;
-
-      for (const n of nodes) {
-        if (matchesTimelineFilters(n)) {
-          n.removeAttribute('hidden');
-          visible += 1;
-        } else {
-          n.setAttribute('hidden', 'true');
-        }
-      }
-
-      for (const item of listItems) {
-        item.hidden = !matchesTimelineFilters(item);
-      }
-
-      if (listEmpty) {
-        listEmpty.hidden = visible > 0;
-      }
-
-      if (cCount) {
-        const label = visible <= 1 ? 'dossier' : 'dossiers';
-        cCount.textContent = `${visible} / ${nodes.length} ${label}`;
-      }
-    }
-
-    [cCamp, cStatut, cCat].forEach((sel) => {
-      sel?.addEventListener('change', () => {
-        arcadeSynth.play('filterTick');
-        filterChart();
-      });
-    });
-
-    // 4. Onglets des Thèmes
-    const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.round-tab-btn'));
-    const tabPanels = Array.from(document.querySelectorAll<HTMLElement>('.round-panel'));
-
-    function activateTab(targetKey: string) {
-      tabBtns.forEach((b) => {
-        const isTarget = b.dataset.tabTarget === targetKey;
-        b.setAttribute('aria-selected', String(isTarget));
-      });
-      tabPanels.forEach((p) => {
-        p.hidden = p.id !== `panel-${targetKey}`;
-      });
-    }
-
-    tabBtns.forEach((b) => {
-      b.addEventListener('click', () => {
-        const target = b.dataset.tabTarget;
-        if (!target) return;
-        activateTab(target);
-        arcadeSynth.play('uiSelect');
-        arcadeSynth.vibrate(8);
-      });
-    });
-
-    // Ouvre l'onglet Procédures en cours si clic sur l'ancre #procedures-en-cours
-    document.querySelectorAll('a[href="#procedures-en-cours"]').forEach((link) => {
-      link.addEventListener('click', (ev) => {
-        ev.preventDefault();
-        activateTab('procedures_en_cours');
-        document.getElementById('explorer-rounds')?.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    if (cCamp) cCamp.value = state.mode === 'all' ? 'ALL' : 'DUEL';
+    renderAll();
   </script>
 </BaseLayout>

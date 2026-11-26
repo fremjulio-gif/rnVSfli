@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const CAMP_VALUES = ['RN', 'LFI'] as const;
+export const CAMP_VALUES = ['LFI', 'RN', 'LR', 'CENTRE', 'PS', 'ECOLO'] as const;
 export const CATEGORIE_VALUES = [
   'financement_probite',
   'presse_expression',
@@ -80,6 +80,7 @@ export const CaseSchema = z
   .object({
     id: z.string().regex(/^[a-z0-9-]+$/),
     camp: z.enum(CAMP_VALUES),
+    parti_precis: z.string().min(2).optional(),
     categorie: z.enum(CATEGORIE_VALUES),
     section: z.enum(SECTION_VALUES),
     statut: z.enum(STATUT_VALUES),
@@ -130,7 +131,6 @@ export const CaseSchema = z
     }
 
     if (item.statut === 'relaxe') {
-      // Une relaxe peut être frappée d'appel par le parquet/partie civile (ex: est_definitif=false)
       if (item.presomption_innocence !== !item.est_definitif) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,

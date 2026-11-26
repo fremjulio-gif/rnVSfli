@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 from PIL import Image, ImageEnhance
 
@@ -11,12 +12,10 @@ FIGHTERS_DIR = ROOT / "public" / "fighters"
 TARGETS = {
     "melenchon": 86,
     "lepen": 86,
-    "chikirou": 64,
-    "bompard": 64,
-    "panot": 64,
-    "aliot": 64,
-    "odoul": 64,
-    "jacobelli": 64,
+    "retailleau": 86,
+    "macron": 86,
+    "faure": 86,
+    "tondelier": 86,
 }
 
 # Matrice Bayer 4x4 normalisée [-0.5, +0.5] pour tramage 16-bit subtil
@@ -111,11 +110,18 @@ def pixelize_sprite(path: Path, base_width: int) -> tuple[int, int]:
 
 
 def main() -> int:
-    for slug, base_w in TARGETS.items():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("slugs", nargs="*", help="Slugs spécifiques à pixeliser (sinon tous)")
+    args = parser.parse_args()
+    selected = args.slugs if args.slugs else list(TARGETS.keys())
+
+    for slug in selected:
+        if slug not in TARGETS:
+            raise ValueError(f"Slug inconnu: {slug}")
         path = FIGHTERS_DIR / f"{slug}.png"
         if not path.exists():
             raise FileNotFoundError(f"Portrait manquant: {path}")
-        size = pixelize_sprite(path, base_w)
+        size = pixelize_sprite(path, TARGETS[slug])
         print(f"PIXELIZED {slug}.png -> {size[0]}x{size[1]} ({path.stat().st_size} bytes)")
     return 0
 

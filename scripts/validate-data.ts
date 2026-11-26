@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
-import { DatasetSchema } from '../src/lib/schema.ts';
+import { CAMP_VALUES, DatasetSchema } from '../src/lib/schema.ts';
 
 const dataPath = path.resolve(process.cwd(), 'data/cases.yaml');
 
@@ -24,12 +24,14 @@ if (!result.success) {
 }
 
 const dataset = result.data;
-const rnCount = dataset.cases.filter((c) => c.camp === 'RN').length;
-const lfiCount = dataset.cases.filter((c) => c.camp === 'LFI').length;
+const campCounts = CAMP_VALUES.map(
+  (camp) => `${camp}: ${dataset.cases.filter((c) => c.camp === camp).length}`,
+).join(', ');
+
 const primaryConfirmed = dataset.cases.filter(
   (c) => c.confirmation_primaire === 'confirme',
 ).length;
 
 console.log(
-  `[validate-data] OK — ${dataset.cases.length} fiches valides (RN: ${rnCount}, LFI: ${lfiCount}), ${primaryConfirmed} confirmées par source primaire directe, référence ${dataset.reference_date}.`,
+  `[validate-data] OK — ${dataset.cases.length} fiches valides (${campCounts}), ${primaryConfirmed} confirmées par source primaire directe, référence ${dataset.reference_date}.`,
 );

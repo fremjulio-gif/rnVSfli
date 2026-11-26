@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { FIGHTERS_ROSTER } from '../lib/data';
+import { PARTIES_ROSTER } from '../lib/data';
 import { getDict } from '../i18n';
 
 const dict = getDict('fr');
@@ -9,7 +9,7 @@ const dict = getDict('fr');
 <BaseLayout
   currentPath="/mentions-legales"
   title="Mentions légales & Crédits — VERSUS"
-  description="Mentions légales, éditeur, hébergeur, droit de réponse, RGPD et crédits photographiques Wikimedia Commons."
+  description="Mentions légales, éditeur, hébergeur, droit de réponse, RGPD et crédits photographiques Wikimedia Commons des 6 blocs politiques."
 >
   <div class="container prose-page">
     <h1 class="prose-page-title">
@@ -61,17 +61,18 @@ const dict = getDict('fr');
     <section class="pixel-frame prose-card">
       <h2>4. Crédits photographiques (Wikimedia Commons) et droit à l'image</h2>
       <p style="font-size: 0.94rem; color: var(--ink-muted);">
-        Les portraits présentés illustrent exclusivement des responsables politiques publics dans le
-        cadre du droit à l'information sur des procédures judiciaires d'intérêt général. Chaque
-        image provient de Wikimedia Commons sous licence libre (détourage local et stylisation
-        16-bit sans altération dégradante).
+        Chaque bloc politique est illustré par un portrait pixel-art unique de sa figure de
+        référence. Ce portrait représente symboliquement le mouvement politique dans son ensemble sur
+        la période 2010–2026 et n'implique nullement que la personnalité représentée soit visée
+        personnellement par l'ensemble des dossiers de ce bloc. Chaque image provient de Wikimedia
+        Commons sous licence libre.
       </p>
       <div class="table-scroll">
         <table class="data-table">
           <thead>
             <tr>
               <th>Personnalité</th>
-              <th>Camp</th>
+              <th>Bloc représenté</th>
               <th>Auteur / Source</th>
               <th>Licence</th>
               <th>Fichier original</th>
@@ -79,14 +80,14 @@ const dict = getDict('fr');
           </thead>
           <tbody>
             {
-              FIGHTERS_ROSTER.map((f) => (
+              PARTIES_ROSTER.map((p) => (
                 <tr>
-                  <td>{f.name}</td>
-                  <td>{f.camp}</td>
-                  <td>{f.credit}</td>
-                  <td>{f.license}</td>
+                  <td>{p.figureName}</td>
+                  <td>{p.fullName}</td>
+                  <td>{p.credit}</td>
+                  <td>{p.license}</td>
                   <td>
-                    <a href={f.sourcePage} target="_blank" rel="noopener noreferrer">
+                    <a href={p.sourcePage} target="_blank" rel="noopener noreferrer">
                       Wikimedia Commons
                     </a>
                   </td>

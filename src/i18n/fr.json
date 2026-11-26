@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "VERSUS — Situation judiciaire RN / LFI",
-    "subtitle": "Comparateur factuel, symétrique et sourcé",
+    "title": "VERSUS — Situation judiciaire par parti politique",
+    "subtitle": "Comparateur factuel, symétrique et sourcé (6 blocs politiques)",
     "referenceDate": "26/11/2026",
     "disclaimer": "Outil d'information factuelle et documentaire. Il ne constitue ni un avis juridique ni une prise de position politique. Toute personne qui n'est pas définitivement condamnée reste présumée innocente (article 9-1 du Code civil).",
     "repoIssuesUrl": "https://github.com/fremjulio-gif/rnVSfli/issues/new"
@@ -22,22 +22,42 @@
     "hapticOn": "Vibrations : Oui"
   },
   "camps": {
-    "RN": {
-      "short": "RN",
-      "name": "Rassemblement National",
-      "former": "ex-Front National (FN → RN)"
-    },
     "LFI": {
       "short": "LFI",
       "name": "La France insoumise",
-      "former": "et Front de Gauche (2010–2015)"
+      "former": "et Front de Gauche (2010–2026)"
+    },
+    "RN": {
+      "short": "RN",
+      "name": "Rassemblement National",
+      "former": "ex-Front National (2010–2026)"
+    },
+    "LR": {
+      "short": "LR",
+      "name": "Les Républicains",
+      "former": "ex-UMP (2010–2026)"
+    },
+    "CENTRE": {
+      "short": "Centre",
+      "name": "Centre / Macronistes",
+      "former": "Renaissance, MoDem, Horizons"
+    },
+    "PS": {
+      "short": "PS",
+      "name": "Parti socialiste",
+      "former": "Parti socialiste (2010–2026)"
+    },
+    "ECOLO": {
+      "short": "Écologistes",
+      "name": "Les Écologistes",
+      "former": "ex-EELV (2010–2026)"
     }
   },
   "categories": {
     "financement_probite": {
       "round": "MANCHE 1",
       "label": "Financement politique & probité",
-      "definition": "Affaires portant sur l'argent public ou électoral : détournement de fonds publics, recel, abus de biens sociaux, escroquerie, faux ou financement irrégulier de campagnes."
+      "definition": "Affaires portant sur l'argent public ou électoral : détournement de fonds publics, recel, abus de biens sociaux, fraude fiscale, favoritisme, prise illégale d'intérêts ou financement irrégulier de campagnes."
     },
     "presse_expression": {
       "round": "MANCHE 2",
@@ -47,7 +67,7 @@
     "ordre_public_biens": {
       "round": "MANCHE 3",
       "label": "Ordre public, personnes & biens",
-      "definition": "Autres infractions pénales liées à l'action publique : rébellion, provocation, violences, vol, intimidation ou violation du secret de l'enquête."
+      "definition": "Autres infractions pénales liées à l'action publique : rébellion, provocation, violences, vol, intimidation ou violation du secret professionnel / de l'enquête."
     }
   },
   "statuts": {
@@ -109,8 +129,8 @@
   "guide": [
     {
       "step": "1",
-      "title": "Ce que montre le pourcentage",
-      "body": "La barre en haut mesure uniquement la part des dossiers selon leur étape judiciaire (ex. condamnations définitives). Ce n'est ni un score, ni un classement de gravité."
+      "title": "Choisir un duel ou tout voir",
+      "body": "En haut de l'écran, comparez deux blocs politiques face à face (LFI, RN, LR, Centre, PS ou Écologistes) ou passez en « Vue globale » pour afficher les 6 blocs ensemble."
     },
     {
       "step": "2",
@@ -120,7 +140,7 @@
     {
       "step": "3",
       "title": "Vérifier chaque preuve",
-      "body": "Cliquez sur n'importe quel visage, point de la frise ou bouton « Lire le dossier » pour consulter le détail des faits, des peines et les liens officiels."
+      "body": "Cliquez sur n'importe quel portrait de parti, point de la frise ou bouton « Lire le dossier » pour consulter le détail des faits, des peines et les liens officiels."
     }
   ],
   "glossary": [
@@ -146,7 +166,7 @@
     },
     {
       "term": "Personne morale vs personne physique",
-      "definition": "La justice distingue un individu (personne physique, ex. un élu) d'une organisation (personne morale, ex. un parti politique ou une association)."
+      "definition": "La justice distingue un individu (personne physique, ex. un élu ou un ministre) d'une organisation (personne morale, ex. un parti politique ou une association)."
     }
   ],
   "ending": {
@@ -154,8 +174,8 @@
     "subhead": "Les 4 réflexes pour bien interpréter ces chiffres :",
     "points": [
       "Un appel ou un pourvoi en cassation suspend en principe les peines (sauf exécution provisoire spécifique) : toute personne non définitivement condamnée reste présumée innocente.",
-      "Les dossiers ne s'additionnent pas comme des points : une diffamation, un vol, une rébellion ou un détournement de fonds publics n'ont ni la même nature ni les mêmes sanctions.",
-      "Les élus (personnes physiques) et les partis ou associations (personnes morales) sont jugés séparément.",
+      "Les dossiers ne s'additionnent pas comme des points : des partis qui ont exercé le pouvoir national (LR, Centre, PS) ou comptent davantage d'élus anciens ont aussi un historique différent de partis plus récents.",
+      "Les élus ou ministres (personnes physiques) et les partis ou associations (personnes morales) sont jugés séparément.",
       "Les enquêtes et procès en cours sont classés à part et ne préjugent d'aucune culpabilité."
     ]
   }

@@ -1,37 +1,15 @@
 ---
-import type { JudicialCase } from '../lib/schema';
 import { CATEGORIE_VALUES } from '../lib/schema';
-import { formatDateFr, getDict } from '../i18n';
+import { getDict } from '../i18n';
 
-interface Props {
-  cases: JudicialCase[];
-}
-
-const { cases } = Astro.props;
 const dict = getDict('fr');
-
-function formatDossierCount(count: number): string {
-  return count <= 1 ? `${count} dossier` : `${count} dossiers`;
-}
-
 const tabs = [
   ...CATEGORIE_VALUES.map((cat) => ({
-    id: `tab-${cat}`,
-    key: cat,
+    key: cat as string,
     kicker: dict.categories[cat].round,
     label: dict.categories[cat].label,
-    definition: dict.categories[cat].definition,
-    items: cases.filter((c) => c.section === 'decisions' && c.categorie === cat),
   })),
-  {
-    id: 'tab-procedures_en_cours',
-    key: 'procedures_en_cours',
-    kicker: 'EN COURS',
-    label: 'Procédures en cours (présumés innocents)',
-    definition:
-      'Enquêtes, informations judiciaires, mises en examen et affaires renvoyées avant jugement. Elles sont présentées à part et ne constituent pas des condamnations.',
-    items: cases.filter((c) => c.section === 'procedures_en_cours'),
-  },
+  { key: 'procedures_en_cours', kicker: 'EN COURS', label: 'Procédures en cours (présumés innocents)' },
 ];
 ---
 
@@ -39,152 +17,23 @@ const tabs = [
   <div class="container">
     <header class="section-header">
       <span class="section-kicker">EXPLORER PAR THÈME · 2010–2026</span>
-      <h2 id="explorer-heading" class="section-title">
-        Tous les dossiers, classés par thème
-      </h2>
-      <p class="section-desc">
+      <h2 id="explorer-heading" class="section-title">Tous les dossiers, classés par thème</h2>
+      <p class="section-desc" id="explorer-desc">
         Choisissez un thème (ou l'onglet séparé des procédures en cours), puis cliquez sur « Lire le
         dossier complet » pour voir les dates, les peines et les liens officiels.
       </p>
     </header>
 
     <div class="round-tabs" role="tablist" aria-label="Thèmes judiciaires">
-      {
-        tabs.map((t, index) => (
-          <button
-            type="button"
-            role="tab"
-            id={t.id}
-            aria-selected={index === 0 ? 'true' : 'false'}
-            aria-controls={`panel-${t.key}`}
-            class="round-tab-btn"
-            data-tab-target={t.key}
-          >
-            <span class="round-tab-btn__kicker">{t.kicker}</span>
-            <span>{t.label}</span>
-            <span class="round-tab-btn__count">({t.items.length})</span>
-          </button>
-        ))
-      }
+      {tabs.map((t, i) => (
+        <button type="button" role="tab" id={`tab-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls="explorer-panel" class="round-tab-btn" data-tab-target={t.key}>
+          <span class="round-tab-btn__kicker">{t.kicker}</span>
+          <span>{t.label}</span>
+          <span class="round-tab-btn__count" id={`tab-count-${t.key}`}>(0)</span>
+        </button>
+      ))}
     </div>
 
-    {
-      tabs.map((t, index) => {
-        const lfiList = t.items.filter((c) => c.camp === 'LFI');
-        const rnList = t.items.filter((c) => c.camp === 'RN');
-
-        return (
-          <div
-            id={`panel-${t.key}`}
-            role="tabpanel"
-            aria-labelledby={t.id}
-            hidden={index !== 0}
-            class="round-panel"
-          >
-            <div class="round-def-banner" role="note">
-              <strong>De quoi s'agit-il ?</strong> {t.definition}
-            </div>
-
-            <div class="duel-grid">
-              <!-- GAUCHE : LFI -->
-              <div>
-                <div class="camp-column-header camp-column-header--lfi">
-                  <span class="camp-column-header__name">La France insoumise (LFI / ex-FdG)</span>
-                  <span>{formatDossierCount(lfiList.length)}</span>
-                </div>
-                <div class="cases-stack">
-                  {lfiList.length > 0 ? (
-                    lfiList.map((item) => {
-                      const st = dict.statuts[item.statut];
-                      return (
-                        <article class="pixel-frame pixel-frame--lfi compact-case">
-                          <div class="case-card__top">
-                            <span class={`status-badge status-badge--${st.tone}`}>
-                              <span aria-hidden="true">{st.glyph}</span>
-                              <span>{st.label}</span>
-                            </span>
-                            <span class="entity-pill">{formatDateFr(item.date_derniere_decision)}</span>
-                          </div>
-                          <h3 class="compact-case__title">{item.titre}</h3>
-                          <p class="compact-case__sub">
-                            <strong>{item.entite_principale}</strong> · {item.juridiction}
-                          </p>
-                          <div class="compact-case__actions">
-                            <span class="compact-case__src-pill">
-                              {item.confirmation_primaire === 'confirme'
-                                ? 'Décision officielle vérifiée'
-                                : `Presse et institutions (${item.sources.length} sources)`}
-                            </span>
-                            <button
-                              type="button"
-                              class="arcade-btn arcade-btn--sm"
-                              data-open-case={item.id}
-                            >
-                              Lire le dossier complet →
-                            </button>
-                          </div>
-                        </article>
-                      );
-                    })
-                  ) : (
-                    <div class="empty-slot">
-                      Aucun dossier recensé dans cette catégorie pour LFI / FdG au 26/11/2026.
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <!-- DROITE : RN -->
-              <div>
-                <div class="camp-column-header camp-column-header--rn">
-                  <span class="camp-column-header__name">Rassemblement National (RN / ex-FN)</span>
-                  <span>{formatDossierCount(rnList.length)}</span>
-                </div>
-                <div class="cases-stack">
-                  {rnList.length > 0 ? (
-                    rnList.map((item) => {
-                      const st = dict.statuts[item.statut];
-                      return (
-                        <article class="pixel-frame pixel-frame--rn compact-case">
-                          <div class="case-card__top">
-                            <span class={`status-badge status-badge--${st.tone}`}>
-                              <span aria-hidden="true">{st.glyph}</span>
-                              <span>{st.label}</span>
-                            </span>
-                            <span class="entity-pill">{formatDateFr(item.date_derniere_decision)}</span>
-                          </div>
-                          <h3 class="compact-case__title">{item.titre}</h3>
-                          <p class="compact-case__sub">
-                            <strong>{item.entite_principale}</strong> · {item.juridiction}
-                          </p>
-                          <div class="compact-case__actions">
-                            <span class="compact-case__src-pill">
-                              {item.confirmation_primaire === 'confirme'
-                                ? 'Décision officielle vérifiée'
-                                : `Presse et institutions (${item.sources.length} sources)`}
-                            </span>
-                            <button
-                              type="button"
-                              class="arcade-btn arcade-btn--sm"
-                              data-open-case={item.id}
-                            >
-                              Lire le dossier complet →
-                            </button>
-                          </div>
-                        </article>
-                      );
-                    })
-                  ) : (
-                    <div class="empty-slot">
-                      Aucun dossier recensé dans cette catégorie pour le RN au 26/11/2026.
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      })
-    }
+    <div id="explorer-panel" role="tabpanel" class="round-panel" aria-live="polite"></div>
   </div>
 </section>

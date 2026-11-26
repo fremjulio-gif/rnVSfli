@@ -1,31 +1,18 @@
 ---
-import type { CampMetrics } from '../lib/data';
-import { FIGHTERS_ROSTER } from '../lib/data';
-import type { JudicialCase } from '../lib/schema';
+import { PARTIES_ROSTER } from '../lib/data';
 
 interface Props {
-  lfiMetrics: CampMetrics;
-  rnMetrics: CampMetrics;
-  cases: JudicialCase[];
+  totalCases: number;
 }
+const { totalCases } = Astro.props;
 
-const { lfiMetrics, rnMetrics, cases } = Astro.props;
-
-const lfiFighters = FIGHTERS_ROSTER.filter((f) => f.camp === 'LFI');
-const lfiLeader = lfiFighters.find((f) => f.isLeader)!;
-const lfiAllies = lfiFighters.filter((f) => !f.isLeader);
-
-const rnFighters = FIGHTERS_ROSTER.filter((f) => f.camp === 'RN');
-const rnLeader = rnFighters.find((f) => f.isLeader)!;
-const rnAllies = rnFighters.filter((f) => !f.isLeader);
-
-function countFighterCases(slug: string): number {
-  return cases.filter((c) => c.fighter_slugs.includes(slug)).length;
-}
-
-function formatDossierCount(count: number): string {
-  return count <= 1 ? `${count} dossier` : `${count} dossiers`;
-}
+const quickDuels: [string, string, string][] = [
+  ['LFI', 'RN', 'LFI vs RN'],
+  ['LR', 'PS', 'LR vs PS'],
+  ['CENTRE', 'RN', 'Centre vs RN'],
+  ['LR', 'CENTRE', 'LR vs Centre'],
+  ['ECOLO', 'RN', 'Écologistes vs RN'],
+];
 ---
 
 <section class="vs-arena" aria-labelledby="arena-heading">
@@ -37,268 +24,170 @@ function formatDossierCount(count: number): string {
 
   <div class="container vs-arena__inner">
     <div class="vs-arena__topmeta">
-      <span class="hero-badge">DOSSIERS JUDICIAIRES COMPARÉS · 2010–2026 · À JOUR AU 26/11/2026</span>
+      <span class="hero-badge">DOSSIERS JUDICIAIRES PAR PARTI · 2010–2026 · À JOUR AU 26/11/2026</span>
       <h1 id="arena-heading" class="visually-hidden">
-        VERSUS — La France insoumise face au Rassemblement National (2010–2026)
+        VERSUS — Situation judiciaire comparée des 6 grands blocs politiques (2010–2026)
       </h1>
       <p class="arena-subtitle">
-        La France insoumise face au Rassemblement National : comparez de façon neutre et sourcée
-        les décisions de justice et les procédures en cours.
+        Comparez de façon neutre et sourcée les décisions de justice et les procédures en cours
+        de 6 blocs politiques : choisissez un duel ou affichez-les tous.
       </p>
     </div>
 
-    <!-- HUD DE POURCENTAGE FACE-À-FACE -->
+    <!-- BASCULE DE MODE -->
+    <div class="mode-switcher" role="group" aria-label="Mode d'affichage">
+      <button type="button" id="mode-duel-btn" class="mode-btn" aria-pressed="true">
+        ⚔ Mode Duel (2 partis face à face)
+      </button>
+      <button type="button" id="mode-all-btn" class="mode-btn" aria-pressed="false">
+        ▦ Vue globale (les 6 partis)
+      </button>
+    </div>
+
+    <!-- SÉLECTEUR DE DUEL -->
+    <div id="duel-picker-panel" class="duel-picker-panel">
+      <div class="duel-picker-row">
+        <label class="filter-chip-label picker-label picker-label--left">
+          <span>Camp à gauche</span>
+          <select id="picker-left" class="filter-input">
+            {PARTIES_ROSTER.map((p) => <option value={p.camp}>{p.fullName}</option>)}
+          </select>
+        </label>
+        <button type="button" id="picker-swap" class="arcade-btn arcade-btn--sm swap-btn" aria-label="Inverser les deux camps">
+          ⇄ Inverser
+        </button>
+        <label class="filter-chip-label picker-label picker-label--right">
+          <span>Camp à droite</span>
+          <select id="picker-right" class="filter-input">
+            {PARTIES_ROSTER.map((p) => <option value={p.camp}>{p.fullName}</option>)}
+          </select>
+        </label>
+      </div>
+      <div class="quick-duels" role="group" aria-label="Duels rapides">
+        <span class="quick-duels__label">Duels rapides :</span>
+        {
+          quickDuels.map(([a, b, label]) => (
+            <button type="button" class="quick-duel-btn" data-quick-left={a} data-quick-right={b}>
+              {label}
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- SÉLECTEUR D'INDICATEUR (commun aux deux modes) -->
     <div class="hud-panel" role="region" aria-label="Indicateurs en pourcentage">
-      <div class="hud-bars">
-        <!-- Côté LFI (Gauche) -->
+      <div id="arena-duel-hud" class="hud-bars">
         <div class="hud-side hud-side--lfi">
           <div class="hud-side__head">
-            <span class="hud-camp-tag hud-camp-tag--lfi">La France insoumise (LFI / ex-FdG)</span>
-            <span class="hud-pct hud-pct--lfi" id="hud-lfi-pct">{lfiMetrics.definitivePct}%</span>
+            <span class="hud-camp-tag hud-camp-tag--lfi" id="hud-left-name">—</span>
+            <span class="hud-pct hud-pct--lfi" id="hud-left-pct">0%</span>
           </div>
           <div class="hud-track hud-track--left" aria-hidden="true">
-            <div
-              class="hud-fill hud-fill--lfi"
-              id="hud-lfi-bar"
-              style={`transform: scaleX(${lfiMetrics.definitivePct / 100})`}
-            ></div>
+            <div class="hud-fill hud-fill--lfi" id="hud-left-bar" style="transform: scaleX(0)"></div>
           </div>
-          <div class="hud-ratio" id="hud-lfi-ratio">
-            {lfiMetrics.definitiveConvictions} sur {lfiMetrics.totalCases} dossiers recensés
-          </div>
+          <div class="hud-ratio" id="hud-left-ratio">—</div>
         </div>
-
-        <!-- Compteur central -->
         <div class="hud-center-badge" aria-hidden="true">
           <span>2010</span>
           <span class="hud-center-sep">VS</span>
           <span>2026</span>
         </div>
-
-        <!-- Côté RN (Droite) -->
         <div class="hud-side hud-side--rn">
           <div class="hud-side__head hud-side__head--rn">
-            <span class="hud-pct hud-pct--rn" id="hud-rn-pct">{rnMetrics.definitivePct}%</span>
-            <span class="hud-camp-tag hud-camp-tag--rn">Rassemblement National (RN / ex-FN)</span>
+            <span class="hud-pct hud-pct--rn" id="hud-right-pct">0%</span>
+            <span class="hud-camp-tag hud-camp-tag--rn" id="hud-right-name">—</span>
           </div>
           <div class="hud-track hud-track--right" aria-hidden="true">
-            <div
-              class="hud-fill hud-fill--rn"
-              id="hud-rn-bar"
-              style={`transform: scaleX(${rnMetrics.definitivePct / 100})`}
-            ></div>
+            <div class="hud-fill hud-fill--rn" id="hud-right-bar" style="transform: scaleX(0)"></div>
           </div>
-          <div class="hud-ratio hud-ratio--rn" id="hud-rn-ratio">
-            {rnMetrics.definitiveConvictions} sur {rnMetrics.totalCases} dossiers recensés
-          </div>
+          <div class="hud-ratio hud-ratio--rn" id="hud-right-ratio">—</div>
         </div>
       </div>
 
-      <!-- Sélecteur de métrique % -->
       <div class="hud-switcher" role="group" aria-label="Choisir quel type de situation comparer">
-        <button
-          type="button"
-          class="hud-metric-btn"
-          data-metric="definitive"
-          aria-pressed="true"
-        >
-          ■ Condamnations définitives
-        </button>
-        <button
-          type="button"
-          class="hud-metric-btn"
-          data-metric="pending"
-          aria-pressed="false"
-        >
-          ▲ Condamnations sous recours
-        </button>
-        <button
-          type="button"
-          class="hud-metric-btn"
-          data-metric="cleared"
-          aria-pressed="false"
-        >
-          ○ Relaxes et classements
-        </button>
-        <button
-          type="button"
-          class="hud-metric-btn"
-          data-metric="ongoing"
-          aria-pressed="false"
-        >
-          ◎ Procédures en cours
-        </button>
+        <button type="button" class="hud-metric-btn" data-metric="definitive" aria-pressed="true">■ Condamnations définitives</button>
+        <button type="button" class="hud-metric-btn" data-metric="pending" aria-pressed="false">▲ Condamnations sous recours</button>
+        <button type="button" class="hud-metric-btn" data-metric="cleared" aria-pressed="false">○ Relaxes et classements</button>
+        <button type="button" class="hud-metric-btn" data-metric="ongoing" aria-pressed="false">◎ Procédures en cours</button>
       </div>
       <p class="hud-caption" id="hud-metric-caption">
         Part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive.
-        Cliquez sur un portrait ci-dessous pour lire ses dossiers.
       </p>
     </div>
 
-    <!-- SCÈNE VS : SILHOUETTES PIXEL-ART LIBRES + MÉDAILLON VS PIXEL -->
-    <div class="arena-duel-stage">
-      <!-- Leader LFI (Gauche) -->
-      <button
-        type="button"
-        class="sprite-hero sprite-hero--lfi"
-        data-open-fighter={lfiLeader.slug}
-        title={`Lire les dossiers concernant ${lfiLeader.name}`}
-      >
-        <span class="sprite-hero__aura sprite-hero__aura--lfi" aria-hidden="true"></span>
-        <img
-          src={lfiLeader.image}
-          alt={`Portrait pixel-art de ${lfiLeader.name}`}
-          width="352"
-          height="424"
-          loading="eager"
-          decoding="sync"
-          class="pixel-sprite"
-        />
-        <span class="sprite-hero__pedestal sprite-hero__pedestal--lfi">
-          <span class="sprite-hero__tag">La France insoumise</span>
-          <strong>{lfiLeader.name}</strong>
-          <small>{formatDossierCount(countFighterCases(lfiLeader.slug))} · Cliquer →</small>
-        </span>
-      </button>
+    <!-- VUE DUEL : SCÈNE VS -->
+    <div id="arena-duel-view">
+      <div class="arena-duel-stage">
+        <button type="button" class="sprite-hero sprite-hero--lfi" id="stage-left" data-open-party="LFI">
+          <span class="sprite-hero__aura sprite-hero__aura--lfi" aria-hidden="true"></span>
+          <img id="stage-left-img" src="/fighters/melenchon.png" alt="" width="352" height="424" loading="eager" class="pixel-sprite" />
+          <span class="sprite-hero__pedestal sprite-hero__pedestal--lfi">
+            <span class="sprite-hero__tag" id="stage-left-tag">—</span>
+            <strong id="stage-left-figure">—</strong>
+            <small id="stage-left-count">—</small>
+          </span>
+        </button>
 
-      <!-- Médaillon VS Pixel-Art SVG sur-mesure -->
-      <div class="vs-emblem-center" aria-hidden="true">
-        <svg
-          width="92"
-          height="92"
-          viewBox="0 0 24 24"
-          shape-rendering="crispEdges"
-          class="vs-pixel-svg"
-        >
-          <rect x="4" y="1" width="16" height="22" fill="#0B0E17" />
-          <rect x="1" y="4" width="22" height="16" fill="#0B0E17" />
-          <rect x="2" y="2" width="20" height="20" fill="#141929" />
-          <rect x="4" y="1" width="8" height="1" fill="#F5B73B" />
-          <rect x="12" y="1" width="8" height="1" fill="#4CC9F0" />
-          <rect x="4" y="22" width="8" height="1" fill="#F5B73B" />
-          <rect x="12" y="22" width="8" height="1" fill="#4CC9F0" />
-          <rect x="1" y="4" width="1" height="16" fill="#F5B73B" />
-          <rect x="22" y="4" width="1" height="16" fill="#4CC9F0" />
-          <rect x="12" y="3" width="2" height="4" fill="#F5B73B" />
-          <rect x="11" y="7" width="3" height="4" fill="#F2F5FA" />
-          <rect x="10" y="11" width="4" height="3" fill="#F2F5FA" />
-          <rect x="10" y="14" width="3" height="4" fill="#4CC9F0" />
-          <rect x="9" y="18" width="2" height="3" fill="#4CC9F0" />
-          <rect x="4" y="6" width="2" height="7" fill="#F2F5FA" />
-          <rect x="8" y="6" width="2" height="7" fill="#F2F5FA" />
-          <rect x="5" y="13" width="2" height="3" fill="#F2F5FA" />
-          <rect x="7" y="13" width="2" height="3" fill="#F2F5FA" />
-          <rect x="6" y="16" width="2" height="2" fill="#F5B73B" />
-          <rect x="15" y="6" width="5" height="2" fill="#F2F5FA" />
-          <rect x="14" y="8" width="2" height="3" fill="#F2F5FA" />
-          <rect x="15" y="11" width="4" height="2" fill="#F2F5FA" />
-          <rect x="18" y="13" width="2" height="3" fill="#F2F5FA" />
-          <rect x="14" y="16" width="5" height="2" fill="#4CC9F0" />
-        </svg>
-        <span class="vs-emblem-year">2010 — 2026</span>
+        <div class="vs-emblem-center" aria-hidden="true">
+          <svg width="92" height="92" viewBox="0 0 24 24" shape-rendering="crispEdges" class="vs-pixel-svg">
+            <rect x="4" y="1" width="16" height="22" fill="#0B0E17" />
+            <rect x="1" y="4" width="22" height="16" fill="#0B0E17" />
+            <rect x="2" y="2" width="20" height="20" fill="#141929" />
+            <rect x="4" y="1" width="8" height="1" fill="#F5B73B" />
+            <rect x="12" y="1" width="8" height="1" fill="#4CC9F0" />
+            <rect x="4" y="22" width="8" height="1" fill="#F5B73B" />
+            <rect x="12" y="22" width="8" height="1" fill="#4CC9F0" />
+            <rect x="1" y="4" width="1" height="16" fill="#F5B73B" />
+            <rect x="22" y="4" width="1" height="16" fill="#4CC9F0" />
+            <rect x="12" y="3" width="2" height="4" fill="#F5B73B" />
+            <rect x="11" y="7" width="3" height="4" fill="#F2F5FA" />
+            <rect x="10" y="11" width="4" height="3" fill="#F2F5FA" />
+            <rect x="10" y="14" width="3" height="4" fill="#4CC9F0" />
+            <rect x="9" y="18" width="2" height="3" fill="#4CC9F0" />
+            <rect x="4" y="6" width="2" height="7" fill="#F2F5FA" />
+            <rect x="8" y="6" width="2" height="7" fill="#F2F5FA" />
+            <rect x="5" y="13" width="2" height="3" fill="#F2F5FA" />
+            <rect x="7" y="13" width="2" height="3" fill="#F2F5FA" />
+            <rect x="6" y="16" width="2" height="2" fill="#F5B73B" />
+            <rect x="15" y="6" width="5" height="2" fill="#F2F5FA" />
+            <rect x="14" y="8" width="2" height="3" fill="#F2F5FA" />
+            <rect x="15" y="11" width="4" height="2" fill="#F2F5FA" />
+            <rect x="18" y="13" width="2" height="3" fill="#F2F5FA" />
+            <rect x="14" y="16" width="5" height="2" fill="#4CC9F0" />
+          </svg>
+          <span class="vs-emblem-year">2010 — 2026</span>
+        </div>
+
+        <button type="button" class="sprite-hero sprite-hero--rn" id="stage-right" data-open-party="RN">
+          <span class="sprite-hero__aura sprite-hero__aura--rn" aria-hidden="true"></span>
+          <img id="stage-right-img" src="/fighters/lepen.png" alt="" width="352" height="432" loading="eager" class="pixel-sprite" />
+          <span class="sprite-hero__pedestal sprite-hero__pedestal--rn">
+            <span class="sprite-hero__tag" id="stage-right-tag">—</span>
+            <strong id="stage-right-figure">—</strong>
+            <small id="stage-right-count">—</small>
+          </span>
+        </button>
       </div>
-
-      <!-- Leader RN (Droite) -->
-      <button
-        type="button"
-        class="sprite-hero sprite-hero--rn"
-        data-open-fighter={rnLeader.slug}
-        title={`Lire les dossiers concernant ${rnLeader.name}`}
-      >
-        <span class="sprite-hero__aura sprite-hero__aura--rn" aria-hidden="true"></span>
-        <img
-          src={rnLeader.image}
-          alt={`Portrait pixel-art de ${rnLeader.name}`}
-          width="352"
-          height="432"
-          loading="eager"
-          decoding="sync"
-          class="pixel-sprite"
-        />
-        <span class="sprite-hero__pedestal sprite-hero__pedestal--rn">
-          <span class="sprite-hero__tag">Rassemblement National</span>
-          <strong>{rnLeader.name}</strong>
-          <small>{formatDossierCount(countFighterCases(rnLeader.slug))} · Cliquer →</small>
-        </span>
-      </button>
+      <p class="party-neutral-note">
+        Chaque portrait représente son mouvement politique sur 2010–2026 et n'implique pas que la
+        personnalité illustrée soit personnellement visée par tous les dossiers du bloc.
+      </p>
     </div>
 
-    <!-- RAIL DES ÉLUS SOUS LES LEADERS -->
-    <div class="roster-rail-wrap">
-      <p class="roster-rail-help">
-        Autres personnalités politiques concernées — cliquez sur un portrait pour ouvrir ses dossiers&nbsp;:
+    <!-- VUE GLOBALE : 6 CARTES -->
+    <div id="arena-global-view" hidden>
+      <div class="global-parties-grid" id="global-parties-grid"></div>
+      <p class="party-neutral-note">
+        Les portraits illustrent chaque bloc dans son ensemble. Les pourcentages ne sont pas des
+        scores : ils décrivent l'étape judiciaire des dossiers recensés pour chaque bloc.
       </p>
-      <div class="roster-rail">
-        <div class="roster-group roster-group--lfi" role="group" aria-label="Élus LFI liés aux dossiers">
-          {
-            lfiAllies.map((ally) => (
-              <button
-                type="button"
-                class="roster-card roster-card--lfi"
-                data-open-fighter={ally.slug}
-                title={`Lire les dossiers concernant ${ally.name}`}
-              >
-                <span class="roster-card__thumb">
-                  <img
-                    src={ally.image}
-                    alt={ally.name}
-                    width="120"
-                    height="140"
-                    loading="eager"
-                    decoding="async"
-                    class="pixel-sprite"
-                  />
-                </span>
-                <span class="roster-card__info">
-                  <strong>{ally.name}</strong>
-                  <span>{formatDossierCount(countFighterCases(ally.slug))}</span>
-                </span>
-              </button>
-            ))
-          }
-        </div>
-
-        <div class="roster-group roster-group--rn" role="group" aria-label="Élus RN liés aux dossiers">
-          {
-            rnAllies.map((ally) => (
-              <button
-                type="button"
-                class="roster-card roster-card--rn"
-                data-open-fighter={ally.slug}
-                title={`Lire les dossiers concernant ${ally.name}`}
-              >
-                <span class="roster-card__thumb">
-                  <img
-                    src={ally.image}
-                    alt={ally.name}
-                    width="120"
-                    height="140"
-                    loading="eager"
-                    decoding="async"
-                    class="pixel-sprite"
-                  />
-                </span>
-                <span class="roster-card__info">
-                  <strong>{ally.name}</strong>
-                  <span>{formatDossierCount(countFighterCases(ally.slug))}</span>
-                </span>
-              </button>
-            ))
-          }
-        </div>
-      </div>
     </div>
 
     <div class="arena-cta-row">
-      <a href="#dataviz-dashboard" class="arcade-btn arcade-btn--primary">
-        Voir les graphiques et la frise
-      </a>
-      <a href="#explorer-rounds" class="arcade-btn">
-        Lire les {cases.length} dossiers par thème
-      </a>
-      <a href="#procedures-en-cours" class="arcade-btn">
-        Voir les procédures en cours
-      </a>
+      <a href="#dataviz-dashboard" class="arcade-btn arcade-btn--primary">Voir les graphiques et la frise</a>
+      <a href="#explorer-rounds" class="arcade-btn">Lire les {totalCases} dossiers par thème</a>
+      <a href="#procedures-en-cours" class="arcade-btn">Voir les procédures en cours</a>
     </div>
   </div>
 </section>

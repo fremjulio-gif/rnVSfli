@@ -1545,3 +1545,1340 @@ cases:
         date_publication: "2026-01-15"
         date_consultation: "2026-11-26"
     verified_at: "2026-11-26"
+
+  # =========================================================================
+  # LES RÉPUBLICAINS (LR, EX-UMP) — 12 FICHES
+  # =========================================================================
+
+  - id: lr-sarkozy-bismuth-2024
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Nicolas Sarkozy (ancien président de la République)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Nicolas Sarkozy"
+        qualite: "Ancien président de la République et ancien président de l'UMP/LR"
+        type: personne_physique
+    titre: "Affaire dite des « écoutes » (Bismuth) — Corruption et trafic d'influence"
+    qualification_legale: "Corruption active et trafic d'influence actif sur magistrat"
+    resume_factuel: "Par arrêt du 18 décembre 2024, la chambre criminelle de la Cour de cassation a rejeté le pourvoi de Nicolas Sarkozy, rendant définitive sa condamnation à trois ans d'emprisonnement dont un an ferme sous bracelet électronique et trois ans d'inéligibilité. La peine ferme a été exécutée à domicile entre février et mai 2025 avant libération conditionnelle."
+    juridiction: "Cour de cassation (chambre criminelle) — après TJ Paris et CA Paris"
+    dates_cles:
+      - date: "2021-03-01"
+        libelle: "Jugement du tribunal correctionnel de Paris"
+      - date: "2023-05-17"
+        libelle: "Confirmation par la cour d'appel de Paris"
+      - date: "2024-12-18"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2024-12-18"
+    peine:
+      prison: "3 ans d'emprisonnement dont 1 an ferme aménagé sous bracelet électronique (purgé fév.–mai 2025)"
+      ineligibilite: "3 ans d'inéligibilité et de privation des droits civiques"
+      note_recours: "Condamnation définitive — voies de recours internes épuisées (Cass. crim., 18 décembre 2024)."
+    references_judiciaires:
+      - "Cass. crim., 18 déc. 2024, n° 23-83.178"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/juri/id/JURITEXT000050868554"
+        type: primaire
+        titre: "Cour de cassation, chambre criminelle, 18 décembre 2024, 23-83.178 (Légifrance)"
+        editeur: "Légifrance / Cour de cassation"
+        date_publication: "2024-12-18"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/justice/affaire-des-ecoutes-la-cour-de-cassation-tranche-sur-le-pourvoi-de-nicolas-sarkozy-8483/"
+        type: presse
+        titre: "Affaire des écoutes : la Cour de cassation tranche sur le pourvoi de Nicolas Sarkozy"
+        editeur: "Le Club des Juristes"
+        date_publication: "2024-12-18"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-sarkozy-bygmalion-2025
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Nicolas Sarkozy (campagne présidentielle 2012)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Nicolas Sarkozy"
+        qualite: "Ancien président de la République (candidat UMP en 2012)"
+        type: personne_physique
+    titre: "Affaire Bygmalion — Financement illégal de la campagne présidentielle de 2012"
+    qualification_legale: "Financement illégal de campagne électorale (dépassement du plafond légal)"
+    resume_factuel: "Poursuivi en qualité de bénéficiaire du dépassement du plafond des dépenses de la campagne présidentielle de 2012, Nicolas Sarkozy a été condamné en appel le 14 février 2024 à un an de prison dont six mois ferme aménageable. Le 26 novembre 2025, la Cour de cassation a rejeté son pourvoi, rendant cette condamnation définitive ; le 9 mars 2026, le tribunal judiciaire de Paris a rejeté sa demande de confusion de peines avec le dossier Bismuth."
+    juridiction: "Cour de cassation (chambre criminelle) — après CA Paris et TJ Paris"
+    dates_cles:
+      - date: "2024-02-14"
+        libelle: "Arrêt de la cour d'appel de Paris (1 an dont 6 mois ferme aménageable)"
+      - date: "2025-11-26"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+      - date: "2026-03-09"
+        libelle: "Rejet de la demande de confusion de peines par le TJ de Paris"
+    date_derniere_decision: "2025-11-26"
+    peine:
+      prison: "1 an d'emprisonnement dont 6 mois ferme aménageable"
+      note_recours: "Condamnation définitive — pourvoi rejeté par la Cour de cassation le 26 novembre 2025."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt du 26/11/2025 documenté de façon concordante par Le Club des Juristes et Public Sénat ; texte intégral Légifrance non indexé ici."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/affaire-bygmalion-la-cour-de-cassation-rejette-le-pourvoi-de-nicolas-sarkozy-13123/"
+        type: presse
+        titre: "Affaire Bygmalion : la Cour de cassation rejette le pourvoi de Nicolas Sarkozy"
+        editeur: "Le Club des Juristes"
+        date_publication: "2025-11-26"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/affaire-bygmalion-vers-une-nouvelle-condamnation-definitive-pour-nicolas-sarkozy"
+        type: presse
+        titre: "Affaire Bygmalion : vers une nouvelle condamnation définitive pour Nicolas Sarkozy"
+        editeur: "Public Sénat"
+        date_publication: "2025-11"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-sarkozy-libye-2025
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Nicolas Sarkozy (campagne présidentielle 2007)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Nicolas Sarkozy"
+        qualite: "Ancien président de la République"
+        type: personne_physique
+    titre: "Affaire du financement libyen présumé (campagne 2007) — Jugement 2025 et appel"
+    qualification_legale: "Association de malfaiteurs (relaxe sur les chefs de corruption passive, financement illégal et recel)"
+    resume_factuel: "Par jugement du 25 septembre 2025, le tribunal correctionnel de Paris a relaxé Nicolas Sarkozy de corruption passive, recel et financement illégal mais l'a condamné pour association de malfaiteurs à cinq ans d'emprisonnement avec mandat de dépôt à effet différé et exécution provisoire. Appel a été interjeté, avec examen devant la cour d'appel en 2026."
+    juridiction: "Tribunal correctionnel de Paris — appel en cours"
+    dates_cles:
+      - date: "2025-09-25"
+        libelle: "Jugement du tribunal correctionnel de Paris (5 ans dont exécution provisoire ; appel formé)"
+    date_derniere_decision: "2025-09-25"
+    peine:
+      prison: "5 ans d'emprisonnement avec mandat de dépôt à effet différé"
+      execution_provisoire: "Prononcée par le tribunal correctionnel sur la peine d'emprisonnement"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel interjeté, procédure devant la cour d'appel de Paris ; présumé innocent."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de première instance du 25/09/2025 non publié intégralement en open data direct."
+    sources:
+      - url: "https://transparency-france.org/2026/11/25/affaire-des-financements-libyens-foire-aux-questions-faq/"
+        type: presse
+        titre: "Affaire des financements libyens : foire aux questions (FAQ)"
+        editeur: "Transparency International France"
+        date_publication: "2026-11-25"
+        date_consultation: "2026-11-26"
+      - url: "https://blog.juspoliticum.com/2025/10/17/condamnation-de-nicolas-sarkozy-anatomie-dun-verdict-par-cecile-guerin-bargues/"
+        type: presse
+        titre: "Condamnation de Nicolas Sarkozy : anatomie d'un verdict"
+        editeur: "Blog Jus Politicum"
+        date_publication: "2025-10-17"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-fillon-emplois-fictifs-2026
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "François Fillon (ancien Premier ministre et ex-député)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "François Fillon"
+        qualite: "Ancien Premier ministre et ancien député LR/UMP"
+        type: personne_physique
+      - nom: "Penelope Fillon"
+        qualite: "Ex-collaboratrice parlementaire (co-condamnée)"
+        type: personne_physique
+    titre: "Affaire des emplois fictifs (« Penelopegate ») — Détournement de fonds publics"
+    qualification_legale: "Détournement de fonds publics, complicité et recel"
+    resume_factuel: "Par arrêt du 24 avril 2024, la Cour de cassation a confirmé définitivement la culpabilité de François Fillon tout en cassant la peine de prison ferme pour réexamen. Statuant sur renvoi le 17 juin 2025, la cour d'appel de Paris l'a condamné à quatre ans avec sursis, 375 000 € d'amende et cinq ans d'inéligibilité ; son désistement de pourvoi en février 2026 a rendu la condamnation définitive."
+    juridiction: "Cour de cassation (24/04/2024) puis cour d'appel de Paris sur renvoi (17/06/2025)"
+    dates_cles:
+      - date: "2024-04-24"
+        libelle: "Arrêt de la Cour de cassation confirmant définitivement la culpabilité (n° 22-83.466)"
+      - date: "2025-06-17"
+        libelle: "Arrêt de la cour d'appel de Paris sur renvoi (4 ans avec sursis, 375 000 € d'amende, 5 ans d'inéligibilité)"
+      - date: "2026-02-01"
+        libelle: "Désistement du second pourvoi en cassation (décision définitive)"
+    date_derniere_decision: "2025-06-17"
+    peine:
+      prison: "4 ans d'emprisonnement avec sursis"
+      amende: "375 000 € d'amende"
+      ineligibilite: "5 ans d'inéligibilité"
+      autres: "Suspension pour 10 ans de la Légion d'honneur et de l'Ordre national du Mérite (août 2026)"
+      note_recours: "Condamnation définitive après désistement du pourvoi en février 2026."
+    references_judiciaires:
+      - "Cass. crim., 24 avr. 2024, n° 22-83.466"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/juri/id/JURITEXT000049510003"
+        type: primaire
+        titre: "Cour de cassation, chambre criminelle, 24 avril 2024, 22-83.466 (Légifrance)"
+        editeur: "Légifrance / Cour de cassation"
+        date_publication: "2024-04-24"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/en-bref/penelopegate-francois-fillon-se-desiste-de-son-pourvoi-en-cassation-14293/"
+        type: presse
+        titre: "Penelopegate : François Fillon se désiste de son pourvoi en cassation"
+        editeur: "Le Club des Juristes"
+        date_publication: "2026-02"
+        date_consultation: "2026-11-26"
+      - url: "https://lcp.fr/actualites/francois-fillon-suspendu-de-la-legion-d-honneur-et-de-l-ordre-national-du-merite-pour"
+        type: presse
+        titre: "François Fillon suspendu de la Légion d'honneur et de l'Ordre national du Mérite"
+        editeur: "LCP - Assemblée nationale"
+        date_publication: "2026-08"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-gueant-primes-liquide-2019
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Claude Guéant (ex-ministre de l'Intérieur)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Claude Guéant"
+        qualite: "Ancien ministre de l'Intérieur (UMP)"
+        type: personne_physique
+    titre: "Affaire des « primes en liquide » du ministère de l'Intérieur (2019)"
+    qualification_legale: "Complicité de détournement de fonds publics et recel"
+    resume_factuel: "Poursuivi pour le versement de primes en espèces provenant de frais d'enquête de la police nationale entre 2002 et 2004, Claude Guéant a vu son pourvoi rejeté par la Cour de cassation en janvier 2019, rendant définitive sa condamnation à deux ans de prison dont un an ferme, 75 000 € d'amende et cinq ans d'interdiction d'exercer une fonction publique."
+    juridiction: "Cour de cassation — après cour d'appel de Paris"
+    dates_cles:
+      - date: "2017-01-23"
+        libelle: "Condamnation par la cour d'appel de Paris"
+      - date: "2019-01-16"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2019-01-16"
+    peine:
+      prison: "2 ans d'emprisonnement dont 1 an ferme"
+      amende: "75 000 € d'amende"
+      autres: "5 ans d'interdiction d'exercer une fonction publique"
+      note_recours: "Condamnation définitive depuis l'arrêt de rejet de la Cour de cassation de janvier 2019."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de janvier 2019 rapporté par Public Sénat ; lien Judilibre direct non indexé ici."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/claude-gueant-definitivement-condamne-dans-l-affaire-des-primes-en-liquide-de-l"
+        type: presse
+        titre: "Claude Guéant définitivement condamné dans l'affaire des primes en liquide de l'Intérieur"
+        editeur: "Public Sénat"
+        date_publication: "2019-01-16"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-gueant-sondages-elysee-2025
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_appel
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Claude Guéant (ex-secrétaire général de l'Élysée)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Claude Guéant"
+        qualite: "Ancien secrétaire général de l'Élysée et ex-ministre UMP"
+        type: personne_physique
+    titre: "Affaire des « sondages de l'Élysée » — Favoritisme en appel (2025)"
+    qualification_legale: "Atteinte à la liberté d'accès et à l'égalité des candidats dans les marchés publics (favoritisme)"
+    resume_factuel: "Jugé pour l'attribution de contrats de sondages sans appel d'offres entre 2007 et 2012, Claude Guéant a été condamné en appel par la cour d'appel de Paris le 4 novembre 2025 à un an d'emprisonnement avec sursis (allégeant la peine ferme prononcée en première instance). Un pourvoi en cassation a été annoncé."
+    juridiction: "Cour d'appel de Paris"
+    dates_cles:
+      - date: "2022-01-21"
+        libelle: "Jugement du tribunal correctionnel de Paris (1re instance)"
+      - date: "2025-11-04"
+        libelle: "Arrêt de la cour d'appel de Paris (1 an avec sursis ; pourvoi annoncé)"
+    date_derniere_decision: "2025-11-04"
+    peine:
+      prison: "1 an d'emprisonnement avec sursis"
+      note_recours: "CONDAMNATION EN APPEL : pourvoi en cassation annoncé après l'arrêt du 04/11/2025 (présumé innocent)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de la cour d'appel de Paris du 04/11/2025 documenté par Le Club des Juristes sans mise en ligne open data directe."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/affaire-des-sondages-de-lelysee-claude-gueant-condamne-a-un-an-de-prison-avec-sursis-en-appel-12809/"
+        type: presse
+        titre: "Affaire des sondages de l'Élysée : Claude Guéant condamné à un an de prison avec sursis en appel"
+        editeur: "Le Club des Juristes"
+        date_publication: "2025-11-04"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-balkany-fraude-blanchiment-2021
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Patrick Balkany (ex-député-maire de Levallois-Perret)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Patrick Balkany"
+        qualite: "Ancien député UMP/LR des Hauts-de-Seine et ex-maire"
+        type: personne_physique
+    titre: "Fraude fiscale et blanchiment aggravé — Condamnations 2020–2021"
+    qualification_legale: "Fraude fiscale, blanchiment aggravé de fraude fiscale et prise illégale d'intérêts"
+    resume_factuel: "Condamné en appel en mars et mai 2020 pour fraude fiscale puis blanchiment aggravé de fraude fiscale, Patrick Balkany a vu l'essentiel de ses pourvois rejetés par la Cour de cassation en mars et juin 2021, rendant définitives sa culpabilité ainsi que des peines d'emprisonnement ferme et dix ans d'inéligibilité."
+    juridiction: "Cour de cassation — après cour d'appel de Paris"
+    dates_cles:
+      - date: "2020-05-27"
+        libelle: "Arrêt de la cour d'appel de Paris (blanchiment aggravé)"
+      - date: "2021-06-30"
+        libelle: "Rejet des pourvois sur la culpabilité et les peines principales (Cour de cassation)"
+    date_derniere_decision: "2021-06-30"
+    peine:
+      prison: "Peines d'emprisonnement ferme confirmées (exécutées puis aménagées)"
+      ineligibilite: "10 ans d'inéligibilité"
+      note_recours: "Culpabilité et peines principales définitivement confirmées par la Cour de cassation en 2021."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Dossier suivi dans la durée ; synthétisé par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/nouveau-round-judiciaire-pour-les-balkany-juges-en-appel-pour-blanchiment-180377"
+        type: presse
+        titre: "Nouveau round judiciaire pour les Balkany, jugés en appel pour blanchiment"
+        editeur: "Public Sénat"
+        date_publication: "2021-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-lagarde-tapie-cjr-2016
+    camp: LR
+    parti_precis: "UMP"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Christine Lagarde (ex-ministre de l'Économie)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Christine Lagarde"
+        qualite: "Ancienne ministre de l'Économie (UMP)"
+        type: personne_physique
+    titre: "Arbitrage Tapie devant la CJR — Négligence avec dispense de peine (2016)"
+    qualification_legale: "Négligence d'une personne dépositaire de l'autorité publique ayant permis un détournement de fonds publics par un tiers"
+    resume_factuel: "Jugée par la Cour de justice de la République pour sa gestion de la procédure d'arbitrage de l'affaire Tapie, Christine Lagarde a été reconnue coupable de négligence le 19 décembre 2016 mais dispensée de peine. Aucun pourvoi n'a été formé."
+    juridiction: "Cour de justice de la République (CJR)"
+    dates_cles:
+      - date: "2016-12-19"
+        libelle: "Arrêt de la CJR (culpabilité pour négligence, dispense de peine)"
+    date_derniere_decision: "2016-12-19"
+    peine:
+      autres: "Déclarée coupable avec dispense de peine (aucune amende ni prison prononcée)"
+      note_recours: "Arrêt définitif de la CJR en l'absence de pourvoi en cassation."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt CJR du 19/12/2016 documenté par Le Club des Juristes."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/justice/cour-de-justice-de-la-republique-dix-ministres-mis-en-cause-dans-le-passe-1430/"
+        type: presse
+        titre: "Cour de justice de la République : dix ministres mis en cause dans le passé"
+        editeur: "Le Club des Juristes"
+        date_publication: "2023-11"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-woerth-bettencourt-relaxe-2015
+    camp: LR
+    parti_precis: "UMP / Les Républicains"
+    categorie: financement_probite
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Éric Woerth (ex-ministre et ex-trésorier UMP)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Éric Woerth"
+        qualite: "Ancien ministre du Travail et du Budget, député UMP/LR"
+        type: personne_physique
+    titre: "Affaire Bettencourt — Relaxe d'Éric Woerth (Bordeaux, 2015)"
+    qualification_legale: "Trafic d'influence passif et recel d'abus de faiblesse (relaxe)"
+    resume_factuel: "Jugé devant le tribunal correctionnel de Bordeaux dans le volet politique de l'affaire Bettencourt, l'ancien ministre et trésorier de l'UMP Éric Woerth a bénéficié d'une relaxe totale le 28 mai 2015."
+    juridiction: "Tribunal correctionnel de Bordeaux"
+    dates_cles:
+      - date: "2015-05-28"
+        libelle: "Jugement de relaxe totale du tribunal correctionnel de Bordeaux"
+    date_derniere_decision: "2015-05-28"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel du 28/05/2015 non publié en open data ; relaté par RTS et Poligraph."
+    sources:
+      - url: "https://www.rts.ch/info/monde/6819845-lexministre-francais-eric-woerth-relaxe-dans-laffaire-bettencourt.html"
+        type: presse
+        titre: "L'ex-ministre français Éric Woerth relaxé dans l'affaire Bettencourt"
+        editeur: "RTS Info"
+        date_publication: "2015-05-28"
+        date_consultation: "2026-11-26"
+      - url: "https://poligraph.fr/affaires/eric-woerth-woerth-bettencourt-relaxe-d-eric-woerth"
+        type: presse
+        titre: "Affaire Bettencourt : relaxe d'Éric Woerth"
+        editeur: "Poligraph"
+        date_publication: "2015-05-28"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-dati-renault-nissan-2026
+    camp: LR
+    parti_precis: "Les Républicains (puis gouvernement)"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: renvoye
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Rachida Dati (ex-eurodéputée LR, ancienne ministre)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Rachida Dati"
+        qualite: "Ancienne députée européenne LR et ancienne ministre"
+        type: personne_physique
+    titre: "Contrats Renault-Nissan / Parlement européen — Procès en cours / délibéré (2026)"
+    qualification_legale: "Corruption passive et trafic d'influence passif par personne investie d'un mandat électif public"
+    resume_factuel: "Jugée à l'automne 2026 devant le tribunal correctionnel de Paris pour des honoraires perçus de Renault-Nissan lorsqu'elle était eurodéputée LR, Rachida Dati a fait l'objet de réquisitions du PNF (quatre ans de prison dont deux ferme aménageables et cinq ans d'inéligibilité) en septembre 2026. La décision a été mise en délibéré pour début 2027."
+    juridiction: "Tribunal correctionnel de Paris (en délibéré)"
+    dates_cles:
+      - date: "2026-09-29"
+        libelle: "Réquisitions du PNF à l'audience devant le tribunal correctionnel de Paris ; mise en délibéré pour 2027"
+    date_derniere_decision: "2026-09-29"
+    peine:
+      note_recours: "PROCÉDURE EN DÉLIBÉRÉ — PRÉSUMÉE INNOCENTE : aucun jugement encore rendu au 26/11/2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Affaire mise en délibéré (décision attendue en 2027) ; couverte par LCP."
+    sources:
+      - url: "https://lcp.fr/actualites/proces-de-rachida-dati-quatre-ans-de-prison-dont-deux-ferme-requis-pour-corruption-et"
+        type: presse
+        titre: "Procès de Rachida Dati : quatre ans de prison dont deux ferme requis pour corruption"
+        editeur: "LCP - Assemblée nationale"
+        date_publication: "2026-09"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-wauquiez-enquete-pnf-2024
+    camp: LR
+    parti_precis: "Les Républicains"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Laurent Wauquiez (député et ex-président de LR)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Laurent Wauquiez"
+        qualite: "Député LR de la Haute-Loire et ex-président de la région Auvergne-Rhône-Alpes"
+        type: personne_physique
+    titre: "Enquête préliminaire PNF (« dîner des sommets » et étude d'opinion régionale)"
+    qualification_legale: "Favoritisme, recel de favoritisme et détournement de fonds publics (enquête)"
+    resume_factuel: "Le Parquet national financier mène une enquête préliminaire relative au « dîner des sommets » financé par la région Auvergne-Rhône-Alpes et l'a élargie en décembre 2024 à une étude d'opinion commandée en 2021 à la société Mediascopie."
+    juridiction: "Parquet national financier (PNF)"
+    dates_cles:
+      - date: "2024-12-10"
+        libelle: "Élargissement de l'enquête préliminaire du PNF à l'étude d'opinion Mediascopie"
+    date_derniere_decision: "2024-12-10"
+    peine:
+      note_recours: "ENQUÊTE PRÉLIMINAIRE EN COURS — PRÉSUMÉ INNOCENT : aucune poursuite ni condamnation prononcée."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Enquête préliminaire couverte par le secret de l'enquête (art. 11 CPP)."
+    sources:
+      - url: "https://www.lagazettefrance.fr/article/le-pnf-enquete-sur-l-etude-d-opinion-sur-wauquiez-financee-par-la-region"
+        type: presse
+        titre: "Le PNF enquête sur l'étude d'opinion sur Wauquiez financée par la région"
+        editeur: "La Gazette France"
+        date_publication: "2024-12"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lr-ciotti-enquete-nice-2024
+    camp: LR
+    parti_precis: "Les Républicains (puis UDR)"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Éric Ciotti (député, ex-président de LR)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Éric Ciotti"
+        qualite: "Député des Alpes-Maritimes et ex-président de LR"
+        type: personne_physique
+    titre: "Enquête préliminaire du parquet de Nice (détournement de fonds publics)"
+    qualification_legale: "Détournement de fonds publics présumé (enquête préliminaire)"
+    resume_factuel: "À la suite d'un signalement de l'association Anticor portant notamment sur l'usage de cartes de stationnement lors de la campagne des législatives de 2022, le parquet de Nice a ouvert en 2024 une enquête préliminaire pour détournement de fonds publics."
+    juridiction: "Parquet de Nice"
+    dates_cles:
+      - date: "2024-06-20"
+        libelle: "Ouverture de l'enquête préliminaire par le parquet de Nice"
+    date_derniere_decision: "2024-06-20"
+    peine:
+      note_recours: "ENQUÊTE PRÉLIMINAIRE EN COURS — PRÉSUMÉ INNOCENT : aucune mise en examen ni condamnation."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Enquête préliminaire couverte par le secret (art. 11 CPP)."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/eric-ciotti-le-parquet-de-nice-ouvre-une-enquete-pour-detournement-de-fonds-publics-lors-de-sa-campagne-pour-pour-les-legislatives-de-2022-6277/"
+        type: presse
+        titre: "Éric Ciotti : le parquet de Nice ouvre une enquête pour détournement de fonds publics"
+        editeur: "Le Club des Juristes"
+        date_publication: "2024-06"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  # =========================================================================
+  # CENTRE / MACRONISTES (RENAISSANCE EX-LREM, MODEM, HORIZONS) — 8 FICHES
+  # =========================================================================
+
+  - id: centre-modem-assistants-ue-2024
+    camp: CENTRE
+    parti_precis: "MoDem / UDF"
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_morale_et_physique
+    entite_principale: "MoDem & UDF (personnes morales), cadres et eurodéputés ; F. Bayrou relaxé"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Mouvement démocrate (MoDem)"
+        qualite: "Parti politique (personne morale)"
+        type: personne_morale
+      - nom: "UDF"
+        qualite: "Ancien parti politique (personne morale)"
+        type: personne_morale
+      - nom: "François Bayrou"
+        qualite: "Président du MoDem (relaxé en 1re instance ; appel du parquet)"
+        type: personne_physique
+    titre: "Affaire des assistants parlementaires européens du MoDem (jugement 2024 et appel 2026)"
+    qualification_legale: "Complicité et recel de détournement de fonds publics"
+    resume_factuel: "Par jugement du 5 février 2024, le tribunal correctionnel de Paris a condamné le MoDem (300 000 € d'amende), l'UDF (100 000 € d'amende) et plusieurs cadres ou anciens eurodéputés pour complicité/recel de détournement de fonds publics, tout en relaxant François Bayrou au bénéfice du doute. Le parquet et des prévenus ont fait appel : le procès en appel s'est ouvert le 9 septembre 2026 devant la cour d'appel de Paris (délibéré attendu le 17 décembre 2026)."
+    juridiction: "Tribunal correctionnel de Paris — appel examiné à l'automne 2026 (délibéré 17/12/2026)"
+    dates_cles:
+      - date: "2024-02-05"
+        libelle: "Jugement du tribunal correctionnel de Paris (MoDem/UDF et cadres condamnés ; F. Bayrou relaxé)"
+      - date: "2026-09-09"
+        libelle: "Ouverture du procès en appel devant la cour d'appel de Paris (délibéré fixé au 17/12/2026)"
+    date_derniere_decision: "2024-02-05"
+    peine:
+      amende: "300 000 € d'amende contre le MoDem ; 100 000 € contre l'UDF ; amendes et peines avec sursis/inéligibilité pour des cadres et ex-eurodéputés"
+      note_recours: "DÉCISION FRAPPÉE D'APPEL : François Bayrou a été relaxé en 1re instance et toutes les parties visées par l'appel restent présumées innocentes dans l'attente de l'arrêt du 17/12/2026."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement du 05/02/2024 et audience d'appel documentés par Public Sénat, Le Club des Juristes et La Gazette France."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/proces-des-assistants-parlementaires-du-modem-francois-bayrou-relaxe"
+        type: presse
+        titre: "Procès des assistants parlementaires du MoDem : François Bayrou relaxé"
+        editeur: "Public Sénat"
+        date_publication: "2024-02-05"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/justice/affaire-bayrou-modem-tout-ce-quil-faut-comprendre-4751/"
+        type: presse
+        titre: "Affaire Bayrou – MoDem : tout ce qu'il faut comprendre"
+        editeur: "Le Club des Juristes"
+        date_publication: "2024-02"
+        date_consultation: "2026-11-26"
+      - url: "https://www.lagazettefrance.fr/article/assistants-d-eurodeputes-le-proces-en-appel-de-francois-bayrou-et-du-modem-s-ouvre-mercredi-a-paris"
+        type: presse
+        titre: "Assistants d'eurodéputés : le procès en appel de François Bayrou et du MoDem s'ouvre à Paris"
+        editeur: "La Gazette France"
+        date_publication: "2026-09"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-griset-patrimoine-2023
+    camp: CENTRE
+    parti_precis: "Majorité présidentielle (gouvernement Castex)"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Alain Griset (ex-ministre délégué aux PME)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Alain Griset"
+        qualite: "Ancien ministre délégué chargé des PME (gouvernement Castex)"
+        type: personne_physique
+    titre: "Déclaration incomplète de patrimoine à la HATVP — Condamnation 2023"
+    qualification_legale: "Déclaration incomplète ou mensongère de patrimoine auprès de la HATVP"
+    resume_factuel: "Condamné en première instance en décembre 2021 (entraînant sa démission du gouvernement), l'ancien ministre Alain Griset a été condamné en appel par la cour d'appel de Paris le 4 janvier 2023 à quatre mois d'emprisonnement avec sursis pour omission déclarative de patrimoine."
+    juridiction: "Cour d'appel de Paris — après TJ Paris"
+    dates_cles:
+      - date: "2021-12-08"
+        libelle: "Jugement du tribunal correctionnel de Paris et démission du gouvernement"
+      - date: "2023-01-04"
+        libelle: "Arrêt de la cour d'appel de Paris (4 mois de prison avec sursis)"
+    date_derniere_decision: "2023-01-04"
+    peine:
+      prison: "4 mois d'emprisonnement avec sursis"
+      note_recours: "Arrêt d'appel du 04/01/2023 devenu définitif sans pourvoi ultérieur rapporté."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Décision documentée par Public Sénat et Poligraph."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/alain-griset-le-ministre-des-pme-demissionne-apres-une-condamnation-191531"
+        type: presse
+        titre: "Alain Griset, le ministre des PME, démissionne après une condamnation"
+        editeur: "Public Sénat"
+        date_publication: "2021-12-08"
+        date_consultation: "2026-11-26"
+      - url: "https://poligraph.fr/affaires/alain-griset-declaration-patrimoine-incomplete"
+        type: presse
+        titre: "Alain Griset — Déclaration de patrimoine incomplète"
+        editeur: "Poligraph"
+        date_publication: "2023-01"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-dussopt-favoritisme-2026
+    camp: CENTRE
+    parti_precis: "Renaissance / Territoires de progrès"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: renvoye
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Olivier Dussopt (ex-ministre du Travail et ex-député)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Olivier Dussopt"
+        qualite: "Ancien ministre du Travail et ex-député Renaissance"
+        type: personne_physique
+    titre: "Marché de l'eau d'Annonay (favoritisme) — Cassation avec renvoi (2026)"
+    qualification_legale: "Favoritisme (atteinte à la liberté d'accès et à l'égalité dans les marchés publics)"
+    resume_factuel: "Relaxé par le tribunal correctionnel de Paris en janvier 2024, Olivier Dussopt a été condamné en appel en février 2025 à 15 000 € d'amende dont 10 000 € avec sursis. Le 3 juin 2026, la Cour de cassation a annulé l'arrêt d'appel et renvoyé l'affaire devant une nouvelle cour d'appel pour être entièrement rejugée."
+    juridiction: "Cour de cassation (cassation et renvoi le 03/06/2026)"
+    dates_cles:
+      - date: "2024-01-17"
+        libelle: "Relaxe prononcée par le tribunal correctionnel de Paris (appel du PNF)"
+      - date: "2025-02-07"
+        libelle: "Condamnation par la cour d'appel de Paris (15 000 € d'amende dont 10 000 € avec sursis)"
+      - date: "2026-06-03"
+        libelle: "Arrêt de la Cour de cassation annulant la condamnation et renvoyant le dossier en appel"
+    date_derniere_decision: "2026-06-03"
+    peine:
+      note_recours: "ARRÊT D'APPEL ANNULÉ PAR LA COUR DE CASSATION : l'affaire est renvoyée devant une nouvelle cour d'appel ; présumé innocent."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de cassation du 03/06/2026 analysé dans la presse juridique spécialisée."
+    sources:
+      - url: "https://kohenavocats.com/olivier-dussopt-condamnation-favoritisme-annulee-cassation-prescription-renvoi/"
+        type: presse
+        titre: "Olivier Dussopt : condamnation pour favoritisme annulée en cassation et renvoi"
+        editeur: "Kohen Avocats (veille juridique)"
+        date_publication: "2026-06"
+        date_consultation: "2026-11-26"
+      - url: "https://www.leclubdesjuristes.com/societe/droit-et-justice/affaire-dussopt-les-raisons-dune-relaxe-4525/"
+        type: presse
+        titre: "Affaire Dussopt : les raisons d'une relaxe (première instance)"
+        editeur: "Le Club des Juristes"
+        date_publication: "2024-01"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-dupond-moretti-cjr-2023
+    camp: CENTRE
+    parti_precis: "Majorité présidentielle (garde des Sceaux)"
+    categorie: financement_probite
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Éric Dupond-Moretti (ex-ministre de la Justice)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Éric Dupond-Moretti"
+        qualite: "Ancien garde des Sceaux, ministre de la Justice"
+        type: personne_physique
+    titre: "Procès devant la Cour de justice de la République — Relaxe (2023)"
+    qualification_legale: "Prise illégale d'intérêts (relaxe par la CJR)"
+    resume_factuel: "Jugé devant la Cour de justice de la République pour des enquêtes administratives diligentées contre des magistrats alors qu'il était garde des Sceaux, Éric Dupond-Moretti a été relaxé le 29 novembre 2023 (élément matériel retenu mais absence d'élément intentionnel)."
+    juridiction: "Cour de justice de la République (CJR)"
+    dates_cles:
+      - date: "2023-11-29"
+        libelle: "Arrêt de relaxe de la Cour de justice de la République"
+    date_derniere_decision: "2023-11-29"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt CJR du 29/11/2023 analysé par Le Club des Juristes et Public Sénat."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/justice/proces-deric-dupond-moretti-voici-ce-qua-decide-la-cjr-2-3822/"
+        type: presse
+        titre: "Procès d'Éric Dupond-Moretti : voici ce qu'a décidé la CJR"
+        editeur: "Le Club des Juristes"
+        date_publication: "2023-11-29"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/societe/proces-deric-dupond-moretti-quest-ce-que-la-cour-de-justice-de-la-republique"
+        type: presse
+        titre: "Procès d'Éric Dupond-Moretti : qu'est-ce que la Cour de justice de la République ?"
+        editeur: "Public Sénat"
+        date_publication: "2023-11"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-buzyn-philippe-veran-cjr-2025
+    camp: CENTRE
+    parti_precis: "Renaissance / Horizons (gouvernement)"
+    categorie: ordre_public_biens
+    section: decisions
+    statut: non_lieu
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Édouard Philippe, Agnès Buzyn et Olivier Véran (CJR)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Édouard Philippe"
+        qualite: "Ancien Premier ministre"
+        type: personne_physique
+      - nom: "Agnès Buzyn"
+        qualite: "Ancienne ministre de la Santé"
+        type: personne_physique
+      - nom: "Olivier Véran"
+        qualite: "Ancien ministre de la Santé et des Solidarités"
+        type: personne_physique
+    titre: "Gestion de la crise du Covid-19 devant la CJR — Non-lieu général (2025)"
+    qualification_legale: "Abstention volontaire de combattre un sinistre / mise en danger (non-lieu)"
+    resume_factuel: "À l'issue de l'instruction menée devant la Cour de justice de la République sur la gestion gouvernementale de la crise sanitaire du Covid-19, la commission d'instruction de la CJR a prononcé en juillet 2025 un non-lieu général en faveur d'Édouard Philippe, d'Agnès Buzyn et d'Olivier Véran."
+    juridiction: "Commission d'instruction de la Cour de justice de la République (CJR)"
+    dates_cles:
+      - date: "2023-01-20"
+        libelle: "Annulation par la Cour de cassation de la mise en examen d'Agnès Buzyn pour mise en danger"
+      - date: "2025-07-11"
+        libelle: "Non-lieu général prononcé par la commission d'instruction de la CJR"
+    date_derniere_decision: "2025-07-11"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Ordonnance de non-lieu de la CJR non publiée en open data ; rapportée par Le Club des Juristes."
+    sources:
+      - url: "https://www.leclubdesjuristes.com/en-bref/gestion-du-covid-19-la-cjr-prononce-un-non-lieu-a-lencontre-de-edouard-philippe-agnes-buzyn-et-olivier-veran-11443/"
+        type: presse
+        titre: "Gestion du Covid-19 : la CJR prononce un non-lieu à l'encontre d'Édouard Philippe, Agnès Buzyn et Olivier Véran"
+        editeur: "Le Club des Juristes"
+        date_publication: "2025-07"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-ferrand-mutuelles-2022
+    camp: CENTRE
+    parti_precis: "LREM / Renaissance"
+    categorie: financement_probite
+    section: decisions
+    statut: prescription
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Richard Ferrand (ex-président de l'Assemblée nationale)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Richard Ferrand"
+        qualite: "Ancien président de l'Assemblée nationale et ex-ministre LREM"
+        type: personne_physique
+    titre: "Affaire des Mutuelles de Bretagne — Extinction pour prescription (2022)"
+    qualification_legale: "Prise illégale d'intérêts (action publique éteinte par prescription)"
+    resume_factuel: "Mis en examen en septembre 2019 dans l'affaire immobilière des Mutuelles de Bretagne, Richard Ferrand a vu l'action publique définitivement éteinte pour prescription par décision de la chambre de l'instruction (mars 2021), confirmée par la Cour de cassation en octobre 2022 sans jugement sur le fond."
+    juridiction: "Cour de cassation — après cour d'appel de Douai"
+    dates_cles:
+      - date: "2021-03-31"
+        libelle: "Constat de prescription par la chambre de l'instruction"
+      - date: "2022-10-05"
+        libelle: "Confirmation définitive de la prescription par la Cour de cassation"
+    date_derniere_decision: "2022-10-05"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Décision documentée par le suivi associatif d'Anticor."
+    sources:
+      - url: "https://www.anticor.org/2022/10/05/pour-la-cour-de-cassation-laffaire-ferrand-est-prescrite/"
+        type: presse
+        titre: "Pour la Cour de cassation, l'affaire Ferrand est prescrite"
+        editeur: "Anticor"
+        date_publication: "2022-10-05"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-philippe-le-havre-2026
+    camp: CENTRE
+    parti_precis: "Horizons"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: enquete
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Édouard Philippe (ancien Premier ministre, maire du Havre)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Édouard Philippe"
+        qualite: "Président d'Horizons, ancien Premier ministre, maire du Havre"
+        type: personne_physique
+    titre: "Information judiciaire / PNF — Convention Cité numérique du Havre (LH French Tech)"
+    qualification_legale: "Détournement de fonds publics, favoritisme, prise illégale d'intérêts et concussion (instruction)"
+    resume_factuel: "À la suite d'une enquête préliminaire ouverte par le PNF en 2023 puis d'une plainte avec constitution de partie civile en juin 2025, une information judiciaire (rendue publique en mai 2026) a été ouverte sur la convention d'animation de la Cité numérique du Havre."
+    juridiction: "Tribunal judiciaire de Paris (juge d'instruction / PNF)"
+    dates_cles:
+      - date: "2024-04-03"
+        libelle: "Perquisitions dans le cadre de l'enquête préliminaire du PNF"
+      - date: "2026-05-01"
+        libelle: "Révélation de l'ouverture d'une information judiciaire"
+    date_derniere_decision: "2026-05-01"
+    peine:
+      note_recours: "INSTRUCTION EN COURS — PRÉSUMÉ INNOCENT : aucune condamnation prononcée."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Procédure d'instruction couverte par le secret (art. 11 CPP) ; couverte par LCP et Public Sénat."
+    sources:
+      - url: "https://lcp.fr/actualites/edouard-philippe-vise-par-une-enquete-pour-des-soupcons-de-detournement-de-fonds-publics"
+        type: presse
+        titre: "Édouard Philippe visé par une enquête pour des soupçons de détournement de fonds publics"
+        editeur: "LCP - Assemblée nationale"
+        date_publication: "2024-04"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/soupcons-de-detournement-de-fonds-publics-edouard-philippe-a-reagi-avec-beaucoup-de-serenite-affirme-christophe-bechu"
+        type: presse
+        titre: "Soupçons de détournement de fonds publics : réaction autour de l'enquête visant Édouard Philippe"
+        editeur: "Public Sénat"
+        date_publication: "2024-04"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: centre-solere-mise-en-examen-2019
+    camp: CENTRE
+    parti_precis: "LREM / Renaissance"
+    categorie: financement_probite
+    section: procedures_en_cours
+    statut: mis_en_examen
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Thierry Solère (ex-député LREM et conseiller politique)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Thierry Solère"
+        qualite: "Ancien député LREM des Hauts-de-Seine"
+        type: personne_physique
+    titre: "Information judiciaire à Nanterre — Mises en examen (fraude fiscale, trafic d'influence)"
+    qualification_legale: "Fraude fiscale, détournement de fonds publics, trafic d'influence passif et financement illicite"
+    resume_factuel: "Ancien député LREM et conseiller de la majorité, Thierry Solère a été mis en examen au tribunal de Nanterre pour plusieurs chefs incluant fraude fiscale, détournement de fonds publics et trafic d'influence."
+    juridiction: "Tribunal judiciaire de Nanterre (information judiciaire)"
+    dates_cles:
+      - date: "2019-10-08"
+        libelle: "Annonce des mises en examen au tribunal de Nanterre"
+    date_derniere_decision: "2019-10-08"
+    peine:
+      note_recours: "MISE EN EXAMEN EN INSTRUCTION — PRÉSUMÉ INNOCENT : procédure préalable à tout éventuel procès."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Ordonnance d'instruction couverte par le secret (art. 11 CPP) ; rapportée par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/le-depute-lrem-thierry-solere-mis-en-examen-pour-plusieurs-chefs-dont-fraude"
+        type: presse
+        titre: "Le député LREM Thierry Solère mis en examen pour plusieurs chefs dont fraude fiscale"
+        editeur: "Public Sénat"
+        date_publication: "2019-10"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  # =========================================================================
+  # PARTI SOCIALISTE (PS) — 6 FICHES
+  # =========================================================================
+
+  - id: ps-cahuzac-fraude-fiscale-2018
+    camp: PS
+    parti_precis: "Parti socialiste (ex-ministre)"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jérôme Cahuzac (ex-ministre du Budget, ex-député PS)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jérôme Cahuzac"
+        qualite: "Ancien ministre délégué chargé du Budget et ex-député PS"
+        type: personne_physique
+    titre: "Compte bancaire caché à l'étranger — Fraude fiscale et blanchiment (2018)"
+    qualification_legale: "Fraude fiscale, blanchiment de fraude fiscale et omission de déclaration à la commission de transparence"
+    resume_factuel: "Poursuivi pour avoir dissimulé des avoirs sur des comptes bancaires à l'étranger, l'ancien ministre du Budget Jérôme Cahuzac a été condamné en appel par la cour d'appel de Paris le 15 mai 2018 à quatre ans d'emprisonnement dont deux ans avec sursis (partie ferme aménagée sous bracelet électronique), 300 000 € d'amende et cinq ans d'inéligibilité."
+    juridiction: "Cour d'appel de Paris — après tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2016-12-08"
+        libelle: "Jugement du tribunal correctionnel de Paris"
+      - date: "2018-05-15"
+        libelle: "Arrêt de la cour d'appel de Paris (4 ans dont 2 avec sursis, 300 000 € d'amende, 5 ans d'inéligibilité)"
+    date_derniere_decision: "2018-05-15"
+    peine:
+      prison: "4 ans d'emprisonnement dont 2 ans avec sursis (partie ferme aménagée sous surveillance électronique)"
+      amende: "300 000 € d'amende"
+      ineligibilite: "5 ans d'inéligibilité"
+      note_recours: "Condamnation devenue définitive en l'absence de pourvoi en cassation."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt d'appel du 15/05/2018 documenté par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/cahuzac-condamne-a-2-ans-ferme-devrait-echapper-a-la-prison-85951"
+        type: presse
+        titre: "Cahuzac condamné à 2 ans ferme en appel pour fraude fiscale"
+        editeur: "Public Sénat"
+        date_publication: "2018-05-15"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ps-thevenoud-fraude-fiscale-2019
+    camp: PS
+    parti_precis: "Parti socialiste (ex-secrétaire d'État)"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Thomas Thévenoud (ex-secrétaire d'État et ex-député PS)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Thomas Thévenoud"
+        qualite: "Ancien secrétaire d'État au Commerce extérieur et ex-député PS"
+        type: personne_physique
+    titre: "Fraude fiscale — Condamnation définitive en cassation (2019)"
+    qualification_legale: "Fraude fiscale par omission déclarative"
+    resume_factuel: "Condamné en appel le 31 janvier 2018 pour fraude fiscale (déclarations omises ou tardives), l'ancien secrétaire d'État Thomas Thévenoud a vu son pourvoi rejeté par la Cour de cassation le 12 septembre 2019, rendant sa peine définitive."
+    juridiction: "Cour de cassation — après cour d'appel de Paris"
+    dates_cles:
+      - date: "2018-01-31"
+        libelle: "Arrêt de la cour d'appel de Paris (1 an avec sursis et 3 ans d'inéligibilité)"
+      - date: "2019-09-12"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2019-09-12"
+    peine:
+      prison: "1 an d'emprisonnement avec sursis"
+      ineligibilite: "3 ans d'inéligibilité"
+      note_recours: "Condamnation définitive (Cass. crim., 12 septembre 2019)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de cassation du 12/09/2019 documenté par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/fraude-fiscale-condamnation-definitive-de-l-ex-ministre-thomas-thevenoud-145302"
+        type: presse
+        titre: "Fraude fiscale : condamnation définitive de l'ex-ministre Thomas Thévenoud"
+        editeur: "Public Sénat"
+        date_publication: "2019-09-12"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ps-andrieux-subventions-2016
+    camp: PS
+    parti_precis: "Parti socialiste"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Sylvie Andrieux (ex-députée PS des Bouches-du-Rhône)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Sylvie Andrieux"
+        qualite: "Ancienne députée PS des Bouches-du-Rhône et ex-vice-présidente de région"
+        type: personne_physique
+    titre: "Affaire des subventions du Conseil régional PACA — Condamnation définitive (2016)"
+    qualification_legale: "Détournement de fonds publics"
+    resume_factuel: "Poursuivie pour l'attribution de subventions régionales PACA à des associations fictives à Marseille, Sylvie Andrieux a vu son pourvoi rejeté par la Cour de cassation le 9 novembre 2016, rendant définitive sa condamnation à quatre ans de prison dont trois avec sursis, 100 000 € d'amende et cinq ans d'inéligibilité."
+    juridiction: "Cour de cassation — après cour d'appel d'Aix-en-Provence"
+    dates_cles:
+      - date: "2014-05-22"
+        libelle: "Condamnation par la cour d'appel d'Aix-en-Provence"
+      - date: "2016-11-09"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2016-11-09"
+    peine:
+      prison: "4 ans d'emprisonnement dont 3 ans avec sursis (1 an ferme aménagé sous bracelet électronique)"
+      amende: "100 000 € d'amende"
+      ineligibilite: "5 ans d'inéligibilité"
+      note_recours: "Condamnation définitive (Cour de cassation, 9 novembre 2016)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt du 09/11/2016 documenté en détail par la presse régionale (Gomet')."
+    sources:
+      - url: "https://gomet.net/infographie-sylvie-andrieux-condamnee-retour-parcours-judiciaire/"
+        type: presse
+        titre: "Sylvie Andrieux condamnée : retour sur le parcours judiciaire"
+        editeur: "Gomet'"
+        date_publication: "2016-11-09"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ps-urvoas-secret-cjr-2019
+    camp: PS
+    parti_precis: "Parti socialiste (ex-garde des Sceaux)"
+    categorie: ordre_public_biens
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Jacques Urvoas (ex-garde des Sceaux et ex-député PS)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Jacques Urvoas"
+        qualite: "Ancien garde des Sceaux, ministre de la Justice (PS)"
+        type: personne_physique
+    titre: "Transmission d'éléments d'enquête (CJR) — Violation du secret professionnel (2019)"
+    qualification_legale: "Violation du secret professionnel"
+    resume_factuel: "Jugé devant la Cour de justice de la République pour avoir transmis en mai 2017 une fiche d'action publique au député Thierry Solère, l'ancien garde des Sceaux Jean-Jacques Urvoas a été condamné le 30 septembre 2019 à un mois de prison avec sursis et 5 000 € d'amende."
+    juridiction: "Cour de justice de la République (CJR)"
+    dates_cles:
+      - date: "2019-09-30"
+        libelle: "Arrêt de la CJR (1 mois avec sursis et 5 000 € d'amende)"
+    date_derniere_decision: "2019-09-30"
+    peine:
+      prison: "1 mois d'emprisonnement avec sursis"
+      amende: "5 000 € d'amende"
+      note_recours: "Condamnation définitive de la CJR en l'absence de pourvoi."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt CJR du 30/09/2019 documenté par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/violation-du-secret-l-ex-garde-des-sceaux-urvoas-condamne-par-la-cour-de-justice"
+        type: presse
+        titre: "Violation du secret : l'ex-garde des Sceaux Urvoas condamné par la Cour de justice"
+        editeur: "Public Sénat"
+        date_publication: "2019-09-30"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ps-guerini-marches-2024
+    camp: PS
+    parti_precis: "Ex-sénateur PS (puis La Force du 13)"
+    categorie: financement_probite
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Noël Guérini (ex-sénateur et ex-président du CG 13)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Noël Guérini"
+        qualite: "Ancien sénateur PS des Bouches-du-Rhône et ex-président du Conseil général"
+        type: personne_physique
+    titre: "Marchés publics dans les Bouches-du-Rhône — Condamnation définitive (2024)"
+    qualification_legale: "Prise illégale d'intérêts, favoritisme et abus de confiance"
+    resume_factuel: "Poursuivi pour des malversations liées aux marchés publics et décharges dans les Bouches-du-Rhône, l'ancien sénateur Jean-Noël Guérini a vu sa condamnation en appel (trois ans de prison dont dix-huit mois ferme aménagés et cinq ans d'inéligibilité) confirmée définitivement par la Cour de cassation le 13 mars 2024."
+    juridiction: "Cour de cassation (chambre criminelle) — après CA Aix-en-Provence"
+    dates_cles:
+      - date: "2022-03-04"
+        libelle: "Arrêt de la cour d'appel d'Aix-en-Provence"
+      - date: "2024-03-13"
+        libelle: "Arrêt de rejet de la Cour de cassation (n° 22-83.689, condamnation définitive)"
+    date_derniere_decision: "2024-03-13"
+    peine:
+      prison: "3 ans d'emprisonnement dont 18 mois ferme aménagés sous surveillance électronique"
+      ineligibilite: "5 ans d'inéligibilité"
+      note_recours: "Condamnation définitive — pourvoi rejeté par la Cour de cassation le 13 mars 2024."
+    references_judiciaires:
+      - "Cass. crim., 13 mars 2024, n° 22-83.689"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/juri/id/JURITEXT000051553772"
+        type: primaire
+        titre: "Cour de cassation, chambre criminelle, 13 mars 2024, 22-83.689 (Légifrance)"
+        editeur: "Légifrance / Cour de cassation"
+        date_publication: "2024-03-13"
+        date_consultation: "2026-11-26"
+      - url: "https://www.anticor.org/2020/04/27/affaire-guerini/"
+        type: presse
+        titre: "Affaire Guérini — Suivi de la procédure judiciaire"
+        editeur: "Anticor"
+        date_publication: "2020-04-27"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ps-cambadelis-irfm-2025
+    camp: PS
+    parti_precis: "Parti socialiste (ex-premier secrétaire)"
+    categorie: financement_probite
+    section: decisions
+    statut: condamne_appel
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Jean-Christophe Cambadélis (ex-premier secrétaire du PS, ex-député)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Christophe Cambadélis"
+        qualite: "Ancien premier secrétaire du PS et ex-député de Paris"
+        type: personne_physique
+    titre: "Utilisation personnelle de frais de mandat (IRFM) — Condamnation en appel (2025)"
+    qualification_legale: "Détournement de fonds publics"
+    resume_factuel: "Poursuivi pour l'utilisation à des fins personnelles d'une partie de son indemnité représentative de frais de mandat (IRFM) entre 2015 et 2017, Jean-Christophe Cambadélis a été condamné en appel en mai 2025 à huit mois de prison avec sursis, 60 000 € d'amende avec sursis et cinq ans d'inéligibilité."
+    juridiction: "Cour d'appel de Paris — après TJ Paris"
+    dates_cles:
+      - date: "2024-09-12"
+        libelle: "Jugement du tribunal correctionnel de Paris"
+      - date: "2025-05-21"
+        libelle: "Arrêt de la cour d'appel de Paris (8 mois sursis, 60 000 € amende avec sursis, 5 ans d'inéligibilité)"
+    date_derniere_decision: "2025-05-21"
+    peine:
+      prison: "8 mois d'emprisonnement avec sursis"
+      amende: "60 000 € d'amende avec sursis"
+      ineligibilite: "5 ans d'inéligibilité"
+      note_recours: "CONDAMNATION EN APPEL : l'épuisement éventuel des voies de recours en cassation n'étant pas confirmé par décision publique, classée comme non définitive par prudence."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt d'appel de mai 2025 documenté par l'Agence Anadolu et Anticor."
+    sources:
+      - url: "https://www.aa.com.tr/fr/monde/france-l-ancien-premier-secr%C3%A9taire-du-parti-socialiste-condamn%C3%A9-pour-d%C3%A9tournement-de-fonds-publics/3581373"
+        type: presse
+        titre: "L'ancien premier secrétaire du Parti socialiste condamné en appel pour détournement de fonds publics"
+        editeur: "Agence Anadolu"
+        date_publication: "2025-05-21"
+        date_consultation: "2026-11-26"
+      - url: "https://observatoire.anticor.org/tag/jean-christophe-cambadelis/"
+        type: presse
+        titre: "Suivi du dossier Jean-Christophe Cambadélis"
+        editeur: "Observatoire Anticor"
+        date_publication: "2025-05"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  # =========================================================================
+  # LES ÉCOLOGISTES (EX-EELV) — 5 FICHES
+  # =========================================================================
+
+  - id: ecolo-place-outrages-2018
+    camp: ECOLO
+    parti_precis: "Ex-sénateur EELV (puis UDE / ex-ministre)"
+    categorie: ordre_public_biens
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Vincent Placé (ex-sénateur EELV, ex-secrétaire d'État)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Vincent Placé"
+        qualite: "Ancien sénateur EELV (2011–2015) et ancien secrétaire d'État (UDE)"
+        type: personne_physique
+    titre: "Violences et outrages envers des agents publics — Condamnation (2018)"
+    qualification_legale: "Violences volontaires en état d'ivresse, outrages et injures envers des agents de la force publique"
+    resume_factuel: "Jugé à la suite d'une interpellation dans un bar parisien en avril 2018, l'ancien sénateur écologiste et ancien secrétaire d'État Jean-Vincent Placé a été condamné en septembre 2018 par le tribunal correctionnel de Paris à trois mois de prison avec sursis et 1 000 € d'amende."
+    juridiction: "Tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2018-09-10"
+        libelle: "Jugement du tribunal correctionnel de Paris (3 mois avec sursis et 1 000 € d'amende)"
+    date_derniere_decision: "2018-09-10"
+    peine:
+      prison: "3 mois d'emprisonnement avec sursis"
+      amende: "1 000 € d'amende"
+      note_recours: "Condamnation définitive de septembre 2018."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel du 10/09/2018 documenté par la presse."
+    sources:
+      - url: "https://imazpress.com/france-monde/violences-outrages-jean-vincent-place-condamne-a-3-mois-de-prison-avec-sursis"
+        type: presse
+        titre: "Violences, outrages : Jean-Vincent Placé condamné à 3 mois de prison avec sursis"
+        editeur: "Imaz Press"
+        date_publication: "2018-09-10"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ecolo-bove-diffamation-2018
+    camp: ECOLO
+    parti_precis: "EELV / Les Écologistes"
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "José Bové (eurodéputé EELV 2009–2019)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "José Bové"
+        qualite: "Ancien député européen EELV (2009–2019)"
+        type: personne_physique
+    titre: "Diffamation publique envers Aziz Akhannouch (TGI Paris, 2018)"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881)"
+    resume_factuel: "Poursuivi par le ministre marocain Aziz Akhannouch à la suite d'accusations tenues en 2018 concernant des accords agricoles UE-Maroc, José Bové a été condamné par la 17e chambre correctionnelle du TGI de Paris le 16 octobre 2018 pour diffamation publique."
+    juridiction: "Tribunal de grande instance de Paris (17e chambre)"
+    dates_cles:
+      - date: "2018-10-16"
+        libelle: "Jugement du tribunal correctionnel de Paris (condamnation pour diffamation publique)"
+    date_derniere_decision: "2018-10-16"
+    peine:
+      amende: "Amende et dommages-intérêts civils prononcés par la 17e chambre"
+      note_recours: "Condamnation devenue définitive."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement du 16/10/2018 non publié en open data direct."
+    sources:
+      - url: "https://www.bladi.net/aziz-akhannouch-plainte-diffamation-jose-benagalbon,98699.html"
+        type: presse
+        titre: "Plainte en diffamation d'Aziz Akhannouch et rappel de la condamnation de José Bové du 16 octobre 2018"
+        editeur: "Bladi.net"
+        date_publication: "2022-12"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ecolo-jadot-relaxe-totalenergies-2025
+    camp: ECOLO
+    parti_precis: "Les Écologistes (ex-EELV)"
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Yannick Jadot (sénateur et ex-eurodéputé Les Écologistes)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Yannick Jadot"
+        qualite: "Sénateur Les Écologistes de Paris et ancien député européen"
+        type: personne_physique
+    titre: "Plainte en diffamation de TotalEnergies — Relaxe de Yannick Jadot (2025)"
+    qualification_legale: "Diffamation publique envers une société (relaxe)"
+    resume_factuel: "Poursuivi en diffamation par le groupe TotalEnergies après avoir qualifié en mars 2022 le maintien de ses activités en Russie de « complice de crimes de guerre », Yannick Jadot a été relaxé par le tribunal correctionnel de Paris le 6 juin 2025."
+    juridiction: "Tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2022-03-04"
+        libelle: "Propos publics tenus au début de la guerre en Ukraine"
+      - date: "2025-06-06"
+        libelle: "Jugement de relaxe du tribunal correctionnel de Paris"
+    date_derniere_decision: "2025-06-06"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement du 06/06/2025 documenté par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/accuse-davoir-diffame-totalenergies-yannick-jadot-relaxe-par-le-tribunal"
+        type: presse
+        titre: "Accusé d'avoir diffamé TotalEnergies, Yannick Jadot relaxé par le tribunal"
+        editeur: "Public Sénat"
+        date_publication: "2025-06-06"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ecolo-baupin-prescription-2017
+    camp: ECOLO
+    parti_precis: "EELV"
+    categorie: ordre_public_biens
+    section: decisions
+    statut: prescription
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Denis Baupin (ex-député et vice-président AN, EELV)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Denis Baupin"
+        qualite: "Ancien député EELV et ex-vice-président de l'Assemblée nationale"
+        type: personne_physique
+    titre: "Enquête pénale classée pour prescription (2017) et procès en diffamation (2019)"
+    qualification_legale: "Harcèlement et agressions sexuelles (enquête classée pour prescription) ; procédure abusive en diffamation"
+    resume_factuel: "Visé par une enquête préliminaire ouverte en mai 2016 à la suite de témoignages d'élues et cadres d'EELV, Denis Baupin a vu la procédure pénale classée sans suite le 6 mars 2017 pour cause de prescription. Il a ensuite été débouté de ses poursuites en diffamation contre les médias et accusatrices le 19 avril 2019."
+    juridiction: "Parquet de Paris (2017) puis TGI de Paris (2019)"
+    dates_cles:
+      - date: "2017-03-06"
+        libelle: "Classement sans suite de l'enquête pénale pour prescription"
+      - date: "2019-04-19"
+        libelle: "Relaxe des médias et accusatrices ; condamnation civile de D. Baupin pour procédure abusive"
+    date_derniere_decision: "2017-03-06"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Classement du parquet et jugement civil/diffamation documentés par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/denis-baupin-perd-son-proces-en-diffamation-contre-les-medias-et-ses-accusatrices"
+        type: presse
+        titre: "Denis Baupin perd son procès en diffamation contre les médias et ses accusatrices"
+        editeur: "Public Sénat"
+        date_publication: "2019-04-19"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: ecolo-bayou-classement-2025
+    camp: ECOLO
+    parti_precis: "Les Écologistes (ex-EELV)"
+    categorie: ordre_public_biens
+    section: decisions
+    statut: non_lieu
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Julien Bayou (ex-secrétaire national et ex-député EELV)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Julien Bayou"
+        qualite: "Ancien secrétaire national d'EELV et ex-député de Paris"
+        type: personne_physique
+    titre: "Plaintes contre Julien Bayou — Classement sans suite (février 2025)"
+    qualification_legale: "Accusations de violences psychologiques (classées sans suite pour absence d'infraction)"
+    resume_factuel: "À la suite de plaintes déposées par une ancienne compagne ayant entraîné sa mise en retrait en 2022–2024, la justice a classé l'affaire sans suite le 20 février 2025 pour « absence d'infraction »."
+    juridiction: "Parquet de Paris"
+    dates_cles:
+      - date: "2025-02-20"
+        libelle: "Classement sans suite pour absence d'infraction"
+    date_derniere_decision: "2025-02-20"
+    peine: null
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Avis de classement sans suite non publié en open data ; confirmé par Public Sénat."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/affaire-bayou-cette-senatrice-quitte-les-ecologistes-profondement-choquee-de-voir-son-parti-incapable-de-reconnaitre-une-decision-de-justice"
+        type: presse
+        titre: "Affaire Bayou : réactions au classement sans suite de la procédure judiciaire"
+        editeur: "Public Sénat"
+        date_publication: "2025-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"

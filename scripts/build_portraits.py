@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import subprocess
 import tempfile
 import time
@@ -20,53 +21,56 @@ FIGHTERS = [
         480,
     ),
     (
-        "chikirou",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e2/Sophia-Chikirou.jpg/960px-Sophia-Chikirou.jpg",
-        320,
-    ),
-    (
-        "bompard",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Manuel_Bompard_Manifestation_Liban_%28cropped%29.jpg/960px-Manuel_Bompard_Manifestation_Liban_%28cropped%29.jpg",
-        320,
-    ),
-    (
-        "panot",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Mathilde_Panot_2021-3.jpg/960px-Mathilde_Panot_2021-3.jpg",
-        320,
-    ),
-    (
         "lepen",
         "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Marine_Le_Pen_2025_%28cropped%29.jpg/960px-Marine_Le_Pen_2025_%28cropped%29.jpg",
         480,
     ),
     (
-        "aliot",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Louis_Aliot_2015_02_%28cropped%29_%28cropped%29.jpg/960px-Louis_Aliot_2015_02_%28cropped%29_%28cropped%29.jpg",
-        320,
+        "retailleau",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Bruno_Retailleau_-_Ministre_de_l%27Int%C3%A9rieur_fran%C3%A7ais.jpg/960px-Bruno_Retailleau_-_Ministre_de_l%27Int%C3%A9rieur_fran%C3%A7ais.jpg",
+        480,
     ),
     (
-        "odoul",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Photo_officielle_Julien_Odoul.jpg/960px-Photo_officielle_Julien_Odoul.jpg",
-        320,
+        "macron",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Emmanuel_Macron_May_2024.jpg/960px-Emmanuel_Macron_May_2024.jpg",
+        480,
     ),
     (
-        "jacobelli",
-        "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Laurent_Jacobelli.jpg/960px-Laurent_Jacobelli.jpg",
-        320,
+        "faure",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Portrait_d%27Olivier_Faure.jpg/960px-Portrait_d%27Olivier_Faure.jpg",
+        480,
+    ),
+    (
+        "tondelier",
+        "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Huma2023MarineTondelier.jpg/960px-Huma2023MarineTondelier.jpg",
+        480,
     ),
 ]
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--force", action="store_true", help="Re-générer aussi les fichiers existants")
+    args = parser.parse_args()
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     headers = {
         "User-Agent": "VERSUS-PortraitBuilder/1.0 (https://github.com/fremjulio-gif/rnVSfli)"
     }
 
+    pending = [
+        (slug, url, width)
+        for slug, url, width in FIGHTERS
+        if args.force or not (OUT_DIR / f"{slug}.png").exists()
+    ]
+    if not pending:
+        print("Tous les portraits de référence sont déjà présents.")
+        return 0
+
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
         with httpx.Client(timeout=20.0, follow_redirects=True, headers=headers) as client:
-            for slug, url, width in FIGHTERS:
+            for slug, url, width in pending:
                 resp = client.get(url)
                 if resp.status_code == 429:
                     time.sleep(2.5)

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import yaml from 'js-yaml';
 import {
+  CAMP_VALUES,
   CATEGORIE_VALUES,
   DatasetSchema,
   STATUT_DECISIONS,
@@ -24,117 +25,99 @@ export function loadDataset(): JudicialDataset {
   return cachedDataset;
 }
 
-export interface FighterProfile {
-  slug: string;
+export interface PartyProfile {
   camp: Camp;
-  name: string;
   shortName: string;
-  role: string;
-  isLeader: boolean;
+  fullName: string;
+  former: string;
+  figureName: string;
+  figureRole: string;
   image: string;
   credit: string;
   license: string;
   sourcePage: string;
 }
 
-export const FIGHTERS_ROSTER: readonly FighterProfile[] = [
+export const PARTIES_ROSTER: readonly PartyProfile[] = [
   {
-    slug: 'melenchon',
     camp: 'LFI',
-    name: 'Jean-Luc Mélenchon',
-    shortName: 'J.-L. MÉLENCHON',
-    role: 'Fondateur LFI · Ex-député / Ex-eurodéputé',
-    isLeader: true,
+    shortName: 'LFI',
+    fullName: 'La France insoumise',
+    former: 'LFI / ex-Front de Gauche (2010–2026)',
+    figureName: 'Jean-Luc Mélenchon',
+    figureRole: 'Fondateur LFI · Figure du bloc',
     image: '/fighters/melenchon.png',
     credit: 'jlm2017.fr (mai 2026)',
     license: 'CC BY 4.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Jean_Luc_M%C3%A9lenchon_en_mai_2026-_55261894422_(cropped).jpg',
+    sourcePage:
+      'https://commons.wikimedia.org/wiki/File:Jean_Luc_M%C3%A9lenchon_en_mai_2026-_55261894422_(cropped).jpg',
   },
   {
-    slug: 'chikirou',
-    camp: 'LFI',
-    name: 'Sophia Chikirou',
-    shortName: 'S. CHIKIROU',
-    role: 'Députée LFI de Paris',
-    isLeader: false,
-    image: '/fighters/chikirou.png',
-    credit: 'Wikimedia Commons',
-    license: 'CC0 1.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Sophia-Chikirou.jpg',
-  },
-  {
-    slug: 'bompard',
-    camp: 'LFI',
-    name: 'Manuel Bompard',
-    shortName: 'M. BOMPARD',
-    role: 'Député LFI · Coordinateur',
-    isLeader: false,
-    image: '/fighters/bompard.png',
-    credit: 'Wikimedia Commons',
-    license: 'CC0 1.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Manuel_Bompard_Manifestation_Liban_(cropped).jpg',
-  },
-  {
-    slug: 'panot',
-    camp: 'LFI',
-    name: 'Mathilde Panot',
-    shortName: 'M. PANOT',
-    role: 'Présidente groupe LFI',
-    isLeader: false,
-    image: '/fighters/panot.png',
-    credit: 'Antoine Stouls',
-    license: 'CC BY 4.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Mathilde_Panot_2021-3.jpg',
-  },
-  {
-    slug: 'lepen',
     camp: 'RN',
-    name: 'Marine Le Pen',
-    shortName: 'M. LE PEN',
-    role: 'Ex-présidente FN/RN · Députée',
-    isLeader: true,
+    shortName: 'RN',
+    fullName: 'Rassemblement National',
+    former: 'RN / ex-Front National (2010–2026)',
+    figureName: 'Marine Le Pen',
+    figureRole: 'Ex-présidente FN/RN · Figure du bloc',
     image: '/fighters/lepen.png',
     credit: 'Vox España (2025)',
     license: 'CC0 1.0',
     sourcePage: 'https://commons.wikimedia.org/wiki/File:Marine_Le_Pen_2025_(cropped).jpg',
   },
   {
-    slug: 'aliot',
-    camp: 'RN',
-    name: 'Louis Aliot',
-    shortName: 'L. ALIOT',
-    role: 'Vice-président RN · Ex-eurodéputé',
-    isLeader: false,
-    image: '/fighters/aliot.png',
-    credit: 'Pablo029',
-    license: 'CC BY-SA 4.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Louis_Aliot_2015_02_(cropped)_(cropped).jpg',
+    camp: 'LR',
+    shortName: 'LR',
+    fullName: 'Les Républicains',
+    former: 'LR / ex-UMP (2010–2026)',
+    figureName: 'Bruno Retailleau',
+    figureRole: 'Président de LR · Figure du bloc',
+    image: '/fighters/retailleau.png',
+    credit: 'Anthonymontardyfr',
+    license: 'CC BY 4.0',
+    sourcePage:
+      'https://commons.wikimedia.org/wiki/File:Bruno_Retailleau_-_Ministre_de_l%27Int%C3%A9rieur_fran%C3%A7ais.jpg',
   },
   {
-    slug: 'odoul',
-    camp: 'RN',
-    name: 'Julien Odoul',
-    shortName: 'J. ODOUL',
-    role: 'Député RN de l’Yonne',
-    isLeader: false,
-    image: '/fighters/odoul.png',
-    credit: 'SamothraceV',
+    camp: 'CENTRE',
+    shortName: 'Centre',
+    fullName: 'Centre / Macronistes',
+    former: 'Renaissance (ex-LREM), MoDem, Horizons',
+    figureName: 'Emmanuel Macron',
+    figureRole: 'Fondateur de la majorité · Figure du bloc',
+    image: '/fighters/macron.png',
+    credit: 'Presidencia de la República del Ecuador (2024)',
     license: 'CC0 1.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Photo_officielle_Julien_Odoul.jpg',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Emmanuel_Macron_May_2024.jpg',
   },
   {
-    slug: 'jacobelli',
-    camp: 'RN',
-    name: 'Laurent Jacobelli',
-    shortName: 'L. JACOBELLI',
-    role: 'Député RN de la Moselle',
-    isLeader: false,
-    image: '/fighters/jacobelli.png',
-    credit: 'Debout la France',
+    camp: 'PS',
+    shortName: 'PS',
+    fullName: 'Parti socialiste',
+    former: 'Parti socialiste (2010–2026)',
+    figureName: 'Olivier Faure',
+    figureRole: 'Premier secrétaire du PS · Figure du bloc',
+    image: '/fighters/faure.png',
+    credit: 'Olivier Faure (Wikimedia Commons)',
     license: 'CC BY-SA 2.0',
-    sourcePage: 'https://commons.wikimedia.org/wiki/File:Laurent_Jacobelli.jpg',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Portrait_d%27Olivier_Faure.jpg',
+  },
+  {
+    camp: 'ECOLO',
+    shortName: 'Écologistes',
+    fullName: 'Les Écologistes',
+    former: 'Les Écologistes / ex-EELV (2010–2026)',
+    figureName: 'Marine Tondelier',
+    figureRole: 'Secrétaire nationale · Figure du bloc',
+    image: '/fighters/tondelier.png',
+    credit: 'Selbymay (2023)',
+    license: 'CC BY 4.0',
+    sourcePage: 'https://commons.wikimedia.org/wiki/File:Huma2023MarineTondelier.jpg',
   },
 ] as const;
+
+export const PARTIES_BY_CAMP: Record<Camp, PartyProfile> = Object.fromEntries(
+  PARTIES_ROSTER.map((p) => [p.camp, p]),
+) as Record<Camp, PartyProfile>;
 
 export interface CampBreakdown {
   camp: Camp;
@@ -210,6 +193,12 @@ export function computeCampMetrics(cases: JudicialCase[], camp: Camp): CampMetri
   };
 }
 
+export function computeAllCampMetrics(cases: JudicialCase[]): Record<Camp, CampMetrics> {
+  return Object.fromEntries(
+    CAMP_VALUES.map((camp) => [camp, computeCampMetrics(cases, camp)]),
+  ) as Record<Camp, CampMetrics>;
+}
+
 export function computeBreakdown(cases: JudicialCase[], camp: Camp): CampBreakdown {
   const campCases = cases.filter((c) => c.camp === camp);
   const decisions = campCases.filter((c) => c.section === 'decisions');
@@ -241,9 +230,11 @@ export function computeBreakdown(cases: JudicialCase[], camp: Camp): CampBreakdo
 }
 
 export function buildIssueReportUrl(item: JudicialCase, repoIssuesUrl: string): string {
+  const campInfo = PARTIES_BY_CAMP[item.camp].fullName;
+  const precise = item.parti_precis ? ` — ${item.parti_precis}` : '';
   const title = `[Correction] ${item.id} — ${item.titre}`;
   const body = [
-    `**Fiche concernée :** \`${item.id}\` (${item.camp})`,
+    `**Fiche concernée :** \`${item.id}\` (${campInfo}${precise})`,
     `**Dernière vérification affichée :** ${item.verified_at}`,
     '',
     '**Erreur constatée / précision factuelle :**',

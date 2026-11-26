@@ -1,0 +1,134 @@
+"""Vérificateur asynchrone des URLs sources du dataset VERSUS (exécuté via `uv`)."""
+
+from __future__ import annotations
+
+import argparse
+import asyncio
+import json
+import sys
+from pathlib import Path
+from urllib.parse import urlparse
+
+import httpx
+import yaml
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "cases.yaml"
+OFFICIAL_WAF_DOMAINS = (
+    "legifrance.gouv.fr",
+    "courdecassation.fr",
+    "conseil-etat.fr",
+    "justice.fr",
+)
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) VERSUS-LinkCheck/1.0"
+)
+
+
+def is_official_waf_challenge(url: str, response: httpx.Response) -> bool:
+    """Détecte un challenge anti-bot officiel sans jamais tenter de le contourner."""
+    host = (urlparse(url).hostname or "").lower()
+    is_official = any(host == d or host.endswith(f".{d}") for d in OFFICIAL_WAF_DOMAINS)
+    if not is_official or response.status_code != 403:
+        return False
+    cf_mitigated = response.headers.get("cf-mitigated", "").lower()
+    server = response.headers.get("server", "").lower()
+    return cf_mitigated == "challenge" or "cloudflare" in server
+
+
+async def check_one(
+    client: httpx.AsyncClient,
+    sem: asyncio.Semaphore,
+    url: str,
+    case_ids: list[str],
+) -> dict[str, object]:
+    """Vérifie une URL avec repli GET si HEAD est refusé (405/403)."""
+    async with sem:
+        try:
+            resp = await client.head(url)
+            if resp.status_code in (403, 405, 400):
+                resp = await client.get(url)
+            if 200 <= resp.status_code < 400:
+                return {
+                    "url": url,
+                    "cases": case_ids,
+                    "status": "OK",
+                    "code": resp.status_code,
+                    "final_url": str(resp.url),
+                }
+            if is_official_waf_challenge(url, resp):
+                return {
+                    "url": url,
+                    "cases": case_ids,
+                    "status": "WAF_OFFICIAL",
+                    "code": resp.status_code,
+                    "final_url": str(resp.url),
+                }
+            return {
+                "url": url,
+                "cases": case_ids,
+                "status": "BROKEN",
+                "code": resp.status_code,
+                "final_url": str(resp.url),
+            }
+        except Exception as exc:  # noqa: BLE001
+            return {
+                "url": url,
+                "cases": case_ids,
+                "status": "BROKEN",
+                "code": None,
+                "error": f"{type(exc).__name__}: {exc}",
+            }
+
+
+async def run_checks() -> int:
+    parser = argparse.ArgumentParser(description="Vérifie les liens sources de data/cases.yaml")
+    parser.add_argument("--json", action="store_true", help="Affiche le rapport au format JSON")
+    args = parser.parse_args()
+
+    if not DATA_PATH.exists():
+        print(f"[check_links] Fichier introuvable: {DATA_PATH}", file=sys.stderr)
+        return 2
+
+    payload = yaml.safe_load(DATA_PATH.read_text(encoding="utf-8"))
+    url_to_cases: dict[str, list[str]] = {}
+    for case in payload.get("cases", []):
+        cid = case["id"]
+        for src in case.get("sources", []):
+            url_to_cases.setdefault(src["url"], []).append(cid)
+
+    sem = asyncio.Semaphore(6)
+    headers = {"User-Agent": USER_AGENT, "Accept": "text/html,application/pdf,*/*"}
+    async with httpx.AsyncClient(
+        timeout=httpx.Timeout(15.0),
+        follow_redirects=True,
+        headers=headers,
+    ) as client:
+        results = await asyncio.gather(
+            *(check_one(client, sem, u, ids) for u, ids in url_to_cases.items())
+        )
+
+    broken = [r for r in results if r["status"] == "BROKEN"]
+    waf = [r for r in results if r["status"] == "WAF_OFFICIAL"]
+    ok = [r for r in results if r["status"] == "OK"]
+
+    if args.json:
+        print(
+            json.dumps(
+                {"ok": len(ok), "waf_official": len(waf), "broken": len(broken), "results": results},
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+    else:
+        print(f"[check_links] {len(results)} URL(s) vérifiée(s) : {len(ok)} OK, {len(waf)} WAF_OFFICIAL, {len(broken)} BROKEN")
+        for item in results:
+            tag = item["status"]
+            code = item.get("code") or item.get("error")
+            print(f"  [{tag}] ({code}) {item['url']} <- {', '.join(item['cases'])}")
+
+    return 1 if broken else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(asyncio.run(run_checks()))

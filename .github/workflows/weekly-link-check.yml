@@ -1,0 +1,60 @@
+name: Weekly Source Link Check
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync Python environment
+        run: uv sync --frozen || uv sync
+
+      - name: Run source link checker
+        id: links
+        continue-on-error: true
+        run: |
+          uv run scripts/check_links.py --json > link-report.json
+          cat link-report.json
+
+      - name: Open issue on broken links
+        if: steps.links.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs');
+            const report = JSON.parse(fs.readFileSync('link-report.json', 'utf8'));
+            const broken = report.results.filter((r) => r.status === 'BROKEN');
+            if (broken.length === 0) return;
+
+            const lines = broken.map(
+              (r) => `- \`${r.code || r.error}\` — ${r.url} (fiches : ${r.cases.join(', ')})`
+            );
+            const body = [
+              'La vérification hebdomadaire automatique des sources (`scripts/check_links.py`) a détecté des liens indisponibles ou modifiés :',
+              '',
+              ...lines,
+              '',
+              'Merci de vérifier ces sources primaires/presse et de mettre à jour `data/cases.yaml` ainsi que `CHANGELOG-DONNEES.md`.',
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[Sources] ${broken.length} lien(s) à vérifier (${new Date().toISOString().slice(0, 10)})`,
+              body,
+              labels: ['sources-a-verifier'],
+            });
+            core.setFailed(`${broken.length} lien(s) cassé(s) détecté(s).`);

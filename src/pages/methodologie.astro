@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getDict } from '../i18n';
+
+const dict = getDict('fr');
+---
+
+<BaseLayout
+  currentPath="/methodologie"
+  title="Méthodologie & Sources — VERSUS"
+  description="Périmètre strict, règles de sourcing primaire, glossaire juridique et journal des exclusions de VERSUS."
+>
+  <div class="container prose-page">
+    <h1 class="pixel-title" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1.25rem;">
+      MÉTHODOLOGIE &amp; PRINCIPES ÉDITORIAUX
+    </h1>
+
+    <section class="pixel-frame prose-card">
+      <h2>1. Périmètre d'inclusion (strict et symétrique)</h2>
+      <p>
+        À la date de référence du <strong>{dict.site.referenceDate}</strong>, le comparateur couvre
+        selon les mêmes critères les deux formations : <strong>Rassemblement National (RN, ex-Front National)</strong>
+        et <strong>La France insoumise (LFI)</strong>.
+      </p>
+      <ul>
+        <li>
+          <strong>Acteurs inclus :</strong> le parti ou mouvement (personne morale, y compris sous
+          l'ancien nom FN → RN), ses dirigeants nationaux et ses élus nationaux ou européens
+          (députés, sénateurs, députés européens).
+        </li>
+        <li>
+          <strong>Nature des faits :</strong> procédures liées à l'activité politique, à l'exercice
+          d'un mandat public, au financement électoral/partisan ou à la parole politique publique.
+        </li>
+        <li>
+          <strong>Faits privés :</strong> exclus par défaut, sauf condamnation définitive liée à la
+          fonction ou au mandat.
+        </li>
+        <li>
+          <strong>Séparation stricte :</strong> les enquêtes, informations judiciaires, mises en
+          examen et renvois sans décision sur le fond sont regroupés dans la section séparée{' '}
+          <em>« Procédures en cours – présumés innocents »</em>.
+        </li>
+      </ul>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>2. Hiérarchie des sources &amp; vérification</h2>
+      <p>
+        Aucune fiche n'est publiée sans source vérifiée au <strong>{dict.site.referenceDate}</strong>.
+        La validation automatique du dépôt bloque toute compilation si une source manque ou si un lien
+        est cassé.
+      </p>
+      <ul>
+        <li>
+          <strong>Sources primaires prioritaires :</strong> décisions de justice et bulletins
+          officiels (Cour de cassation / Judilibre, Légifrance, Journal officiel / CNCCFP,
+          communiqués officiels de la cour d'appel de Paris et du Conseil d'État).
+        </li>
+        <li>
+          <strong>Sources de presse de référence :</strong> médias parlementaires et revues
+          juridiques (LCP, Public Sénat, Le Club des Juristes, RTS, presse nationale/régionale)
+          utilisés en complément ou lorsque la décision de première instance ou l'acte d'instruction
+          n'est pas publié en open data.
+        </li>
+        <li>
+          <strong>Transparence sur les décisions non publiées en open data :</strong> lorsqu'une
+          décision de tribunal correctionnel ou une procédure d'instruction n'est pas disponible
+          directement sur Légifrance/Judilibre, la fiche le signale explicitement.
+        </li>
+      </ul>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>3. Statuts juridiques &amp; effets des recours</h2>
+      <p>
+        En droit pénal français, l'appel et le pourvoi en cassation ont un effet suspensif sur les
+        peines prononcées (hors exécution provisoire expressément ordonnée). Toute personne non
+        définitivement condamnée est présumée innocente.
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Statut affiché</th>
+              <th>Signification procédurale</th>
+              <th>Définitif ?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>■ Condamnation définitive</td>
+              <td>Voies de recours épuisées (ou absence d'appel/pourvoi dans les délais).</td>
+              <td>Oui</td>
+            </tr>
+            <tr>
+              <td>▲ Condamné en appel</td>
+              <td>Arrêt rendu par une cour d'appel ; pourvoi en cassation formé ou délai ouvert.</td>
+              <td>Non (présumé innocent)</td>
+            </tr>
+            <tr>
+              <td>◆ Condamné en 1re instance</td>
+              <td>Jugement de tribunal correctionnel frappé d'appel ou susceptible d'appel.</td>
+              <td>Non (présumé innocent)</td>
+            </tr>
+            <tr>
+              <td>○ Relaxé / Non-lieu / Classé</td>
+              <td>Absence de culpabilité retenue, non-lieu ou classement sans suite.</td>
+              <td>Oui (hors recours)</td>
+            </tr>
+            <tr>
+              <td>▷ Renvoyé / En délibéré</td>
+              <td>Affaire audiencée ou renvoyée devant le tribunal, jugement non encore rendu.</td>
+              <td>Non (présumé innocent)</td>
+            </tr>
+            <tr>
+              <td>◎ Mis en examen</td>
+              <td>Indices graves ou concordants à l'instruction ; aucune culpabilité établie.</td>
+              <td>Non (présumé innocent)</td>
+            </tr>
+            <tr>
+              <td>? Enquête / Instruction</td>
+              <td>Enquête préliminaire ou information judiciaire ouverte (souvent contre X).</td>
+              <td>Non (présumé innocent)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>4. Exclusions explicites (exemples justifiés)</h2>
+      <p>
+        Afin de garantir une symétrie rigoureuse, les dossiers suivants n'ont pas été intégrés dans
+        le tableau comparatif principal pour les motifs objectifs ci-dessous :
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Camp</th>
+              <th>Dossier / Personne</th>
+              <th>Motif d'exclusion du périmètre principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LFI</td>
+              <td>Adrien Quatennens (condamnation 2022, violences conjugales)</td>
+              <td>Faits relevant de la sphère privée (sans lien avec l'exercice du mandat ou le financement politique), exclus selon la règle n° 6.</td>
+            </tr>
+            <tr>
+              <td>LFI</td>
+              <td>Raphaël Arnault (condamnation de Lyon, faits d'avril 2021)</td>
+              <td>Faits antérieurs à l'élection comme député en 2024 et sans lien avec un mandat public ou une activité du parti LFI.</td>
+            </tr>
+            <tr>
+              <td>LFI</td>
+              <td>Sébastien Delogu (procédure d'août 2026 à son domicile, audience reportée à juin 2027)</td>
+              <td>Altercation survenue dans son immeuble d'habitation privé (audience renvoyée au 25/06/2027).</td>
+            </tr>
+            <tr>
+              <td>LFI</td>
+              <td>Andy Kerbrat (interpellation d'octobre 2024)</td>
+              <td>Faits relevant de la vie privée (usage personnel).</td>
+            </tr>
+            <tr>
+              <td>RN</td>
+              <td>Élus locaux (maires, conseillers régionaux/départementaux) sans mandat national/européen</td>
+              <td>Périmètre volontairement limité aux partis (personne morale), dirigeants nationaux et parlementaires nationaux/européens pour assurer la comparabilité.</td>
+            </tr>
+            <tr>
+              <td>RN / LFI</td>
+              <td>Enquêtes journalistiques ou polémiques sans procédure judiciaire avérée</td>
+              <td>Exclus : seules les procédures judiciaires (enquêtes officielles, instructions, poursuites, jugements) entrent dans le périmètre.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

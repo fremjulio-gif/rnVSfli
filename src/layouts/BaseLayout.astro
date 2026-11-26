@@ -1,0 +1,190 @@
+---
+import '@fontsource/press-start-2p/400.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/700.css';
+import '../styles/arcade.css';
+import PixelAvatar from '../components/PixelAvatar.astro';
+import { getDict } from '../i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: '/' | '/methodologie' | '/mentions-legales';
+}
+
+const dict = getDict('fr');
+const {
+  title = dict.site.title,
+  description = 'Comparateur factuel, symétrique et sourcé de la situation judiciaire du Rassemblement National (RN) et de La France insoumise (LFI) au 26/11/2026.',
+  currentPath = '/',
+} = Astro.props;
+
+const canonicalUrl = new URL(currentPath, Astro.site ?? 'https://rnvsfli.vercel.app').toString();
+const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.vercel.app').toString();
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0B0E17" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph / Twitter Cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+  </head>
+  <body data-crt="on">
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="/" aria-label="VERSUS — Accueil">
+          <PixelAvatar variant="versus" size={32} />
+          <span class="brand-name">VERSUS</span>
+          <span class="brand-date">RÉF. {dict.site.referenceDate}</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a
+            class="nav-link"
+            href="/"
+            aria-current={currentPath === '/' ? 'page' : undefined}
+          >
+            {dict.nav.home}
+          </a>
+          <a
+            class="nav-link"
+            href="/methodologie"
+            aria-current={currentPath === '/methodologie' ? 'page' : undefined}
+          >
+            {dict.nav.methodology}
+          </a>
+          <a
+            class="nav-link"
+            href="/mentions-legales"
+            aria-current={currentPath === '/mentions-legales' ? 'page' : undefined}
+          >
+            {dict.nav.legal}
+          </a>
+        </nav>
+
+        <div class="controls-bar" role="group" aria-label="Préférences d'interface">
+          <button
+            type="button"
+            id="toggle-sound"
+            class="arcade-btn arcade-btn--sm"
+            aria-pressed="false"
+            title="Activer ou couper les sons 8-bit générés localement (désactivés par défaut)"
+          >
+            {dict.controls.soundOff}
+          </button>
+          <button
+            type="button"
+            id="toggle-crt"
+            class="arcade-btn arcade-btn--sm"
+            aria-pressed="true"
+            title="Activer ou couper l'effet léger de lignes CRT"
+          >
+            {dict.controls.crtOn}
+          </button>
+          <button
+            type="button"
+            id="toggle-haptic"
+            class="arcade-btn arcade-btn--sm"
+            aria-pressed="false"
+            title="Activer ou couper les micro-vibrations mobiles"
+          >
+            {dict.controls.hapticOff}
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <p style="margin: 0 0 0.45rem; color: var(--ink-primary);">
+            <strong>VERSUS</strong> — Date de référence : {dict.site.referenceDate}
+          </p>
+          <p style="margin: 0; max-width: 72ch;">
+            {dict.site.disclaimer}
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="/methodologie">Méthodologie &amp; sources</a>
+          <a href="/mentions-legales">Mentions légales &amp; rectification</a>
+          <a
+            href={dict.site.repoIssuesUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Signaler une erreur
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import { arcadeSynth } from '../scripts/sound';
+
+      const soundBtn = document.getElementById('toggle-sound') as HTMLButtonElement | null;
+      const crtBtn = document.getElementById('toggle-crt') as HTMLButtonElement | null;
+      const hapticBtn = document.getElementById('toggle-haptic') as HTMLButtonElement | null;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.body.setAttribute('data-crt', 'off');
+        if (crtBtn) {
+          crtBtn.setAttribute('aria-pressed', 'false');
+          crtBtn.textContent = 'CRT: OFF';
+        }
+      }
+
+      soundBtn?.addEventListener('click', () => {
+        const next = !arcadeSynth.isEnabled();
+        arcadeSynth.setEnabled(next);
+        soundBtn.setAttribute('aria-pressed', String(next));
+        soundBtn.textContent = next ? 'SON: ON' : 'SON: OFF';
+        if (next) {
+          arcadeSynth.play('uiConfirm');
+        }
+        arcadeSynth.vibrate(10);
+      });
+
+      crtBtn?.addEventListener('click', () => {
+        const current = document.body.getAttribute('data-crt') === 'on';
+        const next = !current;
+        document.body.setAttribute('data-crt', next ? 'on' : 'off');
+        crtBtn.setAttribute('aria-pressed', String(next));
+        crtBtn.textContent = next ? 'CRT: ON' : 'CRT: OFF';
+        arcadeSynth.play('uiSelect');
+        arcadeSynth.vibrate(8);
+      });
+
+      hapticBtn?.addEventListener('click', () => {
+        const next = !arcadeSynth.isHapticEnabled();
+        arcadeSynth.setHapticEnabled(next);
+        hapticBtn.setAttribute('aria-pressed', String(next));
+        hapticBtn.textContent = next ? 'VIBR: ON' : 'VIBR: OFF';
+        arcadeSynth.play('uiSelect');
+        if (next) arcadeSynth.vibrate(14);
+      });
+    </script>
+  </body>
+</html>

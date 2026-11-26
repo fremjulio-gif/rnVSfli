@@ -23,12 +23,13 @@ if (!result.success) {
   process.exit(1);
 }
 
-const rnCount = result.data.cases.filter((c) => c.camp === 'RN').length;
-const lfiCount = result.data.cases.filter((c) => c.camp === 'LFI').length;
-const primaryConfirmed = result.data.cases.filter(
+const dataset = result.data;
+const rnCount = dataset.cases.filter((c) => c.camp === 'RN').length;
+const lfiCount = dataset.cases.filter((c) => c.camp === 'LFI').length;
+const primaryConfirmed = dataset.cases.filter(
   (c) => c.confirmation_primaire === 'confirme',
 ).length;
 
 console.log(
-  `[validate-data] OK — ${result.data.cases.length} fiches valides (RN: ${rnCount}, LFI: ${lfiCount}), ${primaryConfirmed} confirmées par source primaire directe, référence ${result.data.reference_date}.`,
+  `[validate-data] OK — ${dataset.cases.length} fiches valides (RN: ${rnCount}, LFI: ${lfiCount}), ${primaryConfirmed} confirmées par source primaire directe, référence ${dataset.reference_date}.`,
 );

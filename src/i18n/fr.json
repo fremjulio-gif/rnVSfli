@@ -1,0 +1,113 @@
+{
+  "site": {
+    "title": "VERSUS — Situation judiciaire RN / LFI",
+    "subtitle": "Comparateur factuel, symétrique et sourcé",
+    "referenceDate": "26/11/2026",
+    "disclaimer": "Outil d'information factuelle et documentaire. Ne constitue ni un avis juridique ni une prise de position politique. Toute personne non définitivement condamnée est présumée innocente (art. 9-1 C. civ.).",
+    "repoIssuesUrl": "https://github.com/fremjulio-gif/rnVSfli/issues/new"
+  },
+  "nav": {
+    "home": "Comparateur",
+    "methodology": "Méthodologie",
+    "legal": "Mentions légales"
+  },
+  "controls": {
+    "soundOff": "SON: OFF",
+    "soundOn": "SON: ON",
+    "crtOn": "CRT: ON",
+    "crtOff": "CRT: OFF",
+    "hapticOff": "VIBR: OFF",
+    "hapticOn": "VIBR: ON"
+  },
+  "camps": {
+    "RN": {
+      "short": "RN",
+      "name": "Rassemblement National",
+      "former": "ex-Front National (FN → RN)"
+    },
+    "LFI": {
+      "short": "LFI",
+      "name": "La France insoumise",
+      "former": "Mouvement et groupe parlementaire"
+    }
+  },
+  "categories": {
+    "financement_probite": {
+      "round": "ROUND 1",
+      "label": "Financement politique & probité",
+      "definition": "Qualifications pénales relatives aux fonds publics ou électoraux : détournement de fonds publics, recel ou complicité, abus de biens sociaux, escroquerie, faux et infractions aux règles de financement des campagnes."
+    },
+    "presse_expression": {
+      "round": "ROUND 2",
+      "label": "Presse & expression publique",
+      "definition": "Infractions liées à la parole publique ou politique : diffamation publique ou non publique (loi du 29 juillet 1881), outrage envers une personne chargée d'une mission de service public, apologie du terrorisme."
+    },
+    "ordre_public_biens": {
+      "round": "ROUND 3",
+      "label": "Ordre public, personnes & biens",
+      "definition": "Atteintes aux personnes, aux biens ou à l'autorité judiciaire : rébellion, provocation, actes d'intimidation, violences volontaires, vol, violation du secret professionnel ou du secret de l'enquête."
+    }
+  },
+  "statuts": {
+    "condamnation_definitive": {
+      "label": "Condamnation définitive",
+      "glyph": "■",
+      "tone": "definitive"
+    },
+    "condamne_appel": {
+      "label": "Condamné en appel (recours possible/en cours)",
+      "glyph": "▲",
+      "tone": "pending_appeal"
+    },
+    "condamne_premiere_instance": {
+      "label": "Condamné en 1re instance (non définitif)",
+      "glyph": "◆",
+      "tone": "first_instance"
+    },
+    "relaxe": {
+      "label": "Relaxé",
+      "glyph": "○",
+      "tone": "cleared"
+    },
+    "non_lieu": {
+      "label": "Non-lieu / Classé sans suite",
+      "glyph": "○",
+      "tone": "cleared"
+    },
+    "prescription": {
+      "label": "Prescription",
+      "glyph": "◇",
+      "tone": "cleared"
+    },
+    "renvoye": {
+      "label": "Renvoyé / En délibéré (présumé innocent)",
+      "glyph": "▷",
+      "tone": "ongoing"
+    },
+    "mis_en_examen": {
+      "label": "Mis en examen (présumé innocent)",
+      "glyph": "◎",
+      "tone": "ongoing"
+    },
+    "enquete": {
+      "label": "Enquête / Instruction (présumé innocent)",
+      "glyph": "?",
+      "tone": "ongoing"
+    }
+  },
+  "titleScreen": {
+    "badge": "ARCHIVE JUDICIAIRE 16-BIT",
+    "pressStart": "PRESS START",
+    "skipToRounds": "Accès direct aux fiches"
+  },
+  "ending": {
+    "headline": "AUCUN VAINQUEUR. LA JUSTICE N'EST PAS UN JEU.",
+    "subhead": "Voici comment lire ces données avec rigueur :",
+    "points": [
+      "Un pourvoi en cassation ou un appel est suspensif des peines (hors exécution provisoire spécifique) : toute personne non définitivement condamnée reste présumée innocente.",
+      "Les affaires ne sont pas additionnées dans un score unique : un détournement de fonds publics, une diffamation, un vol ou une rébellion ne relèvent pas des mêmes qualifications pénales.",
+      "Les personnes physiques et les personnes morales (partis, associations, prestataires) sont juridiquement distinctes.",
+      "Les procédures en cours sont présentées à part et ne préjugent d'aucune culpabilité."
+    ]
+  }
+}

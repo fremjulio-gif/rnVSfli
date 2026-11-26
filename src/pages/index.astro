@@ -1,0 +1,468 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelAvatar from '../components/PixelAvatar.astro';
+import BreakdownTable from '../components/BreakdownTable.astro';
+import CaseCard from '../components/CaseCard.astro';
+import { computeBreakdown, loadDataset, sortCasesByRecentDate } from '../lib/data';
+import { CATEGORIE_VALUES } from '../lib/schema';
+import { formatDateFr, getDict } from '../i18n';
+
+const dataset = loadDataset();
+const dict = getDict('fr');
+
+const rnBreakdown = computeBreakdown(dataset.cases, 'RN');
+const lfiBreakdown = computeBreakdown(dataset.cases, 'LFI');
+
+const decisions = dataset.cases.filter((c) => c.section === 'decisions');
+const ongoing = dataset.cases.filter((c) => c.section === 'procedures_en_cours');
+const ongoingRN = ongoing.filter((c) => c.camp === 'RN');
+const ongoingLFI = ongoing.filter((c) => c.camp === 'LFI');
+
+const timelineCases = sortCasesByRecentDate(dataset.cases);
+---
+
+<BaseLayout currentPath="/">
+  <!-- 1. ÉCRAN TITRE -->
+  <section class="hero-screen" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-badge">{dict.titleScreen.badge} · RÉF. {dict.site.referenceDate}</div>
+      <div style="display: flex; justify-content: center; margin-bottom: 0.75rem;">
+        <PixelAvatar variant="versus" size={72} label="Balance de justice VERSUS" />
+      </div>
+      <h1 id="hero-heading" class="hero-title">VERSUS</h1>
+      <p class="hero-sub">
+        Mise en regard factuelle, symétrique et sourcée des procédures judiciaires concernant le{' '}
+        <strong>Rassemblement National (RN, ex-FN)</strong> et{' '}
+        <strong>La France insoumise (LFI)</strong> — partis, dirigeants et élus nationaux ou européens.
+      </p>
+
+      <div class="hero-actions">
+        <button type="button" id="press-start-btn" class="arcade-btn arcade-btn--primary">
+          {dict.titleScreen.pressStart}
+        </button>
+        <a href="#round-financement_probite" class="arcade-btn">
+          {dict.titleScreen.skipToRounds}
+        </a>
+        <a href="#procedures-en-cours" class="arcade-btn">
+          Procédures en cours
+        </a>
+        <a href="#frise" class="arcade-btn">
+          Frise chronologique
+        </a>
+      </div>
+
+      <div class="disclaimer-banner" role="note" aria-label="Avertissement juridique">
+        <strong>Avertissement :</strong> {dict.site.disclaimer}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. SÉLECTION DES CAMPS & RÉPARTITION VENTILÉE -->
+  <section id="selection-camps" class="section-block" aria-labelledby="select-heading">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-kicker">CHARACTER SELECT · LECTURE SYMÉTRIQUE</span>
+        <h2 id="select-heading" class="section-title">
+          DEUX CAMPS, MÊME SCHÉMA, ZÉRO SCORE GLOBAL
+        </h2>
+        <p class="section-desc">
+          Les données ci-dessous ne sont jamais additionnées dans un compteur unique de « gravité ».
+          Elles sont strictement ventilées par statut procédural et par catégorie d'infraction pénale.
+        </p>
+      </header>
+
+      <div class="duel-grid">
+        <!-- Panneau RN -->
+        <section
+          class="pixel-frame pixel-frame--rn fighter-panel"
+          aria-labelledby="panel-rn-title"
+        >
+          <div class="fighter-head">
+            <PixelAvatar variant="RN" size={64} label="Emblème neutre RN" />
+            <div>
+              <div class="fighter-camp-tag fighter-camp-tag--rn">CAMP A · RN</div>
+              <h3 id="panel-rn-title" class="fighter-name">{dict.camps.RN.name}</h3>
+              <p class="fighter-former">{dict.camps.RN.former}</p>
+            </div>
+          </div>
+          <BreakdownTable breakdown={rnBreakdown} />
+        </section>
+
+        <!-- Panneau LFI -->
+        <section
+          class="pixel-frame pixel-frame--lfi fighter-panel"
+          aria-labelledby="panel-lfi-title"
+        >
+          <div class="fighter-head">
+            <PixelAvatar variant="LFI" size={64} label="Emblème neutre LFI" />
+            <div>
+              <div class="fighter-camp-tag fighter-camp-tag--lfi">CAMP B · LFI</div>
+              <h3 id="panel-lfi-title" class="fighter-name">{dict.camps.LFI.name}</h3>
+              <p class="fighter-former">{dict.camps.LFI.former}</p>
+            </div>
+          </div>
+          <BreakdownTable breakdown={lfiBreakdown} />
+        </section>
+      </div>
+
+      <!-- 3. BANDEAU VS -->
+      <div id="vs-banner" class="vs-strip" aria-label="Transition de comparaison">
+        <span class="fighter-camp-tag--rn" style="font-family: var(--font-pixel); font-size: 0.75rem;">
+          RN (ex-FN)
+        </span>
+        <span class="vs-pill" id="vs-pill">VS</span>
+        <span class="fighter-camp-tag--lfi" style="font-family: var(--font-pixel); font-size: 0.75rem;">
+          LFI
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. MANCHES PAR CATÉGORIE D'INFRACTION (DÉCISIONS RENDUES) -->
+  {
+    CATEGORIE_VALUES.map((catKey) => {
+      const cat = dict.categories[catKey];
+      const rnList = decisions.filter((c) => c.camp === 'RN' && c.categorie === catKey);
+      const lfiList = decisions.filter((c) => c.camp === 'LFI' && c.categorie === catKey);
+
+      return (
+        <section
+          id={`round-${catKey}`}
+          class="section-block"
+          aria-labelledby={`heading-${catKey}`}
+        >
+          <div class="container">
+            <header class="section-header">
+              <span class="section-kicker">{cat.round} · DÉCISIONS RENDUES</span>
+              <h2 id={`heading-${catKey}`} class="section-title">
+                {cat.label}
+              </h2>
+              <p class="section-desc">
+                <strong>Définition juridique :</strong> {cat.definition}
+              </p>
+            </header>
+
+            <div class="duel-grid">
+              <div>
+                <div class="camp-column-header camp-column-header--rn">
+                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN (ex-FN)</span>
+                  <span>{rnList.length} fiche(s)</span>
+                </div>
+                <div class="cases-stack">
+                  {rnList.length > 0 ? (
+                    rnList.map((item) => <CaseCard item={item} />)
+                  ) : (
+                    <div class="empty-slot">
+                      Aucune décision rendue recensée dans cette catégorie selon le périmètre
+                      retenu au {dict.site.referenceDate}.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <div class="camp-column-header camp-column-header--lfi">
+                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI</span>
+                  <span>{lfiList.length} fiche(s)</span>
+                </div>
+                <div class="cases-stack">
+                  {lfiList.length > 0 ? (
+                    lfiList.map((item) => <CaseCard item={item} />)
+                  ) : (
+                    <div class="empty-slot">
+                      Aucune décision rendue recensée dans cette catégorie selon le périmètre
+                      retenu au {dict.site.referenceDate}.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <!-- 5. SECTION SÉPARÉE : PROCÉDURES EN COURS – PRÉSUMÉS INNOCENTS -->
+  <section
+    id="procedures-en-cours"
+    class="section-block"
+    aria-labelledby="ongoing-heading"
+  >
+    <div class="container">
+      <header class="section-header">
+        <span class="section-kicker">SECTION SÉPARÉE · ART. 9-1 CODE CIVIL</span>
+        <h2 id="ongoing-heading" class="section-title">
+          Procédures en cours – présumés innocents
+        </h2>
+      </header>
+
+      <div class="ongoing-banner" role="note">
+        <strong>Rappel impératif :</strong> Les enquêtes préliminaires, informations judiciaires,
+        mises en examen et dossiers en attente de jugement ou en délibéré ci-dessous ne constituent
+        en aucun cas des condamnations. Ils ne sont jamais mélangés ni additionnés aux décisions
+        rendues. Toute personne citée est présumée innocente.
+      </div>
+
+      <div class="duel-grid">
+        <div>
+          <div class="camp-column-header camp-column-header--rn">
+            <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN — EN COURS</span>
+            <span>{ongoingRN.length} procédure(s)</span>
+          </div>
+          <div class="cases-stack">
+            {ongoingRN.map((item) => <CaseCard item={item} />)}
+          </div>
+        </div>
+
+        <div>
+          <div class="camp-column-header camp-column-header--lfi">
+            <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI — EN COURS</span>
+            <span>{ongoingLFI.length} procédure(s)</span>
+          </div>
+          <div class="cases-stack">
+            {ongoingLFI.map((item) => <CaseCard item={item} />)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FRISE CHRONOLOGIQUE INTERACTIVE FILTRABLE -->
+  <section id="frise" class="section-block" aria-labelledby="timeline-heading">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-kicker">TIMELINE · RECHERCHE &amp; FILTRES</span>
+        <h2 id="timeline-heading" class="section-title">
+          Frise chronologique filtrable
+        </h2>
+        <p class="section-desc">
+          Classement par date de dernière décision ou étape marquante connue au{' '}
+          {dict.site.referenceDate}.
+        </p>
+      </header>
+
+      <form class="pixel-frame timeline-controls" id="timeline-filters" aria-label="Filtres de la frise">
+        <label class="filter-field">
+          <span>Camp</span>
+          <select id="filter-camp" class="filter-input">
+            <option value="ALL">Tous (RN &amp; LFI)</option>
+            <option value="RN">RN (ex-FN)</option>
+            <option value="LFI">LFI</option>
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>Statut</span>
+          <select id="filter-statut" class="filter-input">
+            <option value="ALL">Tous les statuts</option>
+            {
+              Object.entries(dict.statuts).map(([key, val]) => (
+                <option value={key}>{val.label}</option>
+              ))
+            }
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>Catégorie pénale</span>
+          <select id="filter-categorie" class="filter-input">
+            <option value="ALL">Toutes les catégories</option>
+            {
+              CATEGORIE_VALUES.map((catKey) => (
+                <option value={catKey}>{dict.categories[catKey].label}</option>
+              ))
+            }
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>Période</span>
+          <select id="filter-periode" class="filter-input">
+            <option value="ALL">Toutes (2019–2026)</option>
+            <option value="2026">2026 uniquement</option>
+            <option value="2025">2025 uniquement</option>
+            <option value="2019-2024">2019–2024</option>
+          </select>
+        </label>
+
+        <label class="filter-field">
+          <span>Recherche texte</span>
+          <input
+            id="filter-search"
+            class="filter-input"
+            type="search"
+            placeholder="Nom, infraction, juridiction…"
+          />
+        </label>
+      </form>
+
+      <p id="timeline-count" style="font-size: 0.85rem; color: var(--ink-muted); margin: 0 0 0.85rem;">
+        {timelineCases.length} fiche(s) affichée(s).
+      </p>
+
+      <ol class="timeline-list" id="timeline-list">
+        {
+          timelineCases.map((item) => {
+            const st = dict.statuts[item.statut];
+            const cat = dict.categories[item.categorie];
+            const year = item.date_derniere_decision.slice(0, 4);
+            const searchBlob =
+              `${item.titre} ${item.entite_principale} ${item.qualification_legale} ${item.juridiction}`.toLowerCase();
+
+            return (
+              <li
+                class="pixel-frame timeline-item"
+                data-camp={item.camp}
+                data-statut={item.statut}
+                data-categorie={item.categorie}
+                data-year={year}
+                data-search={searchBlob}
+              >
+                <div class="timeline-item__top">
+                  <strong>{formatDateFr(item.date_derniere_decision)}</strong>
+                  <span
+                    class={
+                      item.camp === 'RN' ? 'fighter-camp-tag--rn' : 'fighter-camp-tag--lfi'
+                    }
+                    style="font-family: var(--font-pixel); font-size: 0.65rem;"
+                  >
+                    {item.camp}
+                  </span>
+                  <span class={`status-badge status-badge--${st.tone}`}>
+                    <span aria-hidden="true">{st.glyph}</span>
+                    <span>{st.label}</span>
+                  </span>
+                  <span style="color: var(--ink-muted);">{cat.label}</span>
+                </div>
+                <div>
+                  <a href={`#${item.id}`} style="font-weight: 700;">
+                    {item.titre}
+                  </a>{' '}
+                  <span style="color: var(--ink-muted);">— {item.entite_principale}</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--ink-muted);">
+                  {item.juridiction} · {item.qualification_legale}
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7. ÉCRAN FINAL NEUTRE -->
+  <section class="section-block" aria-labelledby="ending-heading">
+    <div class="container">
+      <div class="pixel-frame ending-box">
+        <span class="section-kicker">FIN DE PARTIE · LECTURE CRITIQUE</span>
+        <h2 id="ending-heading" class="section-title">
+          {dict.ending.headline}
+        </h2>
+        <p style="margin: 0; color: var(--ink-muted);">{dict.ending.subhead}</p>
+        <ol class="ending-list">
+          {dict.ending.points.map((pt) => <li>{pt}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { arcadeSynth } from '../scripts/sound';
+
+    const pressStartBtn = document.getElementById('press-start-btn');
+    const vsPill = document.getElementById('vs-pill');
+    const selectSection = document.getElementById('selection-camps');
+
+    pressStartBtn?.addEventListener('click', () => {
+      arcadeSynth.play('roundTransition');
+      arcadeSynth.vibrate(14);
+      if (vsPill) {
+        vsPill.classList.remove('vs-hit');
+        void vsPill.offsetWidth;
+        vsPill.classList.add('vs-hit');
+      }
+      selectSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Compteurs animés discrets (uniquement hors prefers-reduced-motion)
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      document.querySelectorAll<HTMLElement>('[data-countup]').forEach((el) => {
+        const target = Number(el.getAttribute('data-countup') ?? '0');
+        if (target <= 0) return;
+        let current = 0;
+        const step = () => {
+          current += 1;
+          el.textContent = String(current);
+          if (current < target) {
+            window.setTimeout(step, 70);
+          }
+        };
+        el.textContent = '0';
+        window.setTimeout(step, 120);
+      });
+    }
+
+    // Filtres frise chronologique
+    const campEl = document.getElementById('filter-camp') as HTMLSelectElement | null;
+    const statutEl = document.getElementById('filter-statut') as HTMLSelectElement | null;
+    const catEl = document.getElementById('filter-categorie') as HTMLSelectElement | null;
+    const periodEl = document.getElementById('filter-periode') as HTMLSelectElement | null;
+    const searchEl = document.getElementById('filter-search') as HTMLInputElement | null;
+    const countEl = document.getElementById('timeline-count');
+    const items = Array.from(document.querySelectorAll<HTMLLIElement>('#timeline-list > li'));
+
+    function applyFilters() {
+      const camp = campEl?.value ?? 'ALL';
+      const statut = statutEl?.value ?? 'ALL';
+      const cat = catEl?.value ?? 'ALL';
+      const period = periodEl?.value ?? 'ALL';
+      const q = (searchEl?.value ?? '').trim().toLowerCase();
+
+      let visible = 0;
+      for (const li of items) {
+        const iCamp = li.dataset.camp ?? '';
+        const iStatut = li.dataset.statut ?? '';
+        const iCat = li.dataset.categorie ?? '';
+        const iYear = Number(li.dataset.year ?? '0');
+        const iSearch = li.dataset.search ?? '';
+
+        const matchCamp = camp === 'ALL' || iCamp === camp;
+        const matchStatut = statut === 'ALL' || iStatut === statut;
+        const matchCat = cat === 'ALL' || iCat === cat;
+        const matchPeriod =
+          period === 'ALL' ||
+          (period === '2026' && iYear === 2026) ||
+          (period === '2025' && iYear === 2025) ||
+          (period === '2019-2024' && iYear >= 2019 && iYear <= 2024);
+        const matchSearch = !q || iSearch.includes(q);
+
+        const show = matchCamp && matchStatut && matchCat && matchPeriod && matchSearch;
+        li.hidden = !show;
+        if (show) visible += 1;
+      }
+
+      if (countEl) {
+        countEl.textContent = `${visible} fiche(s) affichée(s).`;
+      }
+    }
+
+    [campEl, statutEl, catEl, periodEl].forEach((ctrl) => {
+      ctrl?.addEventListener('change', () => {
+        arcadeSynth.play('filterTick');
+        arcadeSynth.vibrate(8);
+        applyFilters();
+      });
+    });
+
+    searchEl?.addEventListener('input', applyFilters);
+
+    document.querySelectorAll('details.case-card__details').forEach((d) => {
+      d.addEventListener('toggle', () => {
+        arcadeSynth.play('uiSelect');
+      });
+    });
+  </script>
+</BaseLayout>

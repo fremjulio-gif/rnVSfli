@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getDict } from '../i18n';
+
+const dict = getDict('fr');
+---
+
+<BaseLayout
+  currentPath="/mentions-legales"
+  title="Mentions légales — VERSUS"
+  description="Mentions légales, éditeur, hébergeur, droit de réponse, rectification et protection des données de VERSUS."
+>
+  <div class="container prose-page">
+    <h1 class="pixel-title" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1.25rem;">
+      MENTIONS LÉGALES &amp; DROIT DE RÉPONSE
+    </h1>
+
+    <section class="pixel-frame prose-card">
+      <h2>1. Éditeur du site (LCEN)</h2>
+      <p>
+        Projet open source indépendant publié via le compte GitHub{' '}
+        <a href="https://github.com/fremjulio-gif/rnVSfli" target="_blank" rel="noopener noreferrer">
+          fremjulio-gif/rnVSfli
+        </a>.
+      </p>
+      <p style="color: var(--ink-muted); font-size: 0.85rem;">
+        Note LCEN (art. 6 III de la loi n° 2004-575 du 21 juin 2004) : avant toute diffusion grand
+        public hors cadre privé/associatif, l'éditeur doit compléter ici son identité (nom, prénom
+        ou raison sociale) et une adresse de contact directe (ou les coordonnées de l'hébergeur en
+        cas d'édition non professionnelle ayant choisi l'anonymat conformément à l'art. 6 III-2).
+      </p>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>2. Hébergement</h2>
+      <p>
+        <strong>Vercel Inc.</strong> — 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis —{' '}
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">https://vercel.com</a>.
+      </p>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>3. Avertissement éditorial et juridique</h2>
+      <p>
+        {dict.site.disclaimer}
+      </p>
+      <p>
+        Date de référence des informations vérifiées : <strong>{dict.site.referenceDate}</strong>.
+        Les évolutions postérieures à cette date (notamment les décisions ou audiences annoncées en
+        novembre et décembre 2026) feront l'objet d'une mise à jour documentée dans{' '}
+        <code>CHANGELOG-DONNEES.md</code>.
+      </p>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>4. Droit de réponse &amp; signalement d'erreur</h2>
+      <p>
+        Toute personne physique ou morale mentionnée, ou tout lecteur constatant une imprécision,
+        une évolution procédurale (relaxe, non-lieu, appel, pourvoi, décision définitive) ou un lien
+        source défectueux peut demander une rectification immédiate via le formulaire de signalement
+        GitHub :
+      </p>
+      <p>
+        <a
+          class="arcade-btn"
+          href={dict.site.repoIssuesUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Signaler une erreur / Exercer un droit de rectification
+        </a>
+      </p>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>5. Données personnelles (RGPD) &amp; propriété intellectuelle</h2>
+      <ul>
+        <li>
+          <strong>Cookies et traceurs :</strong> ce site statique ne dépose aucun cookie publicitaire
+          ni traceur analytique tiers. Les préférences d'interface (son, CRT, vibration) restent
+          strictement locales en mémoire de session.
+        </li>
+        <li>
+          <strong>Données publiques :</strong> les informations factuelles concernent exclusivement
+          des procédures publiques impliquant des partis politiques et des responsables ou élus
+          publics (intérêt général, art. 6.1.f et 9.2.e du RGPD).
+        </li>
+        <li>
+          <strong>Polices et visuels :</strong> polices libres sous licence SIL Open Font License
+          (Press Start 2P, IBM Plex Mono) auto-hébergées ; avatars géométriques et sons Web Audio
+          API 100 % originaux.
+        </li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

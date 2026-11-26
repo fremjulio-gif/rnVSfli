@@ -1,0 +1,166 @@
+---
+import type { JudicialCase } from '../lib/schema';
+import { buildIssueReportUrl } from '../lib/data';
+import { formatDateFr, getDict } from '../i18n';
+
+interface Props {
+  item: JudicialCase;
+}
+
+const { item } = Astro.props;
+const dict = getDict('fr');
+const statusInfo = dict.statuts[item.statut];
+const campClass = item.camp === 'RN' ? 'rn' : 'lfi';
+const entityLabel =
+  item.type_entite === 'personne_morale'
+    ? 'Personne morale'
+    : item.type_entite === 'personne_physique'
+      ? 'Personne physique'
+      : 'Personne morale + physique';
+const reportUrl = buildIssueReportUrl(item, dict.site.repoIssuesUrl);
+---
+
+<article
+  id={item.id}
+  class={`pixel-frame pixel-frame--${campClass} case-card`}
+  aria-labelledby={`${item.id}-title`}
+>
+  <div class="case-card__top">
+    <span class={`status-badge status-badge--${statusInfo.tone}`}>
+      <span aria-hidden="true">{statusInfo.glyph}</span>
+      <span>{statusInfo.label}</span>
+    </span>
+    <span class="entity-pill">{entityLabel}</span>
+  </div>
+
+  <h4 id={`${item.id}-title`} class="case-card__title">
+    {item.titre}
+  </h4>
+
+  <div class="case-card__meta">
+    <div class="case-card__meta-row">
+      <span class="case-card__label">Entité(s) / Personne(s)</span>
+      <span>{item.entite_principale}</span>
+    </div>
+    <div class="case-card__meta-row">
+      <span class="case-card__label">Qualification juridique exacte</span>
+      <span>{item.qualification_legale}</span>
+    </div>
+    <div class="case-card__meta-row">
+      <span class="case-card__label">Juridiction</span>
+      <span>{item.juridiction}</span>
+    </div>
+    <div class="case-card__meta-row">
+      <span class="case-card__label">Dernière décision / étape marquante</span>
+      <span>{formatDateFr(item.date_derniere_decision)}</span>
+    </div>
+  </div>
+
+  <p class="case-card__summary">{item.resume_factuel}</p>
+
+  {
+    item.peine && (
+      <div class={`case-card__box case-card__box--${campClass}`}>
+        {item.peine.prison && (
+          <p style="margin: 0 0 0.35rem;">
+            <strong>Emprisonnement :</strong> {item.peine.prison}
+          </p>
+        )}
+        {item.peine.amende && (
+          <p style="margin: 0 0 0.35rem;">
+            <strong>Amende / confiscation :</strong> {item.peine.amende}
+          </p>
+        )}
+        {item.peine.ineligibilite && (
+          <p style="margin: 0 0 0.35rem;">
+            <strong>Inéligibilité :</strong> {item.peine.ineligibilite}
+          </p>
+        )}
+        {item.peine.execution_provisoire && (
+          <p style="margin: 0 0 0.35rem;">
+            <strong>Exécution provisoire :</strong> {item.peine.execution_provisoire}
+          </p>
+        )}
+        {item.peine.autres && (
+          <p style="margin: 0 0 0.35rem;">
+            <strong>Autres dispositions :</strong> {item.peine.autres}
+          </p>
+        )}
+        <p style="margin: 0;">
+          <strong>Voies de recours &amp; statut :</strong> {item.peine.note_recours}
+        </p>
+      </div>
+    )
+  }
+
+  <details class="case-card__details">
+    <summary>
+      <span>Chronologie de la procédure ({item.dates_cles.length} dates)</span>
+      <span aria-hidden="true">+</span>
+    </summary>
+    <ul class="timeline-mini">
+      {
+        item.dates_cles.map((d) => (
+          <li>
+            <strong>{formatDateFr(d.date)} :</strong> {d.libelle}
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <details class="case-card__details">
+    <summary>
+      <span>
+        Sources ({item.sources.length}) —{' '}
+        {item.confirmation_primaire === 'confirme'
+          ? 'Source primaire directe vérifiée'
+          : 'Presse / institution (décision non publiée en open data)'}
+      </span>
+      <span aria-hidden="true">+</span>
+    </summary>
+    {
+      item.motif_absence_source_primaire && (
+        <p style="margin: 0.55rem 0 0.2rem; font-size: 0.78rem; color: var(--ink-muted);">
+          Note méthodologique : {item.motif_absence_source_primaire}
+        </p>
+      )
+    }
+    {
+      item.references_judiciaires.length > 0 && (
+        <p style="margin: 0.45rem 0 0.2rem; font-size: 0.78rem;">
+          <strong>Références :</strong> {item.references_judiciaires.join(' · ')}
+        </p>
+      )
+    }
+    <ul class="sources-list">
+      {
+        item.sources.map((src) => (
+          <li>
+            <span class={`source-tag source-tag--${src.type}`}>
+              {src.type === 'primaire' ? 'PRIMAIRE' : 'PRESSE'}
+            </span>
+            <a href={src.url} target="_blank" rel="noopener noreferrer">
+              {src.titre}
+            </a>{' '}
+            <span style="color: var(--ink-muted);">
+              ({src.editeur}, {src.date_publication} — consulté le {formatDateFr(src.date_consultation)})
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <footer class="case-card__footer">
+    <span>Vérifié le {formatDateFr(item.verified_at)}</span>
+    <a
+      class="report-link"
+      href={reportUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Signaler une erreur
+    </a>
+  </footer>
+</article>

@@ -6,6 +6,7 @@ import argparse
 import asyncio
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -38,16 +39,23 @@ def is_official_waf_challenge(url: str, response: httpx.Response) -> bool:
 
 async def check_one(
     client: httpx.AsyncClient,
-    sem: asyncio.Semaphore,
+    global_sem: asyncio.Semaphore,
+    domain_sems: dict[str, asyncio.Semaphore],
     url: str,
     case_ids: list[str],
 ) -> dict[str, object]:
-    """Vérifie une URL avec repli GET si HEAD est refusé (405/403)."""
-    async with sem:
+    """Vérifie une URL avec limitation par domaine et 1 retry sur 429."""
+    host = (urlparse(url).hostname or "").lower()
+    async with global_sem, domain_sems[host]:
         try:
             resp = await client.head(url)
             if resp.status_code in (403, 405, 400):
                 resp = await client.get(url)
+            if resp.status_code == 429:
+                await asyncio.sleep(1.5)
+                resp = await client.get(url)
+            await asyncio.sleep(0.35)
+
             if 200 <= resp.status_code < 400:
                 return {
                     "url": url,
@@ -97,7 +105,8 @@ async def run_checks() -> int:
         for src in case.get("sources", []):
             url_to_cases.setdefault(src["url"], []).append(cid)
 
-    sem = asyncio.Semaphore(6)
+    global_sem = asyncio.Semaphore(5)
+    domain_sems: dict[str, asyncio.Semaphore] = defaultdict(lambda: asyncio.Semaphore(1))
     headers = {"User-Agent": USER_AGENT, "Accept": "text/html,application/pdf,*/*"}
     async with httpx.AsyncClient(
         timeout=httpx.Timeout(15.0),
@@ -105,7 +114,10 @@ async def run_checks() -> int:
         headers=headers,
     ) as client:
         results = await asyncio.gather(
-            *(check_one(client, sem, u, ids) for u, ids in url_to_cases.items())
+            *(
+                check_one(client, global_sem, domain_sems, u, ids)
+                for u, ids in url_to_cases.items()
+            )
         )
 
     broken = [r for r in results if r["status"] == "BROKEN"]
@@ -121,7 +133,10 @@ async def run_checks() -> int:
             )
         )
     else:
-        print(f"[check_links] {len(results)} URL(s) vérifiée(s) : {len(ok)} OK, {len(waf)} WAF_OFFICIAL, {len(broken)} BROKEN")
+        print(
+            f"[check_links] {len(results)} URL(s) vérifiée(s) : "
+            f"{len(ok)} OK, {len(waf)} WAF_OFFICIAL, {len(broken)} BROKEN"
+        )
         for item in results:
             tag = item["status"]
             code = item.get("code") or item.get("error")

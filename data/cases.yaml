@@ -1,7 +1,7 @@
 reference_date: "2026-11-26"
 cases:
   # =========================================================================
-  # CAMP RN — RASSEMBLEMENT NATIONAL (EX-FRONT NATIONAL)
+  # CAMP RN — RASSEMBLEMENT NATIONAL (EX-FRONT NATIONAL, 2010-2026)
   # =========================================================================
   - id: rn-kits-campagne-2012
     camp: RN
@@ -12,6 +12,7 @@ cases:
     presomption_innocence: false
     type_entite: personne_morale_et_physique
     entite_principale: "Rassemblement National (ex-Front National, personne morale)"
+    fighter_slugs: [lepen]
     personnes_et_entites:
       - nom: "Rassemblement National (ex-Front National)"
         qualite: "Parti politique (personne morale)"
@@ -80,6 +81,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_morale_et_physique
     entite_principale: "Rassemblement National (personne morale) et 11 prévenus appelants (dont Marine Le Pen)"
+    fighter_slugs: [lepen, aliot, odoul]
     personnes_et_entites:
       - nom: "Rassemblement National (ex-Front National)"
         qualite: "Parti politique (personne morale)"
@@ -170,6 +172,7 @@ cases:
     presomption_innocence: false
     type_entite: personne_physique
     entite_principale: "Marine Le Pen (députée RN, candidate présidentielle 2022)"
+    fighter_slugs: [lepen]
     personnes_et_entites:
       - nom: "Marine Le Pen"
         qualite: "Candidate à l'élection présidentielle de 2022 / Députée RN"
@@ -207,6 +210,132 @@ cases:
         date_consultation: "2026-11-26"
     verified_at: "2026-11-26"
 
+  - id: rn-jmlp-detail-histoire-2018
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Marie Le Pen (alors député européen et président d'honneur du FN)"
+    fighter_slugs: []
+    personnes_et_entites:
+      - nom: "Jean-Marie Le Pen"
+        qualite: "Député européen et président d'honneur du Front National au moment des faits (2015)"
+        type: personne_physique
+    titre: "Contestation de crime contre l'humanité (« détail de l'histoire », propos de 2015)"
+    qualification_legale: "Contestation de l'existence de crimes contre l'humanité (loi du 29 juillet 1881, art. 24 bis)"
+    resume_factuel: "Poursuivi pour avoir réitéré le 2 avril 2015 sur BFMTV/RMC sa qualification des chambres à gaz comme « détail de l'histoire », Jean-Marie Le Pen a été condamné en 2016 puis par la cour d'appel de Paris le 1er mars 2017 à 30 000 € d'amende. Le 27 mars 2018, la Cour de cassation a rejeté son pourvoi, rendant la condamnation définitive."
+    juridiction: "Cour de cassation (chambre criminelle) — après CA de Paris et TGI de Paris"
+    dates_cles:
+      - date: "2015-04-02"
+        libelle: "Déclaration sur BFMTV/RMC"
+      - date: "2017-03-01"
+        libelle: "Arrêt de la cour d'appel de Paris (30 000 € d'amende)"
+      - date: "2018-03-27"
+        libelle: "Rejet du pourvoi par la Cour de cassation (condamnation définitive)"
+    date_derniere_decision: "2018-03-27"
+    peine:
+      amende: "30 000 € d'amende et dommages et intérêts aux associations parties civiles"
+      note_recours: "Condamnation définitive — pourvoi rejeté le 27 mars 2018."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de 2018 cité par Public Sénat et RTS Info, lien Légifrance non indexé directement dans notre vérification."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/chambres-a-gaz-qualifiees-de-detail-jean-marie-le-pen-definitivement-condamne"
+        type: presse
+        titre: "Chambres à gaz qualifiées de « détail » : Jean-Marie Le Pen définitivement condamné"
+        editeur: "Public Sénat"
+        date_publication: "2018-03-27"
+        date_consultation: "2026-11-26"
+      - url: "https://www.rts.ch/info/monde/9443204-jeanmarie-le-pen-definitivement-condamne-dans-laffaire-du-detail.html"
+        type: presse
+        titre: "Jean-Marie Le Pen définitivement condamné dans l'affaire du « détail »"
+        editeur: "RTS Info"
+        date_publication: "2018-03-27"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-le-pen-relaxe-daech-2021
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Marine Le Pen (et Gilbert Collard, député)"
+    fighter_slugs: [lepen]
+    personnes_et_entites:
+      - nom: "Marine Le Pen"
+        qualite: "Présidente du FN/RN, députée (relaxée)"
+        type: personne_physique
+      - nom: "Gilbert Collard"
+        qualite: "Député, co-prévenu (relaxé)"
+        type: personne_physique
+    titre: "Diffusion d'images violentes de Daech (2015) — Relaxe"
+    qualification_legale: "Diffusion de message à caractère violent susceptible d'être vu par un mineur (art. 227-24 CP — relaxe)"
+    resume_factuel: "Poursuivie après avoir publié sur Twitter en décembre 2015 trois photographies d'exactions de Daech, Marine Le Pen (ainsi que Gilbert Collard) a été relaxée le 4 mai 2021 par le tribunal correctionnel de Nanterre au nom de la liberté d'expression et du débat d'intérêt général."
+    juridiction: "Tribunal correctionnel de Nanterre (14e chambre)"
+    dates_cles:
+      - date: "2015-12-16"
+        libelle: "Publication des messages sur Twitter"
+      - date: "2021-05-04"
+        libelle: "Jugement de relaxe prononcé par le tribunal correctionnel de Nanterre"
+    date_derniere_decision: "2021-05-04"
+    peine:
+      note_recours: "Relaxe prononcée en première instance."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Jugement correctionnel de mai 2021 antérieur à l'open data généralisé ; confirmé par la presse."
+    sources:
+      - url: "https://www.lecourrierdelatlas.com/marine-le-pen-relaxee-dans-l-affaire-des-images-de-daech/"
+        type: presse
+        titre: "Marine Le Pen relaxée dans l'affaire des images de Daech"
+        editeur: "Le Courrier de l'Atlas"
+        date_publication: "2021-05-04"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: rn-le-pen-relaxe-tract-henin-2015
+    camp: RN
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Marine Le Pen (législatives 2012 à Hénin-Beaumont)"
+    fighter_slugs: [lepen]
+    personnes_et_entites:
+      - nom: "Marine Le Pen"
+        qualite: "Présidente du Front National (relaxée en appel)"
+        type: personne_physique
+    titre: "Tract d'Hénin-Beaumont (législatives 2012) — Relaxe en appel"
+    qualification_legale: "Manœuvre frauduleuse électorale et publication de montage sans consentement (relaxe en appel)"
+    resume_factuel: "Poursuivie sur plainte de Jean-Luc Mélenchon pour un tract diffusé durant les législatives de juin 2012 à Hénin-Beaumont, Marine Le Pen avait été condamnée en 1re instance (10 000 € d'amende le 3 avril 2014) puis relaxée par la cour d'appel de Douai le 19 mai 2015, faute de preuve d'implication directe."
+    juridiction: "Cour d'appel de Douai — après tribunal correctionnel de Béthune"
+    dates_cles:
+      - date: "2014-04-03"
+        libelle: "Condamnation en première instance à Béthune (10 000 € d'amende)"
+      - date: "2015-05-19"
+        libelle: "Arrêt de relaxe de la cour d'appel de Douai"
+    date_derniere_decision: "2015-05-19"
+    peine:
+      note_recours: "Relaxe en appel (décision définitive sur le plan pénal)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt de cour d'appel de 2015 antérieur au déploiement de l'open data."
+    sources:
+      - url: "https://www.publicsenat.fr/actualites/politique/marine-le-pen-perd-son-proces-contre-l-avocate-de-melenchon-55200"
+        type: presse
+        titre: "Marine Le Pen perd son procès contre l'avocate de Mélenchon (rappel de la relaxe de Douai)"
+        editeur: "Public Sénat"
+        date_publication: "2017-02"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
   - id: rn-jacobelli-outrage-belhaddad
     camp: RN
     categorie: presse_expression
@@ -216,6 +345,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Laurent Jacobelli (député RN)"
+    fighter_slugs: [jacobelli]
     personnes_et_entites:
       - nom: "Laurent Jacobelli"
         qualite: "Député RN de la Moselle, porte-parole du parti"
@@ -255,6 +385,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_morale_et_physique
     entite_principale: "Compte de campagne présidentielle 2022 de Marine Le Pen (information judiciaire)"
+    fighter_slugs: [lepen]
     personnes_et_entites:
       - nom: "Campagne présidentielle 2022 de Marine Le Pen"
         qualite: "Compte de campagne visé par un signalement CNCCFP"
@@ -307,6 +438,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_morale
     entite_principale: "Ancien groupe parlementaire européen Identité et Démocratie (ID, 2019-2024)"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Groupe Identité et Démocratie (ID)"
         qualite: "Ancien groupe politique au Parlement européen réunissant notamment les eurodéputés RN"
@@ -350,6 +482,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_morale_et_physique
     entite_principale: "Information judiciaire sur des soupçons de fuites vers le Rassemblement National"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Rassemblement National (siège perquisitionné)"
         qualite: "Parti politique concerné par les perquisitions de novembre 2026"
@@ -379,8 +512,54 @@ cases:
     verified_at: "2026-11-26"
 
   # =========================================================================
-  # CAMP LFI — LA FRANCE INSOUMISE
+  # CAMP LFI — LA FRANCE INSOUMISE / FRONT DE GAUCHE (2010-2026)
   # =========================================================================
+  - id: lfi-melenchon-relaxe-fasciste-2017
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: relaxe
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Luc Mélenchon (Front de Gauche / LFI)"
+    fighter_slugs: [melenchon]
+    personnes_et_entites:
+      - nom: "Jean-Luc Mélenchon"
+        qualite: "Député européen / Président du Parti de Gauche au moment des faits (2011), relaxé"
+        type: personne_physique
+    titre: "Poursuites pour injure publique (« fasciste », 2011) — Relaxe définitive"
+    qualification_legale: "Injure publique envers un particulier (loi du 29 juillet 1881 — relaxe définitive)"
+    resume_factuel: "Poursuivi par Marine Le Pen après l'avoir qualifiée de « fasciste » le 5 mars 2011 sur iTÉLÉ, Jean-Luc Mélenchon a été relaxé en première instance (avril 2014) puis par la cour d'appel de Paris (7 octobre 2015). Le 28 février 2017, la chambre criminelle de la Cour de cassation a rejeté le pourvoi de Marine Le Pen, rendant la relaxe définitive."
+    juridiction: "Cour de cassation (chambre criminelle) — après TJ de Paris et CA de Paris"
+    dates_cles:
+      - date: "2011-03-05"
+        libelle: "Propos tenus sur iTÉLÉ"
+      - date: "2015-10-07"
+        libelle: "Confirmation de la relaxe par la cour d'appel de Paris"
+      - date: "2017-02-28"
+        libelle: "Rejet du pourvoi de Marine Le Pen par la Cour de cassation (relaxe définitive)"
+    date_derniere_decision: "2017-02-28"
+    peine:
+      note_recours: "Relaxe définitive (Cass. crim., 28 février 2017)."
+    references_judiciaires:
+      - "Cass. crim., 28 février 2017 (JURITEXT000034140871)"
+    confirmation_primaire: confirme
+    sources:
+      - url: "https://www.legifrance.gouv.fr/juri/id/JURITEXT000034140871"
+        type: primaire
+        titre: "Cour de cassation, chambre criminelle, 28 février 2017"
+        editeur: "Légifrance"
+        date_publication: "2017-02-28"
+        date_consultation: "2026-11-26"
+      - url: "https://www.publicsenat.fr/actualites/politique/fasciste-marine-le-pen-definitivement-deboutee-contre-jean-luc-melenchon-56342"
+        type: presse
+        titre: "« Fasciste » : Marine Le Pen définitivement déboutée contre Jean-Luc Mélenchon"
+        editeur: "Public Sénat"
+        date_publication: "2017-02-28"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
   - id: lfi-perquisition-bobigny-2019
     camp: LFI
     categorie: ordre_public_biens
@@ -390,6 +569,7 @@ cases:
     presomption_innocence: false
     type_entite: personne_physique
     entite_principale: "Jean-Luc Mélenchon et responsables nationaux de LFI"
+    fighter_slugs: [melenchon, bompard]
     personnes_et_entites:
       - nom: "Jean-Luc Mélenchon"
         qualite: "Alors député et président du groupe LFI"
@@ -444,6 +624,82 @@ cases:
         date_consultation: "2026-11-26"
     verified_at: "2026-11-26"
 
+  - id: lfi-melenchon-diffamation-paranagua-2022
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: condamnation_definitive
+    est_definitif: true
+    presomption_innocence: false
+    type_entite: personne_physique
+    entite_principale: "Jean-Luc Mélenchon"
+    fighter_slugs: [melenchon]
+    personnes_et_entites:
+      - nom: "Jean-Luc Mélenchon"
+        qualite: "Fondateur et chef de file de LFI"
+        type: personne_physique
+    titre: "Diffamation publique envers le journaliste Paulo Paranaguá (blog, 2016)"
+    qualification_legale: "Diffamation publique envers un particulier (loi du 29 juillet 1881)"
+    resume_factuel: "Poursuivi pour un billet de blog de novembre 2016 qualifiant un journaliste du Monde d'« assassin repenti », Jean-Luc Mélenchon a été condamné le 24 septembre 2021 par le tribunal correctionnel de Paris puis confirmé en appel en juin 2022 à 500 € d'amende avec sursis."
+    juridiction: "Cour d'appel de Paris — après tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2021-09-24"
+        libelle: "Jugement du tribunal correctionnel de Paris (500 € d'amende avec sursis)"
+      - date: "2022-06-15"
+        libelle: "Confirmation par la cour d'appel de Paris"
+    date_derniere_decision: "2022-06-15"
+    peine:
+      amende: "500 € d'amende avec sursis et dommages et intérêts"
+      note_recours: "Condamnation confirmée en appel en juin 2022 (aucun pourvoi ultérieur rapporté)."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Arrêt d'appel de juin 2022 non localisé en accès public direct sur Judilibre ; documenté par Poligraph."
+    sources:
+      - url: "https://poligraph.fr/affaires/jean-luc-melenchon-condamnation-de-jean-luc-melenchon-pour-diffamation-envers-paulo-paranagua"
+        type: presse
+        titre: "Condamnation de Jean-Luc Mélenchon pour diffamation envers Paulo Paranaguá"
+        editeur: "Poligraph"
+        date_publication: "2022-06"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
+  - id: lfi-melenchon-injure-radio-france-2022
+    camp: LFI
+    categorie: presse_expression
+    section: decisions
+    statut: condamne_premiere_instance
+    est_definitif: false
+    presomption_innocence: true
+    type_entite: personne_physique
+    entite_principale: "Jean-Luc Mélenchon"
+    fighter_slugs: [melenchon]
+    personnes_et_entites:
+      - nom: "Jean-Luc Mélenchon"
+        qualite: "Député et chef de file de LFI"
+        type: personne_physique
+    titre: "Injure publique et diffamation envers des journalistes de Radio France (2018)"
+    qualification_legale: "Injure publique et diffamation publique envers des particuliers (loi du 29 juillet 1881)"
+    resume_factuel: "Condamné en première instance en janvier 2022 par le tribunal correctionnel de Paris à 500 € d'amende avec sursis et des dommages et intérêts après des propos tenus sur les réseaux sociaux visant la cellule investigation de Radio France ; appel interjeté par Jean-Luc Mélenchon."
+    juridiction: "Tribunal correctionnel de Paris"
+    dates_cles:
+      - date: "2022-01-20"
+        libelle: "Jugement du tribunal correctionnel de Paris (500 € avec sursis ; appel formé)"
+    date_derniere_decision: "2022-01-20"
+    peine:
+      amende: "500 € d'amende avec sursis et dommages et intérêts à Radio France"
+      note_recours: "CONDAMNATION NON DÉFINITIVE : appel interjeté sans issue d'appel confirmée dans les sources consultées ; présumé innocent par prudence."
+    references_judiciaires: []
+    confirmation_primaire: non_confirme_en_ligne
+    motif_absence_source_primaire: "Décision correctionnelle non localisée en open data direct ; documentée par Poligraph."
+    sources:
+      - url: "https://poligraph.fr/affaires/jean-luc-melenchon-condamnation-de-jean-luc-melenchon-pour-injure-publique-et-diffamation-envers-radio-france"
+        type: presse
+        titre: "Condamnation de Jean-Luc Mélenchon pour injure publique et diffamation envers Radio France"
+        editeur: "Poligraph"
+        date_publication: "2022-01"
+        date_consultation: "2026-11-26"
+    verified_at: "2026-11-26"
+
   - id: lfi-diouara-diffamation-2026
     camp: LFI
     categorie: presse_expression
@@ -453,6 +709,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Aly Diouara (député LFI)"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Aly Diouara"
         qualite: "Député LFI de Seine-Saint-Denis"
@@ -492,6 +749,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Andrée Taurinya (députée LFI)"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Andrée Taurinya"
         qualite: "Députée LFI de la Loire"
@@ -537,6 +795,7 @@ cases:
     presomption_innocence: false
     type_entite: personne_physique
     entite_principale: "Mathilde Panot (députée et présidente du groupe LFI)"
+    fighter_slugs: [panot]
     personnes_et_entites:
       - nom: "Mathilde Panot"
         qualite: "Députée et présidente du groupe parlementaire LFI"
@@ -580,6 +839,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Sébastien Delogu (député LFI)"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Sébastien Delogu"
         qualite: "Député LFI des Bouches-du-Rhône"
@@ -619,6 +879,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Sophia Chikirou (députée LFI)"
+    fighter_slugs: [chikirou]
     personnes_et_entites:
       - nom: "Sophia Chikirou"
         qualite: "Députée LFI de Paris (faits de 2018 relatifs à la direction du Média)"
@@ -663,6 +924,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_morale_et_physique
     entite_principale: "Sophia Chikirou, Bastien Lachaud, Marie-Pierre Oprandi et L'Ère du peuple"
+    fighter_slugs: [chikirou, melenchon]
     personnes_et_entites:
       - nom: "Sophia Chikirou"
         qualite: "Députée LFI, ex-directrice de communication (mise en examen)"
@@ -719,6 +981,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Assistants parlementaires européens LFI (législature 2009-2017)"
+    fighter_slugs: [melenchon]
     personnes_et_entites:
       - nom: "Jean-Luc Mélenchon (non mis en examen)"
         qualite: "Ex-député européen (aucune mise en examen prononcée)"
@@ -765,6 +1028,7 @@ cases:
     presomption_innocence: true
     type_entite: personne_physique
     entite_principale: "Rima Hassan (eurodéputée LFI)"
+    fighter_slugs: []
     personnes_et_entites:
       - nom: "Rima Hassan"
         qualite: "Députée européenne LFI"

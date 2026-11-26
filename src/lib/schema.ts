@@ -98,6 +98,7 @@ export const CaseSchema = z
     date_derniere_decision: IsoDateSchema,
     peine: PeineSchema.nullable().optional(),
     references_judiciaires: z.array(z.string().min(2)).default([]),
+    fighter_slugs: z.array(z.string().min(2)).default([]),
     confirmation_primaire: z.enum(['confirme', 'non_confirme_en_ligne']),
     motif_absence_source_primaire: z.string().min(10).optional(),
     sources: z.array(SourceSchema).min(1, 'Au moins une source est obligatoire'),

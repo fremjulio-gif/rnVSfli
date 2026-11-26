@@ -1,0 +1,28 @@
+{
+  "name": "versus-rn-lfi",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Comparateur factuel et sourcé des procédures judiciaires visant le RN et LFI (date de référence : 26/11/2026).",
+  "scripts": {
+    "dev": "astro dev",
+    "validate:data": "node scripts/validate-data.ts",
+    "build": "node scripts/validate-data.ts && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check:links": "uv run scripts/check_links.py",
+    "check": "node scripts/validate-data.ts && astro check && astro build && uv run scripts/check_links.py"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.5",
+    "@fontsource/press-start-2p": "^5.2.5",
+    "astro": "^5.5.0",
+    "js-yaml": "^4.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/js-yaml": "^4.0.9",
+    "typescript": "^5.8.2"
+  }
+}

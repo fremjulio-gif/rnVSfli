@@ -3,7 +3,7 @@
     "title": "VERSUS — Situation judiciaire RN / LFI",
     "subtitle": "Comparateur factuel, symétrique et sourcé",
     "referenceDate": "26/11/2026",
-    "disclaimer": "Outil d'information factuelle et documentaire. Ne constitue ni un avis juridique ni une prise de position politique. Toute personne non définitivement condamnée est présumée innocente (art. 9-1 C. civ.).",
+    "disclaimer": "Outil d'information factuelle et documentaire. Il ne constitue ni un avis juridique ni une prise de position politique. Toute personne qui n'est pas définitivement condamnée reste présumée innocente (article 9-1 du Code civil).",
     "repoIssuesUrl": "https://github.com/fremjulio-gif/rnVSfli/issues/new"
   },
   "nav": {
@@ -12,12 +12,14 @@
     "legal": "Mentions légales"
   },
   "controls": {
-    "soundOff": "SON: OFF",
-    "soundOn": "SON: ON",
-    "crtOn": "CRT: ON",
-    "crtOff": "CRT: OFF",
-    "hapticOff": "VIBR: OFF",
-    "hapticOn": "VIBR: ON"
+    "textNormal": "Texte : Normal",
+    "textLarge": "Texte : Grand (A+)",
+    "soundOff": "Sons : Coupés",
+    "soundOn": "Sons : Activés",
+    "crtOff": "Effet rétro : Non",
+    "crtOn": "Effet rétro : Oui",
+    "hapticOff": "Vibrations : Non",
+    "hapticOn": "Vibrations : Oui"
   },
   "camps": {
     "RN": {
@@ -28,86 +30,133 @@
     "LFI": {
       "short": "LFI",
       "name": "La France insoumise",
-      "former": "Mouvement et groupe parlementaire"
+      "former": "et Front de Gauche (2010–2015)"
     }
   },
   "categories": {
     "financement_probite": {
-      "round": "ROUND 1",
+      "round": "MANCHE 1",
       "label": "Financement politique & probité",
-      "definition": "Qualifications pénales relatives aux fonds publics ou électoraux : détournement de fonds publics, recel ou complicité, abus de biens sociaux, escroquerie, faux et infractions aux règles de financement des campagnes."
+      "definition": "Affaires portant sur l'argent public ou électoral : détournement de fonds publics, recel, abus de biens sociaux, escroquerie, faux ou financement irrégulier de campagnes."
     },
     "presse_expression": {
-      "round": "ROUND 2",
+      "round": "MANCHE 2",
       "label": "Presse & expression publique",
-      "definition": "Infractions liées à la parole publique ou politique : diffamation publique ou non publique (loi du 29 juillet 1881), outrage envers une personne chargée d'une mission de service public, apologie du terrorisme."
+      "definition": "Affaires liées aux propos tenus dans l'espace public : diffamation, injure publique, outrage à personne dépositaire de l'autorité ou apologie du terrorisme."
     },
     "ordre_public_biens": {
-      "round": "ROUND 3",
+      "round": "MANCHE 3",
       "label": "Ordre public, personnes & biens",
-      "definition": "Atteintes aux personnes, aux biens ou à l'autorité judiciaire : rébellion, provocation, actes d'intimidation, violences volontaires, vol, violation du secret professionnel ou du secret de l'enquête."
+      "definition": "Autres infractions pénales liées à l'action publique : rébellion, provocation, violences, vol, intimidation ou violation du secret de l'enquête."
     }
   },
   "statuts": {
     "condamnation_definitive": {
       "label": "Condamnation définitive",
+      "plain": "Tous les recours sont épuisés ou le délai est dépassé : la condamnation ne peut plus être contestée.",
       "glyph": "■",
       "tone": "definitive"
     },
     "condamne_appel": {
-      "label": "Condamné en appel (recours possible/en cours)",
+      "label": "Condamné en appel (recours en cours ou possible)",
+      "plain": "Une cour d'appel a prononcé une condamnation, mais un recours devant la Cour de cassation est en cours ou possible. La personne reste présumée innocente tant que la décision n'est pas définitive.",
       "glyph": "▲",
       "tone": "pending_appeal"
     },
     "condamne_premiere_instance": {
       "label": "Condamné en 1re instance (non définitif)",
+      "plain": "Un premier tribunal a prononcé une condamnation, mais un appel est en cours ou possible. En appel, l'affaire est rejugée et la personne reste présumée innocente.",
       "glyph": "◆",
       "tone": "first_instance"
     },
     "relaxe": {
       "label": "Relaxé",
+      "plain": "Le tribunal a jugé que l'infraction n'était pas constituée ou pas prouvée : la personne est déclarée non coupable.",
       "glyph": "○",
       "tone": "cleared"
     },
     "non_lieu": {
       "label": "Non-lieu / Classé sans suite",
+      "plain": "La justice a mis fin aux poursuites sans procès, faute de charges suffisantes ou d'infraction caractérisée.",
       "glyph": "○",
       "tone": "cleared"
     },
     "prescription": {
       "label": "Prescription",
+      "plain": "Le délai légal pour poursuivre ou juger les faits était expiré.",
       "glyph": "◇",
       "tone": "cleared"
     },
     "renvoye": {
-      "label": "Renvoyé / En délibéré (présumé innocent)",
+      "label": "Renvoyé devant le tribunal / En délibéré (présumé innocent)",
+      "plain": "L'affaire est renvoyée devant un tribunal ou attend son jugement : aucune condamnation définitive n'est prononcée, la personne est présumée innocente.",
       "glyph": "▷",
       "tone": "ongoing"
     },
     "mis_en_examen": {
       "label": "Mis en examen (présumé innocent)",
+      "plain": "Un juge d'instruction estime qu'il existe des indices graves ou concordants justifiant d'enquêter davantage. Ce n'est pas une condamnation : la personne est présumée innocente.",
       "glyph": "◎",
       "tone": "ongoing"
     },
     "enquete": {
-      "label": "Enquête / Instruction (présumé innocent)",
+      "label": "Enquête / Instruction en cours (présumé innocent)",
+      "plain": "La justice vérifie les faits au stade de l'enquête ou de l'instruction. Aucune culpabilité n'est établie : la personne est présumée innocente.",
       "glyph": "?",
       "tone": "ongoing"
     }
   },
-  "titleScreen": {
-    "badge": "ARCHIVE JUDICIAIRE 16-BIT",
-    "pressStart": "PRESS START",
-    "skipToRounds": "Accès direct aux fiches"
-  },
+  "guide": [
+    {
+      "step": "1",
+      "title": "Ce que montre le pourcentage",
+      "body": "La barre en haut mesure uniquement la part des dossiers selon leur étape judiciaire (ex. condamnations définitives). Ce n'est ni un score, ni un classement de gravité."
+    },
+    {
+      "step": "2",
+      "title": "Présomption d'innocence",
+      "body": "Tant qu'un appel ou un pourvoi en cassation est en cours, ou qu'une enquête est ouverte, la personne concernée reste juridiquement présumée innocente."
+    },
+    {
+      "step": "3",
+      "title": "Vérifier chaque preuve",
+      "body": "Cliquez sur n'importe quel visage, point de la frise ou bouton « Lire le dossier » pour consulter le détail des faits, des peines et les liens officiels."
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Condamnation définitive",
+      "definition": "Décision de justice qui ne peut plus être contestée : soit parce que tous les recours (appel, cassation) ont été examinés, soit parce que personne n'a fait recours dans le délai."
+    },
+    {
+      "term": "Appel et pourvoi en cassation",
+      "definition": "L'appel permet de faire rejuger toute l'affaire. Le pourvoi en cassation vérifie si la loi a bien été appliquée ; en matière pénale, il suspend généralement l'exécution de la peine."
+    },
+    {
+      "term": "Exécution provisoire",
+      "definition": "Mesure exceptionnelle décidée par un tribunal pour qu'une peine (par exemple une inéligibilité) s'applique immédiatement, même si un appel est formé."
+    },
+    {
+      "term": "Relaxe, non-lieu ou classement sans suite",
+      "definition": "Trois issues sans condamnation : la relaxe acquitte après un procès ; le non-lieu et le classement sans suite ferment le dossier avant même qu'un procès n'ait lieu."
+    },
+    {
+      "term": "Enquête, mise en examen ou renvoi",
+      "definition": "Étapes préalables au jugement définitif. Elles servent à rechercher la vérité et ne constituent jamais une preuve de culpabilité."
+    },
+    {
+      "term": "Personne morale vs personne physique",
+      "definition": "La justice distingue un individu (personne physique, ex. un élu) d'une organisation (personne morale, ex. un parti politique ou une association)."
+    }
+  ],
   "ending": {
     "headline": "AUCUN VAINQUEUR. LA JUSTICE N'EST PAS UN JEU.",
-    "subhead": "Voici comment lire ces données avec rigueur :",
+    "subhead": "Les 4 réflexes pour bien interpréter ces chiffres :",
     "points": [
-      "Un pourvoi en cassation ou un appel est suspensif des peines (hors exécution provisoire spécifique) : toute personne non définitivement condamnée reste présumée innocente.",
-      "Les affaires ne sont pas additionnées dans un score unique : un détournement de fonds publics, une diffamation, un vol ou une rébellion ne relèvent pas des mêmes qualifications pénales.",
-      "Les personnes physiques et les personnes morales (partis, associations, prestataires) sont juridiquement distinctes.",
-      "Les procédures en cours sont présentées à part et ne préjugent d'aucune culpabilité."
+      "Un appel ou un pourvoi en cassation suspend en principe les peines (sauf exécution provisoire spécifique) : toute personne non définitivement condamnée reste présumée innocente.",
+      "Les dossiers ne s'additionnent pas comme des points : une diffamation, un vol, une rébellion ou un détournement de fonds publics n'ont ni la même nature ni les mêmes sanctions.",
+      "Les élus (personnes physiques) et les partis ou associations (personnes morales) sont jugés séparément.",
+      "Les enquêtes et procès en cours sont classés à part et ne préjugent d'aucune culpabilité."
     ]
   }
 }

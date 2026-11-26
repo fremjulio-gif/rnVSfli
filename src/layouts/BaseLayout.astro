@@ -1,7 +1,7 @@
 ---
 import '@fontsource/press-start-2p/400.css';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/700.css';
+import '@fontsource/atkinson-hyperlegible/400.css';
+import '@fontsource/atkinson-hyperlegible/700.css';
 import '../styles/arcade.css';
 import PixelAvatar from '../components/PixelAvatar.astro';
 import { getDict } from '../i18n';
@@ -45,16 +45,24 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <script is:inline>
+      try {
+        if (localStorage.getItem('versus-text-size') === 'large') {
+          document.documentElement.dataset.textSize = 'large';
+        }
+      } catch {}
+    </script>
   </head>
-  <body data-crt="on">
-    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+  <body data-crt="off">
+    <a class="skip-link" href="#main-content">Aller directement au contenu principal</a>
 
     <header class="topbar">
       <div class="container topbar-inner">
-        <a class="brand" href="/" aria-label="VERSUS — Accueil">
-          <PixelAvatar variant="versus" size={32} />
+        <a class="brand" href="/" aria-label="VERSUS — Retour à l'accueil">
+          <PixelAvatar variant="versus" size={34} />
           <span class="brand-name">VERSUS</span>
-          <span class="brand-date">RÉF. {dict.site.referenceDate}</span>
+          <span class="brand-date">À jour au {dict.site.referenceDate}</span>
         </a>
 
         <nav class="nav-links" aria-label="Navigation principale">
@@ -81,13 +89,22 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
           </a>
         </nav>
 
-        <div class="controls-bar" role="group" aria-label="Préférences d'interface">
+        <div class="controls-bar" role="group" aria-label="Confort de lecture et préférences">
+          <button
+            type="button"
+            id="toggle-text-size"
+            class="arcade-btn arcade-btn--sm arcade-btn--comfort"
+            aria-pressed="false"
+            title="Agrandir la taille de tous les textes pour faciliter la lecture"
+          >
+            {dict.controls.textNormal}
+          </button>
           <button
             type="button"
             id="toggle-sound"
             class="arcade-btn arcade-btn--sm"
             aria-pressed="false"
-            title="Activer ou couper les sons 8-bit générés localement (désactivés par défaut)"
+            title="Activer ou couper les sons rétro (coupés par défaut)"
           >
             {dict.controls.soundOff}
           </button>
@@ -95,17 +112,17 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
             type="button"
             id="toggle-crt"
             class="arcade-btn arcade-btn--sm"
-            aria-pressed="true"
-            title="Activer ou couper l'effet léger de lignes CRT"
+            aria-pressed="false"
+            title="Activer ou couper les fines lignes d'écran rétro"
           >
-            {dict.controls.crtOn}
+            {dict.controls.crtOff}
           </button>
           <button
             type="button"
             id="toggle-haptic"
-            class="arcade-btn arcade-btn--sm"
+            class="arcade-btn arcade-btn--sm mobile-only-control"
             aria-pressed="false"
-            title="Activer ou couper les micro-vibrations mobiles"
+            title="Activer ou couper les légères vibrations sur mobile"
           >
             {dict.controls.hapticOff}
           </button>
@@ -120,16 +137,16 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
-          <p style="margin: 0 0 0.45rem; color: var(--ink-primary);">
-            <strong>VERSUS</strong> — Date de référence : {dict.site.referenceDate}
+          <p style="margin: 0 0 0.5rem; color: var(--ink-primary);">
+            <strong>VERSUS</strong> — Informations vérifiées au {dict.site.referenceDate}
           </p>
           <p style="margin: 0; max-width: 72ch;">
             {dict.site.disclaimer}
           </p>
         </div>
         <div class="footer-links">
-          <a href="/methodologie">Méthodologie &amp; sources</a>
-          <a href="/mentions-legales">Mentions légales &amp; rectification</a>
+          <a href="/methodologie">Méthodologie et sources</a>
+          <a href="/mentions-legales">Mentions légales et rectification</a>
           <a
             href={dict.site.repoIssuesUrl}
             target="_blank"
@@ -144,15 +161,44 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
     <script>
       import { arcadeSynth } from '../scripts/sound';
 
+      const textSizeBtn = document.getElementById('toggle-text-size') as HTMLButtonElement | null;
       const soundBtn = document.getElementById('toggle-sound') as HTMLButtonElement | null;
       const crtBtn = document.getElementById('toggle-crt') as HTMLButtonElement | null;
       const hapticBtn = document.getElementById('toggle-haptic') as HTMLButtonElement | null;
+
+      function syncTextSizeButton() {
+        const isLarge = document.documentElement.dataset.textSize === 'large';
+        if (textSizeBtn) {
+          textSizeBtn.setAttribute('aria-pressed', String(isLarge));
+          textSizeBtn.textContent = isLarge ? 'Texte : Grand (A+)' : 'Texte : Normal';
+        }
+      }
+
+      syncTextSizeButton();
+
+      textSizeBtn?.addEventListener('click', () => {
+        const nextLarge = document.documentElement.dataset.textSize !== 'large';
+        if (nextLarge) {
+          document.documentElement.dataset.textSize = 'large';
+          try {
+            localStorage.setItem('versus-text-size', 'large');
+          } catch {}
+        } else {
+          delete document.documentElement.dataset.textSize;
+          try {
+            localStorage.removeItem('versus-text-size');
+          } catch {}
+        }
+        syncTextSizeButton();
+        arcadeSynth.play('uiSelect');
+        arcadeSynth.vibrate(8);
+      });
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.body.setAttribute('data-crt', 'off');
         if (crtBtn) {
           crtBtn.setAttribute('aria-pressed', 'false');
-          crtBtn.textContent = 'CRT: OFF';
+          crtBtn.textContent = 'Effet rétro : Non';
         }
       }
 
@@ -160,7 +206,7 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
         const next = !arcadeSynth.isEnabled();
         arcadeSynth.setEnabled(next);
         soundBtn.setAttribute('aria-pressed', String(next));
-        soundBtn.textContent = next ? 'SON: ON' : 'SON: OFF';
+        soundBtn.textContent = next ? 'Sons : Activés' : 'Sons : Coupés';
         if (next) {
           arcadeSynth.play('uiConfirm');
         }
@@ -172,7 +218,7 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
         const next = !current;
         document.body.setAttribute('data-crt', next ? 'on' : 'off');
         crtBtn.setAttribute('aria-pressed', String(next));
-        crtBtn.textContent = next ? 'CRT: ON' : 'CRT: OFF';
+        crtBtn.textContent = next ? 'Effet rétro : Oui' : 'Effet rétro : Non';
         arcadeSynth.play('uiSelect');
         arcadeSynth.vibrate(8);
       });
@@ -181,7 +227,7 @@ const ogImageUrl = new URL('/og-image.svg', Astro.site ?? 'https://rnvsfli.verce
         const next = !arcadeSynth.isHapticEnabled();
         arcadeSynth.setHapticEnabled(next);
         hapticBtn.setAttribute('aria-pressed', String(next));
-        hapticBtn.textContent = next ? 'VIBR: ON' : 'VIBR: OFF';
+        hapticBtn.textContent = next ? 'Vibrations : Oui' : 'Vibrations : Non';
         arcadeSynth.play('uiSelect');
         if (next) arcadeSynth.vibrate(14);
       });

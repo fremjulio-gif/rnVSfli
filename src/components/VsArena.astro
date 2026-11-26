@@ -22,6 +22,10 @@ const rnAllies = rnFighters.filter((f) => !f.isLeader);
 function countFighterCases(slug: string): number {
   return cases.filter((c) => c.fighter_slugs.includes(slug)).length;
 }
+
+function formatDossierCount(count: number): string {
+  return count <= 1 ? `${count} dossier` : `${count} dossiers`;
+}
 ---
 
 <section class="vs-arena" aria-labelledby="arena-heading">
@@ -33,10 +37,14 @@ function countFighterCases(slug: string): number {
 
   <div class="container vs-arena__inner">
     <div class="vs-arena__topmeta">
-      <span class="hero-badge">ARCADE DATA · 2010–2026 · RÉF. 26/11/2026</span>
+      <span class="hero-badge">DOSSIERS JUDICIAIRES COMPARÉS · 2010–2026 · À JOUR AU 26/11/2026</span>
       <h1 id="arena-heading" class="visually-hidden">
         VERSUS — La France insoumise face au Rassemblement National (2010–2026)
       </h1>
+      <p class="arena-subtitle">
+        La France insoumise face au Rassemblement National : comparez de façon neutre et sourcée
+        les décisions de justice et les procédures en cours.
+      </p>
     </div>
 
     <!-- HUD DE POURCENTAGE FACE-À-FACE -->
@@ -45,7 +53,7 @@ function countFighterCases(slug: string): number {
         <!-- Côté LFI (Gauche) -->
         <div class="hud-side hud-side--lfi">
           <div class="hud-side__head">
-            <span class="hud-camp-tag hud-camp-tag--lfi">P1 · LFI / FDG</span>
+            <span class="hud-camp-tag hud-camp-tag--lfi">La France insoumise (LFI / ex-FdG)</span>
             <span class="hud-pct hud-pct--lfi" id="hud-lfi-pct">{lfiMetrics.definitivePct}%</span>
           </div>
           <div class="hud-track hud-track--left" aria-hidden="true">
@@ -56,7 +64,7 @@ function countFighterCases(slug: string): number {
             ></div>
           </div>
           <div class="hud-ratio" id="hud-lfi-ratio">
-            {lfiMetrics.definitiveConvictions} / {lfiMetrics.totalCases} dossiers recensés
+            {lfiMetrics.definitiveConvictions} sur {lfiMetrics.totalCases} dossiers recensés
           </div>
         </div>
 
@@ -71,7 +79,7 @@ function countFighterCases(slug: string): number {
         <div class="hud-side hud-side--rn">
           <div class="hud-side__head hud-side__head--rn">
             <span class="hud-pct hud-pct--rn" id="hud-rn-pct">{rnMetrics.definitivePct}%</span>
-            <span class="hud-camp-tag hud-camp-tag--rn">P2 · RN (EX-FN)</span>
+            <span class="hud-camp-tag hud-camp-tag--rn">Rassemblement National (RN / ex-FN)</span>
           </div>
           <div class="hud-track hud-track--right" aria-hidden="true">
             <div
@@ -81,20 +89,20 @@ function countFighterCases(slug: string): number {
             ></div>
           </div>
           <div class="hud-ratio hud-ratio--rn" id="hud-rn-ratio">
-            {rnMetrics.definitiveConvictions} / {rnMetrics.totalCases} dossiers recensés
+            {rnMetrics.definitiveConvictions} sur {rnMetrics.totalCases} dossiers recensés
           </div>
         </div>
       </div>
 
       <!-- Sélecteur de métrique % -->
-      <div class="hud-switcher" role="group" aria-label="Choisir l'indicateur en pourcentage">
+      <div class="hud-switcher" role="group" aria-label="Choisir quel type de situation comparer">
         <button
           type="button"
           class="hud-metric-btn"
           data-metric="definitive"
           aria-pressed="true"
         >
-          ■ Cond. définitives (%)
+          ■ Condamnations définitives
         </button>
         <button
           type="button"
@@ -102,7 +110,7 @@ function countFighterCases(slug: string): number {
           data-metric="pending"
           aria-pressed="false"
         >
-          ▲ Sous recours (%)
+          ▲ Condamnations sous recours
         </button>
         <button
           type="button"
@@ -110,7 +118,7 @@ function countFighterCases(slug: string): number {
           data-metric="cleared"
           aria-pressed="false"
         >
-          ○ Relaxes / Classés (%)
+          ○ Relaxes et classements
         </button>
         <button
           type="button"
@@ -118,12 +126,12 @@ function countFighterCases(slug: string): number {
           data-metric="ongoing"
           aria-pressed="false"
         >
-          ◎ En cours (%)
+          ◎ Procédures en cours
         </button>
       </div>
       <p class="hud-caption" id="hud-metric-caption">
         Part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive.
-        Cliquez sur un sprite pour consulter ses dossiers.
+        Cliquez sur un portrait ci-dessous pour lire ses dossiers.
       </p>
     </div>
 
@@ -134,12 +142,12 @@ function countFighterCases(slug: string): number {
         type="button"
         class="sprite-hero sprite-hero--lfi"
         data-open-fighter={lfiLeader.slug}
-        title={`Ouvrir les dossiers de ${lfiLeader.name}`}
+        title={`Lire les dossiers concernant ${lfiLeader.name}`}
       >
         <span class="sprite-hero__aura sprite-hero__aura--lfi" aria-hidden="true"></span>
         <img
           src={lfiLeader.image}
-          alt={`Sprite pixel-art de ${lfiLeader.name}`}
+          alt={`Portrait pixel-art de ${lfiLeader.name}`}
           width="352"
           height="424"
           loading="eager"
@@ -147,9 +155,9 @@ function countFighterCases(slug: string): number {
           class="pixel-sprite"
         />
         <span class="sprite-hero__pedestal sprite-hero__pedestal--lfi">
-          <span class="sprite-hero__tag">GAUCHE · LFI / FDG</span>
+          <span class="sprite-hero__tag">La France insoumise</span>
           <strong>{lfiLeader.name}</strong>
-          <small>{countFighterCases(lfiLeader.slug)} dossier(s) · Voir →</small>
+          <small>{formatDossierCount(countFighterCases(lfiLeader.slug))} · Cliquer →</small>
         </span>
       </button>
 
@@ -162,30 +170,25 @@ function countFighterCases(slug: string): number {
           shape-rendering="crispEdges"
           class="vs-pixel-svg"
         >
-          <!-- Cadre octogonal sombre -->
           <rect x="4" y="1" width="16" height="22" fill="#0B0E17" />
           <rect x="1" y="4" width="22" height="16" fill="#0B0E17" />
           <rect x="2" y="2" width="20" height="20" fill="#141929" />
-          <!-- Bordure bicolore ambre/cyan -->
           <rect x="4" y="1" width="8" height="1" fill="#F5B73B" />
           <rect x="12" y="1" width="8" height="1" fill="#4CC9F0" />
           <rect x="4" y="22" width="8" height="1" fill="#F5B73B" />
           <rect x="12" y="22" width="8" height="1" fill="#4CC9F0" />
           <rect x="1" y="4" width="1" height="16" fill="#F5B73B" />
           <rect x="22" y="4" width="1" height="16" fill="#4CC9F0" />
-          <!-- Éclair diagonal -->
           <rect x="12" y="3" width="2" height="4" fill="#F5B73B" />
           <rect x="11" y="7" width="3" height="4" fill="#F2F5FA" />
           <rect x="10" y="11" width="4" height="3" fill="#F2F5FA" />
           <rect x="10" y="14" width="3" height="4" fill="#4CC9F0" />
           <rect x="9" y="18" width="2" height="3" fill="#4CC9F0" />
-          <!-- Lettres pixel V et S -->
           <rect x="4" y="6" width="2" height="7" fill="#F2F5FA" />
           <rect x="8" y="6" width="2" height="7" fill="#F2F5FA" />
           <rect x="5" y="13" width="2" height="3" fill="#F2F5FA" />
           <rect x="7" y="13" width="2" height="3" fill="#F2F5FA" />
           <rect x="6" y="16" width="2" height="2" fill="#F5B73B" />
-
           <rect x="15" y="6" width="5" height="2" fill="#F2F5FA" />
           <rect x="14" y="8" width="2" height="3" fill="#F2F5FA" />
           <rect x="15" y="11" width="4" height="2" fill="#F2F5FA" />
@@ -200,12 +203,12 @@ function countFighterCases(slug: string): number {
         type="button"
         class="sprite-hero sprite-hero--rn"
         data-open-fighter={rnLeader.slug}
-        title={`Ouvrir les dossiers de ${rnLeader.name}`}
+        title={`Lire les dossiers concernant ${rnLeader.name}`}
       >
         <span class="sprite-hero__aura sprite-hero__aura--rn" aria-hidden="true"></span>
         <img
           src={rnLeader.image}
-          alt={`Sprite pixel-art de ${rnLeader.name}`}
+          alt={`Portrait pixel-art de ${rnLeader.name}`}
           width="352"
           height="432"
           loading="eager"
@@ -213,83 +216,88 @@ function countFighterCases(slug: string): number {
           class="pixel-sprite"
         />
         <span class="sprite-hero__pedestal sprite-hero__pedestal--rn">
-          <span class="sprite-hero__tag">DROITE · RN (EX-FN)</span>
+          <span class="sprite-hero__tag">Rassemblement National</span>
           <strong>{rnLeader.name}</strong>
-          <small>{countFighterCases(rnLeader.slug)} dossier(s) · Voir →</small>
+          <small>{formatDossierCount(countFighterCases(rnLeader.slug))} · Cliquer →</small>
         </span>
       </button>
     </div>
 
-    <!-- CHARACTER SELECT RAIL : 3 DÉPUTÉS LFI | 3 ÉLUS RN SOUS LES LEADERS -->
-    <div class="roster-rail">
-      <div class="roster-group roster-group--lfi" role="group" aria-label="Députés LFI liés aux dossiers">
-        {
-          lfiAllies.map((ally) => (
-            <button
-              type="button"
-              class="roster-card roster-card--lfi"
-              data-open-fighter={ally.slug}
-              title={`Voir les dossiers concernant ${ally.name}`}
-            >
-              <span class="roster-card__thumb">
-                <img
-                  src={ally.image}
-                  alt={ally.name}
-                  width="120"
-                  height="140"
-                  loading="eager"
-                  decoding="async"
-                  class="pixel-sprite"
-                />
-              </span>
-              <span class="roster-card__info">
-                <strong>{ally.shortName}</strong>
-                <span>{countFighterCases(ally.slug)} dossier(s)</span>
-              </span>
-            </button>
-          ))
-        }
-      </div>
+    <!-- RAIL DES ÉLUS SOUS LES LEADERS -->
+    <div class="roster-rail-wrap">
+      <p class="roster-rail-help">
+        Autres personnalités politiques concernées — cliquez sur un portrait pour ouvrir ses dossiers&nbsp;:
+      </p>
+      <div class="roster-rail">
+        <div class="roster-group roster-group--lfi" role="group" aria-label="Élus LFI liés aux dossiers">
+          {
+            lfiAllies.map((ally) => (
+              <button
+                type="button"
+                class="roster-card roster-card--lfi"
+                data-open-fighter={ally.slug}
+                title={`Lire les dossiers concernant ${ally.name}`}
+              >
+                <span class="roster-card__thumb">
+                  <img
+                    src={ally.image}
+                    alt={ally.name}
+                    width="120"
+                    height="140"
+                    loading="eager"
+                    decoding="async"
+                    class="pixel-sprite"
+                  />
+                </span>
+                <span class="roster-card__info">
+                  <strong>{ally.name}</strong>
+                  <span>{formatDossierCount(countFighterCases(ally.slug))}</span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
 
-      <div class="roster-group roster-group--rn" role="group" aria-label="Élus RN liés aux dossiers">
-        {
-          rnAllies.map((ally) => (
-            <button
-              type="button"
-              class="roster-card roster-card--rn"
-              data-open-fighter={ally.slug}
-              title={`Voir les dossiers concernant ${ally.name}`}
-            >
-              <span class="roster-card__thumb">
-                <img
-                  src={ally.image}
-                  alt={ally.name}
-                  width="120"
-                  height="140"
-                  loading="eager"
-                  decoding="async"
-                  class="pixel-sprite"
-                />
-              </span>
-              <span class="roster-card__info">
-                <strong>{ally.shortName}</strong>
-                <span>{countFighterCases(ally.slug)} dossier(s)</span>
-              </span>
-            </button>
-          ))
-        }
+        <div class="roster-group roster-group--rn" role="group" aria-label="Élus RN liés aux dossiers">
+          {
+            rnAllies.map((ally) => (
+              <button
+                type="button"
+                class="roster-card roster-card--rn"
+                data-open-fighter={ally.slug}
+                title={`Lire les dossiers concernant ${ally.name}`}
+              >
+                <span class="roster-card__thumb">
+                  <img
+                    src={ally.image}
+                    alt={ally.name}
+                    width="120"
+                    height="140"
+                    loading="eager"
+                    decoding="async"
+                    class="pixel-sprite"
+                  />
+                </span>
+                <span class="roster-card__info">
+                  <strong>{ally.name}</strong>
+                  <span>{formatDossierCount(countFighterCases(ally.slug))}</span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
       </div>
     </div>
 
     <div class="arena-cta-row">
       <a href="#dataviz-dashboard" class="arcade-btn arcade-btn--primary">
-        DATAVIZ &amp; FRISE 2010–2026
+        Voir les graphiques et la frise
       </a>
       <a href="#explorer-rounds" class="arcade-btn">
-        EXPLORER LES {cases.length} DOSSIERS
+        Lire les {cases.length} dossiers par thème
       </a>
       <a href="#procedures-en-cours" class="arcade-btn">
-        PROCÉDURES EN COURS
+        Voir les procédures en cours
       </a>
     </div>
   </div>

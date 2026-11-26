@@ -11,12 +11,12 @@ const dict = getDict('fr');
   description="Périmètre strict 2010–2026, règles de sourcing primaire, calcul des pourcentages et journal des exclusions."
 >
   <div class="container prose-page">
-    <h1 class="pixel-title" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1.25rem;">
-      MÉTHODOLOGIE &amp; PRINCIPES ÉDITORIAUX (2010–2026)
+    <h1 class="prose-page-title">
+      Méthodologie et règles éditoriales (2010–2026)
     </h1>
 
     <section class="pixel-frame prose-card">
-      <h2>1. Fenêtre temporelle 2010–2026 &amp; périmètre symétrique</h2>
+      <h2>1. Période 2010–2026 et périmètre symétrique</h2>
       <p>
         À la date de référence du <strong>{dict.site.referenceDate}</strong>, le comparateur couvre
         une fenêtre symétrique de <strong>2010 à 2026</strong> :
@@ -44,37 +44,39 @@ const dict = getDict('fr');
     </section>
 
     <section class="pixel-frame prose-card">
-      <h2>2. Calcul des pourcentages affichés dans l'arène VS</h2>
+      <h2>2. Calcul des pourcentages affichés en haut du comparateur</h2>
       <p>
-        L'indicateur en pourcentage affiché en haut de l'arène rapporte le nombre de dossiers d'un
-        statut donné au nombre total de dossiers recensés dans le périmètre pour ce camp sur
-        2010–2026 (avec le ratio exact affiché juste en dessous).
+        L'indicateur en pourcentage affiché en haut de la page rapporte le nombre de dossiers d'une
+        étape judiciaire donnée au nombre total de dossiers recensés dans le périmètre pour ce camp
+        sur 2010–2026 (avec le ratio exact affiché juste en dessous).
       </p>
       <ul>
         <li>
           <strong>Aucun score de gravité :</strong> ce pourcentage ne pondère ni la gravité des
           infractions ni le montant des peines ; il mesure uniquement la proportion procédurale
-          (condamnations définitives, sous recours, relaxes/classés, procédures en cours).
+          (condamnations définitives, sous recours, relaxes ou classements, procédures en cours).
         </li>
         <li>
           <strong>Séparation juridique :</strong> un pourvoi en cassation ou un appel est suspensif
-          des peines ; toute personne non définitivement condamnée reste présumée innocente.
+          des peines (hors exécution provisoire spécifique) ; toute personne non définitivement
+          condamnée reste présumée innocente.
         </li>
       </ul>
     </section>
 
     <section class="pixel-frame prose-card">
-      <h2>3. Hiérarchie des sources &amp; vérification</h2>
+      <h2>3. Hiérarchie des sources et vérification</h2>
       <ul>
         <li>
-          <strong>Sources primaires prioritaires :</strong> décisions et communiqués officiels
-          (Cour de cassation / Judilibre, Légifrance, Journal officiel / CNCCFP, cour d'appel de
-          Paris, Conseil d'État, Cour européenne des droits de l'homme HUDOC, Défenseur des droits).
+          <strong>Sources officielles prioritaires :</strong> décisions et communiqués des
+          juridictions (Cour de cassation / Judilibre, Légifrance, Journal officiel / CNCCFP, cour
+          d'appel de Paris, Conseil d'État, Cour européenne des droits de l'homme HUDOC, Défenseur
+          des droits).
         </li>
         <li>
           <strong>Sources de presse de référence :</strong> médias parlementaires et juridiques
-          (LCP, Public Sénat, Le Club des Juristes, RTS, presse nationale/régionale) lorsque la
-          décision correctionnelle ou l'acte d'instruction n'est pas publié en open data.
+          (LCP, Public Sénat, Le Club des Juristes, RTS, presse nationale ou régionale) lorsque la
+          décision correctionnelle ou l'acte d'instruction n'est pas publié en accès libre.
         </li>
       </ul>
     </section>
@@ -86,7 +88,7 @@ const dict = getDict('fr');
           <thead>
             <tr>
               <th>Camp</th>
-              <th>Dossier / Personne</th>
+              <th>Dossier ou personne</th>
               <th>Motif d'exclusion du périmètre principal</th>
             </tr>
           </thead>
@@ -119,7 +121,7 @@ const dict = getDict('fr');
             <tr>
               <td>RN / LFI</td>
               <td>Polémiques médiatiques sans procédure judiciaire avérée</td>
-              <td>Seules les procédures judiciaires vérifiables entrent dans le dataset.</td>
+              <td>Seules les procédures judiciaires vérifiables entrent dans la base de données.</td>
             </tr>
           </tbody>
         </table>

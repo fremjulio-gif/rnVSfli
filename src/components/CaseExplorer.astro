@@ -10,6 +10,10 @@ interface Props {
 const { cases } = Astro.props;
 const dict = getDict('fr');
 
+function formatDossierCount(count: number): string {
+  return count <= 1 ? `${count} dossier` : `${count} dossiers`;
+}
+
 const tabs = [
   ...CATEGORIE_VALUES.map((cat) => ({
     id: `tab-${cat}`,
@@ -22,10 +26,10 @@ const tabs = [
   {
     id: 'tab-procedures_en_cours',
     key: 'procedures_en_cours',
-    kicker: 'ART. 9-1 C. CIV.',
+    kicker: 'EN COURS',
     label: 'Procédures en cours (présumés innocents)',
     definition:
-      'Enquêtes préliminaires, informations judiciaires, mises en examen et renvois sans décision sur le fond. Jamais mélangés aux condamnations.',
+      'Enquêtes, informations judiciaires, mises en examen et affaires renvoyées avant jugement. Elles sont présentées à part et ne constituent pas des condamnations.',
     items: cases.filter((c) => c.section === 'procedures_en_cours'),
   },
 ];
@@ -34,18 +38,17 @@ const tabs = [
 <section id="explorer-rounds" class="section-block" aria-labelledby="explorer-heading">
   <div class="container">
     <header class="section-header">
-      <span class="section-kicker">DOSSIERS DÉTAILLÉS · PAR CATÉGORIE</span>
+      <span class="section-kicker">EXPLORER PAR THÈME · 2010–2026</span>
       <h2 id="explorer-heading" class="section-title">
-        COMPARATEUR PAR ROUNDS &amp; PROCÉDURES EN COURS
+        Tous les dossiers, classés par thème
       </h2>
       <p class="section-desc">
-        Sélectionnez une manche thématique (ou la section séparée des procédures en cours). Cliquez
-        sur n'importe quelle carte pour afficher la chronologie complète, les peines et les liens
-        sources primaires / presse.
+        Choisissez un thème (ou l'onglet séparé des procédures en cours), puis cliquez sur « Lire le
+        dossier complet » pour voir les dates, les peines et les liens officiels.
       </p>
     </header>
 
-    <div class="round-tabs" role="tablist" aria-label="Manches thématiques">
+    <div class="round-tabs" role="tablist" aria-label="Thèmes judiciaires">
       {
         tabs.map((t, index) => (
           <button
@@ -79,15 +82,15 @@ const tabs = [
             class="round-panel"
           >
             <div class="round-def-banner" role="note">
-              <strong>Définition :</strong> {t.definition}
+              <strong>De quoi s'agit-il ?</strong> {t.definition}
             </div>
 
             <div class="duel-grid">
               <!-- GAUCHE : LFI -->
               <div>
                 <div class="camp-column-header camp-column-header--lfi">
-                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI / FDG</span>
-                  <span>{lfiList.length} dossier(s)</span>
+                  <span class="camp-column-header__name">La France insoumise (LFI / ex-FdG)</span>
+                  <span>{formatDossierCount(lfiList.length)}</span>
                 </div>
                 <div class="cases-stack">
                   {lfiList.length > 0 ? (
@@ -109,15 +112,15 @@ const tabs = [
                           <div class="compact-case__actions">
                             <span class="compact-case__src-pill">
                               {item.confirmation_primaire === 'confirme'
-                                ? 'Source primaire directe'
-                                : `${item.sources.length} source(s) presse/inst.`}
+                                ? 'Décision officielle vérifiée'
+                                : `Presse et institutions (${item.sources.length} sources)`}
                             </span>
                             <button
                               type="button"
                               class="arcade-btn arcade-btn--sm"
                               data-open-case={item.id}
                             >
-                              Dossier &amp; sources →
+                              Lire le dossier complet →
                             </button>
                           </div>
                         </article>
@@ -134,8 +137,8 @@ const tabs = [
               <!-- DROITE : RN -->
               <div>
                 <div class="camp-column-header camp-column-header--rn">
-                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN (EX-FN)</span>
-                  <span>{rnList.length} dossier(s)</span>
+                  <span class="camp-column-header__name">Rassemblement National (RN / ex-FN)</span>
+                  <span>{formatDossierCount(rnList.length)}</span>
                 </div>
                 <div class="cases-stack">
                   {rnList.length > 0 ? (
@@ -157,15 +160,15 @@ const tabs = [
                           <div class="compact-case__actions">
                             <span class="compact-case__src-pill">
                               {item.confirmation_primaire === 'confirme'
-                                ? 'Source primaire directe'
-                                : `${item.sources.length} source(s) presse/inst.`}
+                                ? 'Décision officielle vérifiée'
+                                : `Presse et institutions (${item.sources.length} sources)`}
                             </span>
                             <button
                               type="button"
                               class="arcade-btn arcade-btn--sm"
                               data-open-case={item.id}
                             >
-                              Dossier &amp; sources →
+                              Lire le dossier complet →
                             </button>
                           </div>
                         </article>

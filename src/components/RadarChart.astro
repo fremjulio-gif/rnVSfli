@@ -10,27 +10,27 @@ const { lfiMetrics, rnMetrics } = Astro.props;
 
 const axes = [
   {
-    label: 'Financement',
+    lines: ['Financement', '& probité'],
     lfi: lfiMetrics.byCategoryAll.financement_probite,
     rn: rnMetrics.byCategoryAll.financement_probite,
   },
   {
-    label: 'Presse / Expr.',
+    lines: ['Presse &', 'expression'],
     lfi: lfiMetrics.byCategoryAll.presse_expression,
     rn: rnMetrics.byCategoryAll.presse_expression,
   },
   {
-    label: 'Ordre public',
+    lines: ['Ordre public', '& biens'],
     lfi: lfiMetrics.byCategoryAll.ordre_public_biens,
     rn: rnMetrics.byCategoryAll.ordre_public_biens,
   },
   {
-    label: 'Cond. définitives',
+    lines: ['Condamnations', 'définitives'],
     lfi: lfiMetrics.definitiveConvictions,
     rn: rnMetrics.definitiveConvictions,
   },
   {
-    label: 'En cours / Recours',
+    lines: ['En cours ou', 'sous recours'],
     lfi: lfiMetrics.ongoingCount + lfiMetrics.pendingConvictions,
     rn: rnMetrics.ongoingCount + rnMetrics.pendingConvictions,
   },
@@ -41,9 +41,9 @@ const maxAxis = Math.max(
   ...axes.flatMap((a) => [a.lfi, a.rn]),
 );
 
-const cx = 230;
-const cy = 160;
-const radius = 92;
+const cx = 270;
+const cy = 170;
+const radius = 90;
 
 function polarPoint(index: number, valueRatio: number): { x: number; y: number } {
   const angle = -Math.PI / 2 + (index * 2 * Math.PI) / axes.length;
@@ -75,16 +75,18 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
   <!-- RADAR MULTI-AXES -->
   <section class="pixel-frame dataviz-card" aria-labelledby="radar-heading">
     <div class="dataviz-card__head">
-      <span class="section-kicker">RADAR · PROFILS COMPARÉS (2010–2026)</span>
-      <h3 id="radar-heading" class="dataviz-card__title">FIGHTER STATS — RÉPARTITION PAR NATURE</h3>
+      <span class="section-kicker">GRAPHIQUE COMPARATIF · 2010–2026</span>
+      <h3 id="radar-heading" class="dataviz-card__title">
+        Répartition des dossiers par thème et statut
+      </h3>
     </div>
 
     <div class="radar-wrap">
       <svg
-        viewBox="0 0 460 320"
+        viewBox="0 0 540 340"
         class="radar-svg"
         role="img"
-        aria-label="Graphique radar comparant le nombre de dossiers LFI et RN sur 5 axes : financement, presse, ordre public, condamnations définitives et dossiers en cours ou sous recours."
+        aria-label="Graphique comparant le nombre de dossiers LFI et RN sur 5 critères : financement et probité, presse et expression, ordre public et biens, condamnations définitives, et dossiers en cours ou sous recours."
       >
         {
           rings.map((ratio) => (
@@ -96,7 +98,7 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
                 })
                 .join(' ')}
               fill="none"
-              stroke="rgba(163, 177, 204, 0.25)"
+              stroke="rgba(184, 197, 220, 0.25)"
               stroke-width="1"
             />
           ))
@@ -107,7 +109,8 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
             const edge = polarPoint(i, 1);
             const labelPt = polarPoint(i, 1.24);
             const anchor =
-              labelPt.x < cx - 15 ? 'end' : labelPt.x > cx + 15 ? 'start' : 'middle';
+              labelPt.x < cx - 18 ? 'end' : labelPt.x > cx + 18 ? 'start' : 'middle';
+            const firstY = i === 0 ? labelPt.y - 12 : labelPt.y - 4;
             return (
               <g>
                 <line
@@ -115,18 +118,20 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
                   y1={cy}
                   x2={edge.x}
                   y2={edge.y}
-                  stroke="rgba(163, 177, 204, 0.35)"
+                  stroke="rgba(184, 197, 220, 0.35)"
                   stroke-width="1"
                 />
                 <text
                   x={labelPt.x}
-                  y={labelPt.y}
+                  y={firstY}
                   text-anchor={anchor}
                   fill="#F2F5FA"
-                  font-size="9.5"
-                  font-family="IBM Plex Mono, monospace"
+                  font-size="12.5"
+                  font-weight="700"
+                  font-family="Atkinson Hyperlegible, system-ui, sans-serif"
                 >
-                  {axis.label}
+                  <tspan x={labelPt.x} dy="0">{axis.lines[0]}</tspan>
+                  <tspan x={labelPt.x} dy="15">{axis.lines[1]}</tspan>
                 </text>
               </g>
             );
@@ -152,8 +157,8 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
             const pRn = polarPoint(i, axis.rn / maxAxis);
             return (
               <g>
-                <circle cx={pLfi.x} cy={pLfi.y} r="3.5" fill="#F5B73B" />
-                <circle cx={pRn.x} cy={pRn.y} r="3.5" fill="#4CC9F0" />
+                <circle cx={pLfi.x} cy={pLfi.y} r="4" fill="#F5B73B" />
+                <circle cx={pRn.x} cy={pRn.y} r="4" fill="#4CC9F0" />
               </g>
             );
           })
@@ -161,71 +166,76 @@ const totalRn = Math.max(1, rnMetrics.totalCases);
       </svg>
 
       <div class="radar-legend">
-        <span class="legend-chip legend-chip--lfi">■ LFI / FDG ({lfiMetrics.totalCases} fiches)</span>
-        <span class="legend-chip legend-chip--rn">■ RN ex-FN ({rnMetrics.totalCases} fiches)</span>
+        <span class="legend-chip legend-chip--lfi">■ LFI / ex-FdG ({lfiMetrics.totalCases} dossiers)</span>
+        <span class="legend-chip legend-chip--rn">■ RN / ex-FN ({rnMetrics.totalCases} dossiers)</span>
       </div>
+      <p class="radar-help">
+        Plus la forme s'étend vers un sommet, plus le nombre de dossiers recensés dans ce domaine est élevé.
+      </p>
     </div>
   </section>
 
   <!-- BARRES EMPILÉES & PERSONNE MORALE VS PHYSIQUE -->
   <section class="pixel-frame dataviz-card" aria-labelledby="bars-heading">
     <div class="dataviz-card__head">
-      <span class="section-kicker">VENTILATION · STATUTS &amp; ENTITÉS</span>
-      <h3 id="bars-heading" class="dataviz-card__title">DÉCISIONS, RECOURS &amp; PERSONNES MORALES</h3>
+      <span class="section-kicker">RÉPARTITION DÉTAILLÉE · STATUTS ET ENTITÉS</span>
+      <h3 id="bars-heading" class="dataviz-card__title">
+        Décisions, recours et entités concernées
+      </h3>
     </div>
 
     <div class="stacked-block">
       <div class="stacked-label-row">
-        <strong style="color: var(--camp-lfi);">LFI / FDG ({lfiMetrics.totalCases})</strong>
-        <span>Définitif: {lfiMetrics.definitiveConvictions} · Recours: {lfiMetrics.pendingConvictions} · Relaxe/Classé: {lfiMetrics.clearedCount} · En cours: {lfiMetrics.ongoingCount}</span>
+        <strong style="color: var(--camp-lfi);">La France insoumise ({lfiMetrics.totalCases} dossiers)</strong>
+        <span>Définitives : {lfiMetrics.definitiveConvictions} · Sous recours : {lfiMetrics.pendingConvictions} · Relaxes/Classés : {lfiMetrics.clearedCount} · En cours : {lfiMetrics.ongoingCount}</span>
       </div>
       <div class="stacked-bar" aria-label="Répartition par statut LFI">
-        <span class="seg seg--def" style={`width: ${(lfiMetrics.definitiveConvictions / totalLfi) * 100}%`} title={`Condamnations définitives: ${lfiMetrics.definitiveConvictions}`}></span>
-        <span class="seg seg--pend" style={`width: ${(lfiMetrics.pendingConvictions / totalLfi) * 100}%`} title={`Sous recours: ${lfiMetrics.pendingConvictions}`}></span>
-        <span class="seg seg--clear" style={`width: ${(lfiMetrics.clearedCount / totalLfi) * 100}%`} title={`Relaxes / classés: ${lfiMetrics.clearedCount}`}></span>
-        <span class="seg seg--ong" style={`width: ${(lfiMetrics.ongoingCount / totalLfi) * 100}%`} title={`En cours: ${lfiMetrics.ongoingCount}`}></span>
+        <span class="seg seg--def" style={`width: ${(lfiMetrics.definitiveConvictions / totalLfi) * 100}%`} title={`Condamnations définitives : ${lfiMetrics.definitiveConvictions}`}></span>
+        <span class="seg seg--pend" style={`width: ${(lfiMetrics.pendingConvictions / totalLfi) * 100}%`} title={`Condamnations sous recours : ${lfiMetrics.pendingConvictions}`}></span>
+        <span class="seg seg--clear" style={`width: ${(lfiMetrics.clearedCount / totalLfi) * 100}%`} title={`Relaxes ou classements : ${lfiMetrics.clearedCount}`}></span>
+        <span class="seg seg--ong" style={`width: ${(lfiMetrics.ongoingCount / totalLfi) * 100}%`} title={`Procédures en cours : ${lfiMetrics.ongoingCount}`}></span>
       </div>
 
       <div class="stacked-label-row" style="margin-top: 0.9rem;">
-        <strong style="color: var(--camp-rn);">RN ex-FN ({rnMetrics.totalCases})</strong>
-        <span>Définitif: {rnMetrics.definitiveConvictions} · Recours: {rnMetrics.pendingConvictions} · Relaxe/Classé: {rnMetrics.clearedCount} · En cours: {rnMetrics.ongoingCount}</span>
+        <strong style="color: var(--camp-rn);">Rassemblement National ({rnMetrics.totalCases} dossiers)</strong>
+        <span>Définitives : {rnMetrics.definitiveConvictions} · Sous recours : {rnMetrics.pendingConvictions} · Relaxes/Classés : {rnMetrics.clearedCount} · En cours : {rnMetrics.ongoingCount}</span>
       </div>
       <div class="stacked-bar" aria-label="Répartition par statut RN">
-        <span class="seg seg--def" style={`width: ${(rnMetrics.definitiveConvictions / totalRn) * 100}%`} title={`Condamnations définitives: ${rnMetrics.definitiveConvictions}`}></span>
-        <span class="seg seg--pend" style={`width: ${(rnMetrics.pendingConvictions / totalRn) * 100}%`} title={`Sous recours: ${rnMetrics.pendingConvictions}`}></span>
-        <span class="seg seg--clear" style={`width: ${(rnMetrics.clearedCount / totalRn) * 100}%`} title={`Relaxes / classés: ${rnMetrics.clearedCount}`}></span>
-        <span class="seg seg--ong" style={`width: ${(rnMetrics.ongoingCount / totalRn) * 100}%`} title={`En cours: ${rnMetrics.ongoingCount}`}></span>
+        <span class="seg seg--def" style={`width: ${(rnMetrics.definitiveConvictions / totalRn) * 100}%`} title={`Condamnations définitives : ${rnMetrics.definitiveConvictions}`}></span>
+        <span class="seg seg--pend" style={`width: ${(rnMetrics.pendingConvictions / totalRn) * 100}%`} title={`Condamnations sous recours : ${rnMetrics.pendingConvictions}`}></span>
+        <span class="seg seg--clear" style={`width: ${(rnMetrics.clearedCount / totalRn) * 100}%`} title={`Relaxes ou classements : ${rnMetrics.clearedCount}`}></span>
+        <span class="seg seg--ong" style={`width: ${(rnMetrics.ongoingCount / totalRn) * 100}%`} title={`Procédures en cours : ${rnMetrics.ongoingCount}`}></span>
       </div>
 
       <div class="seg-legend">
-        <span><i class="swatch swatch--def"></i> Définitif</span>
-        <span><i class="swatch swatch--pend"></i> Sous recours</span>
-        <span><i class="swatch swatch--clear"></i> Relaxe / Classé</span>
+        <span><i class="swatch swatch--def"></i> Condamnation définitive</span>
+        <span><i class="swatch swatch--pend"></i> Condamnation sous recours</span>
+        <span><i class="swatch swatch--clear"></i> Relaxe ou classement</span>
         <span><i class="swatch swatch--ong"></i> Procédure en cours</span>
       </div>
     </div>
 
     <div class="entity-split-grid">
       <div class="entity-split-box">
-        <div class="entity-split-box__title" style="color: var(--camp-lfi);">LFI — TYPE D'ENTITÉ</div>
+        <div class="entity-split-box__title" style="color: var(--camp-lfi);">LFI — QUI EST VISÉ ?</div>
         <div class="entity-split-row">
-          <span>Impliquant personne morale / parti</span>
+          <span>Impliquant le parti (personne morale)</span>
           <strong>{lfiMetrics.moraleInvolvedCount}</strong>
         </div>
         <div class="entity-split-row">
-          <span>Personne physique uniquement</span>
+          <span>Un élu ou dirigeant seul (personne physique)</span>
           <strong>{lfiMetrics.physiqueOnlyCount}</strong>
         </div>
       </div>
 
       <div class="entity-split-box">
-        <div class="entity-split-box__title" style="color: var(--camp-rn);">RN — TYPE D'ENTITÉ</div>
+        <div class="entity-split-box__title" style="color: var(--camp-rn);">RN — QUI EST VISÉ ?</div>
         <div class="entity-split-row">
-          <span>Impliquant personne morale / parti</span>
+          <span>Impliquant le parti (personne morale)</span>
           <strong>{rnMetrics.moraleInvolvedCount}</strong>
         </div>
         <div class="entity-split-row">
-          <span>Personne physique uniquement</span>
+          <span>Un élu ou dirigeant seul (personne physique)</span>
           <strong>{rnMetrics.physiqueOnlyCount}</strong>
         </div>
       </div>

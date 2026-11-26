@@ -1,6 +1,7 @@
 ---
 import type { JudicialCase } from '../lib/schema';
 import { CATEGORIE_VALUES } from '../lib/schema';
+import { sortCasesByRecentDate } from '../lib/data';
 import { formatDateFr, getDict } from '../i18n';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 const { cases } = Astro.props;
 const dict = getDict('fr');
+const sortedForList = sortCasesByRecentDate(cases);
 
 const minYear = 2010;
 const maxYear = 2026;
@@ -36,48 +38,69 @@ const plotted = cases
     const colShift = Math.floor(idx / 5) * 14;
     const rowStep = idx % 5;
     const baseY = c.camp === 'LFI' ? 128 : 228;
-    const offset = c.camp === 'LFI' ? -(rowStep * 21) : rowStep * 21;
+    const offset = c.camp === 'LFI' ? -(rowStep * 22) : rowStep * 22;
     return {
       item: c,
-      x: Math.min(968, yearToX(c.date_derniere_decision) + colShift),
-      y: Math.max(28, Math.min(328, baseY + offset)),
+      x: Math.min(966, yearToX(c.date_derniere_decision) + colShift),
+      y: Math.max(30, Math.min(326, baseY + offset)),
     };
   });
 
 const ticks = [2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026];
 const milestones = [
-  { year: '2011-01-16', label: '2011 · M. Le Pen prés. FN' },
-  { year: '2016-02-10', label: '2016 · Création LFI' },
-  { year: '2018-06-01', label: '2018 · FN → RN' },
+  { year: '2011-01-16', label: '2011 : M. Le Pen préside le FN' },
+  { year: '2016-02-10', label: '2016 : Création de LFI' },
+  { year: '2018-06-01', label: '2018 : FN devient RN' },
 ];
 ---
 
 <section id="frise" class="pixel-frame dataviz-card" aria-labelledby="timeline-chart-heading">
-  <div class="dataviz-card__head">
-    <span class="section-kicker">FRISE INTERACTIVE · 2010 → 2026</span>
-    <h3 id="timeline-chart-heading" class="dataviz-card__title">
-      CHRONOLOGIE VISUELLE DES {cases.length} DOSSIERS
-    </h3>
-    <p class="section-desc" style="margin-top: 0.35rem;">
-      Chaque marqueur correspond à la dernière décision ou étape connue au 26/11/2026. Survolez ou
-      cliquez pour ouvrir le dossier complet.
-    </p>
+  <div class="timeline-head-row">
+    <div class="dataviz-card__head" style="margin-bottom: 0;">
+      <span class="section-kicker">FRISE CHRONOLOGIQUE · 2010 → 2026</span>
+      <h3 id="timeline-chart-heading" class="dataviz-card__title">
+        Chronologie des {cases.length} dossiers
+      </h3>
+      <p class="section-desc" style="margin-top: 0.35rem;">
+        Chaque repère correspond à la dernière décision ou étape connue au 26/11/2026. Touchez ou
+        cliquez sur un dossier pour l'ouvrir, ou passez en « Vue liste » pour lire ligne par ligne.
+      </p>
+    </div>
+
+    <div class="timeline-view-switch" role="group" aria-label="Mode d'affichage de la chronologie">
+      <button
+        type="button"
+        id="timeline-view-graph"
+        class="arcade-btn arcade-btn--sm"
+        aria-pressed="true"
+      >
+        Vue graphique (frise)
+      </button>
+      <button
+        type="button"
+        id="timeline-view-list"
+        class="arcade-btn arcade-btn--sm"
+        aria-pressed="false"
+      >
+        Vue liste (lecture facile)
+      </button>
+    </div>
   </div>
 
-  <div class="timeline-filter-bar" role="group" aria-label="Filtrer la frise chronologique">
+  <div class="timeline-filter-bar" role="group" aria-label="Filtrer la chronologie">
     <label class="filter-chip-label">
-      <span>Camp</span>
+      <span>Mouvement politique</span>
       <select id="chart-filter-camp" class="filter-input">
-        <option value="ALL">Tous (LFI &amp; RN)</option>
-        <option value="LFI">LFI / FdG</option>
-        <option value="RN">RN (ex-FN)</option>
+        <option value="ALL">Tous (LFI et RN)</option>
+        <option value="LFI">La France insoumise (LFI / ex-FdG)</option>
+        <option value="RN">Rassemblement National (RN / ex-FN)</option>
       </select>
     </label>
 
     <label class="filter-chip-label">
-      <span>Statut</span>
+      <span>Étape judiciaire</span>
       <select id="chart-filter-statut" class="filter-input">
-        <option value="ALL">Tous les statuts</option>
+        <option value="ALL">Toutes les étapes</option>
         {
           Object.entries(dict.statuts).map(([k, v]) => (
             <option value={k}>{v.label}</option>
@@ -87,9 +110,9 @@ const milestones = [
     </label>
 
     <label class="filter-chip-label">
-      <span>Catégorie</span>
+      <span>Thème</span>
       <select id="chart-filter-cat" class="filter-input">
-        <option value="ALL">Toutes les catégories</option>
+        <option value="ALL">Tous les thèmes</option>
         {
           CATEGORIE_VALUES.map((cat) => (
             <option value={cat}>{dict.categories[cat].label}</option>
@@ -99,97 +122,142 @@ const milestones = [
     </label>
 
     <div class="timeline-count-pill" id="chart-visible-count">
-      {cases.length} / {cases.length} dossier(s)
+      {cases.length} / {cases.length} dossiers
     </div>
   </div>
 
-  <div class="timeline-svg-scroll">
-    <svg
-      viewBox="0 0 1000 365"
-      class="timeline-svg"
-      role="img"
-      aria-label="Frise chronologique interactive de 2010 à 2026 comparant les procédures LFI en haut et RN en bas"
-    >
-      <rect x="60" y="16" width="918" height="142" fill="rgba(245, 183, 59, 0.05)" stroke="rgba(245, 183, 59, 0.25)" />
-      <rect x="60" y="198" width="918" height="142" fill="rgba(76, 201, 240, 0.05)" stroke="rgba(76, 201, 240, 0.25)" />
+  <div id="timeline-graph-panel">
+    <div class="timeline-svg-scroll">
+      <svg
+        viewBox="0 0 1000 365"
+        class="timeline-svg"
+        role="img"
+        aria-label="Frise chronologique interactive de 2010 à 2026 comparant les dossiers LFI en haut et RN en bas"
+      >
+        <rect x="60" y="16" width="918" height="142" fill="rgba(245, 183, 59, 0.05)" stroke="rgba(245, 183, 59, 0.25)" />
+        <rect x="60" y="198" width="918" height="142" fill="rgba(76, 201, 240, 0.05)" stroke="rgba(76, 201, 240, 0.25)" />
 
-      <text x="14" y="92" fill="#F5B73B" font-size="11" font-weight="700" font-family="Press Start 2P, monospace">LFI</text>
-      <text x="14" y="274" fill="#4CC9F0" font-size="11" font-weight="700" font-family="Press Start 2P, monospace">RN</text>
+        <text x="14" y="92" fill="#F5B73B" font-size="13" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">LFI</text>
+        <text x="14" y="274" fill="#4CC9F0" font-size="13" font-weight="700" font-family="Atkinson Hyperlegible, system-ui, sans-serif">RN</text>
 
-      <line x1="60" y1="178" x2="978" y2="178" stroke="#A3B1CC" stroke-width="2" />
+        <line x1="60" y1="178" x2="978" y2="178" stroke="#B8C5DC" stroke-width="2" />
 
-      {
-        ticks.map((yr) => {
-          const tx = yearToX(`${yr}-01-01`);
-          return (
-            <g>
-              <line x1={tx} y1="170" x2={tx} y2="186" stroke="#A3B1CC" stroke-width="1.5" />
-              <text
-                x={tx}
-                y="181"
-                text-anchor="middle"
-                fill="#F2F5FA"
-                font-size="10"
-                font-family="IBM Plex Mono, monospace"
-                style="paint-order: stroke; stroke: #0B0E17; stroke-width: 5px;"
+        {
+          ticks.map((yr) => {
+            const tx = yearToX(`${yr}-01-01`);
+            return (
+              <g>
+                <line x1={tx} y1="170" x2={tx} y2="186" stroke="#B8C5DC" stroke-width="1.5" />
+                <text
+                  x={tx}
+                  y="182"
+                  text-anchor="middle"
+                  fill="#F2F5FA"
+                  font-size="11.5"
+                  font-weight="700"
+                  font-family="Atkinson Hyperlegible, system-ui, sans-serif"
+                  style="paint-order: stroke; stroke: #0B0E17; stroke-width: 5px;"
+                >
+                  {yr}
+                </text>
+              </g>
+            );
+          })
+        }
+
+        {
+          milestones.map((m) => {
+            const mx = yearToX(m.year);
+            return (
+              <g>
+                <line x1={mx} y1="16" x2={mx} y2="340" stroke="rgba(242, 245, 250, 0.22)" stroke-dasharray="4 4" />
+                <text x={mx + 4} y="357" fill="#B8C5DC" font-size="10.5" font-family="Atkinson Hyperlegible, system-ui, sans-serif">
+                  {m.label}
+                </text>
+              </g>
+            );
+          })
+        }
+
+        {
+          plotted.map(({ item, x, y }) => {
+            const color = item.camp === 'LFI' ? '#F5B73B' : '#4CC9F0';
+            const isDef = item.statut === 'condamnation_definitive';
+            const isCleared = item.statut === 'relaxe' || item.statut === 'non_lieu' || item.statut === 'prescription';
+            const isOngoing = item.section === 'procedures_en_cours';
+
+            return (
+              <g
+                class="timeline-node"
+                tabindex="0"
+                role="button"
+                data-open-case={item.id}
+                data-camp={item.camp}
+                data-statut={item.statut}
+                data-categorie={item.categorie}
+                data-tip={`${formatDateFr(item.date_derniere_decision)} · ${item.camp} · ${dict.statuts[item.statut].label} — ${item.titre}`}
+                aria-label={`${item.camp} — ${item.titre} (${formatDateFr(item.date_derniere_decision)}, ${dict.statuts[item.statut].label})`}
               >
-                {yr}
-              </text>
-            </g>
-          );
-        })
-      }
+                {isDef ? (
+                  <rect x={x - 8} y={y - 8} width="16" height="16" fill={color} stroke="#0B0E17" stroke-width="2" />
+                ) : isCleared ? (
+                  <circle cx={x} cy={y} r="8.5" fill="#0B0E17" stroke={color} stroke-width="2.5" />
+                ) : isOngoing ? (
+                  <circle cx={x} cy={y} r="8.5" fill="rgba(11, 14, 23, 0.85)" stroke={color} stroke-width="2.2" stroke-dasharray="3 2" />
+                ) : (
+                  <polygon points={`${x},${y - 9} ${x + 9},${y} ${x},${y + 9} ${x - 9},${y}`} fill={color} stroke="#0B0E17" stroke-width="2" />
+                )}
+              </g>
+            );
+          })
+        }
+      </svg>
+    </div>
 
-      {
-        milestones.map((m) => {
-          const mx = yearToX(m.year);
-          return (
-            <g>
-              <line x1={mx} y1="16" x2={mx} y2="340" stroke="rgba(242, 245, 250, 0.22)" stroke-dasharray="4 4" />
-              <text x={mx + 4} y="356" fill="#A3B1CC" font-size="8.5" font-family="IBM Plex Mono, monospace">
-                {m.label}
-              </text>
-            </g>
-          );
-        })
-      }
-
-      {
-        plotted.map(({ item, x, y }) => {
-          const color = item.camp === 'LFI' ? '#F5B73B' : '#4CC9F0';
-          const isDef = item.statut === 'condamnation_definitive';
-          const isCleared = item.statut === 'relaxe' || item.statut === 'non_lieu' || item.statut === 'prescription';
-          const isOngoing = item.section === 'procedures_en_cours';
-
-          return (
-            <g
-              class="timeline-node"
-              tabindex="0"
-              role="button"
-              data-open-case={item.id}
-              data-camp={item.camp}
-              data-statut={item.statut}
-              data-categorie={item.categorie}
-              data-tip={`${formatDateFr(item.date_derniere_decision)} · ${item.camp} · ${dict.statuts[item.statut].label} — ${item.titre}`}
-              aria-label={`${item.camp} — ${item.titre} (${formatDateFr(item.date_derniere_decision)}, ${dict.statuts[item.statut].label})`}
-            >
-              {isDef ? (
-                <rect x={x - 7} y={y - 7} width="14" height="14" fill={color} stroke="#0B0E17" stroke-width="2" />
-              ) : isCleared ? (
-                <circle cx={x} cy={y} r="7" fill="#0B0E17" stroke={color} stroke-width="2.5" />
-              ) : isOngoing ? (
-                <circle cx={x} cy={y} r="7" fill="rgba(11, 14, 23, 0.85)" stroke={color} stroke-width="2" stroke-dasharray="3 2" />
-              ) : (
-                <polygon points={`${x},${y - 8} ${x + 8},${y} ${x},${y + 8} ${x - 8},${y}`} fill={color} stroke="#0B0E17" stroke-width="2" />
-              )}
-            </g>
-          );
-        })
-      }
-    </svg>
+    <div class="timeline-hover-banner" id="timeline-hover-banner" aria-live="polite">
+      Survolez ou touchez un repère sur la frise (■ Condamnation définitive · ◆ Condamnation sous recours · ○ Relaxe ou classement · ◌ Procédure en cours).
+    </div>
   </div>
 
-  <div class="timeline-hover-banner" id="timeline-hover-banner" aria-live="polite">
-    Survolez ou sélectionnez un marqueur sur la frise (■ Définitif · ◆ Sous recours · ○ Relaxe/Classé · ◌ En cours).
+  <!-- VUE LISTE FACILE À LIRE (DU PLUS RÉCENT AU PLUS ANCIEN) -->
+  <div id="timeline-list-view" class="timeline-list" hidden>
+    {
+      sortedForList.map((item) => {
+        const st = dict.statuts[item.statut];
+        return (
+          <article
+            class={`timeline-list-item timeline-list-item--${item.camp.toLowerCase()}`}
+            data-camp={item.camp}
+            data-statut={item.statut}
+            data-categorie={item.categorie}
+          >
+            <div class="timeline-list-item__meta">
+              <span class="entity-pill">{formatDateFr(item.date_derniere_decision)}</span>
+              <span class={`camp-pill camp-pill--${item.camp.toLowerCase()}`}>{item.camp}</span>
+              <span class={`status-badge status-badge--${st.tone}`}>
+                <span aria-hidden="true">{st.glyph}</span>
+                <span>{st.label}</span>
+              </span>
+            </div>
+            <div class="timeline-list-item__main">
+              <h4 class="timeline-list-item__title">{item.titre}</h4>
+              <p class="timeline-list-item__sub">
+                <strong>{item.entite_principale}</strong> · {item.juridiction}
+              </p>
+            </div>
+            <button
+              type="button"
+              class="arcade-btn arcade-btn--sm timeline-list-item__btn"
+              data-open-case={item.id}
+            >
+              Lire le dossier →
+            </button>
+          </article>
+        );
+      })
+    }
+    <p id="timeline-list-empty" class="empty-slot" hidden>
+      Aucun dossier ne correspond aux filtres sélectionnés.
+    </p>
   </div>
 </section>

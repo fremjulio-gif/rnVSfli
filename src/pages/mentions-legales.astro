@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { FIGHTERS_ROSTER } from '../lib/data';
 import { getDict } from '../i18n';
 
 const dict = getDict('fr');
@@ -7,12 +8,12 @@ const dict = getDict('fr');
 
 <BaseLayout
   currentPath="/mentions-legales"
-  title="Mentions légales — VERSUS"
-  description="Mentions légales, éditeur, hébergeur, droit de réponse, rectification et protection des données de VERSUS."
+  title="Mentions légales & Crédits — VERSUS"
+  description="Mentions légales, éditeur, hébergeur, droit de réponse, RGPD et crédits photographiques Wikimedia Commons."
 >
   <div class="container prose-page">
     <h1 class="pixel-title" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1.25rem;">
-      MENTIONS LÉGALES &amp; DROIT DE RÉPONSE
+      MENTIONS LÉGALES, DROIT DE RÉPONSE &amp; CRÉDITS
     </h1>
 
     <section class="pixel-frame prose-card">
@@ -25,9 +26,8 @@ const dict = getDict('fr');
       </p>
       <p style="color: var(--ink-muted); font-size: 0.85rem;">
         Note LCEN (art. 6 III de la loi n° 2004-575 du 21 juin 2004) : avant toute diffusion grand
-        public hors cadre privé/associatif, l'éditeur doit compléter ici son identité (nom, prénom
-        ou raison sociale) et une adresse de contact directe (ou les coordonnées de l'hébergeur en
-        cas d'édition non professionnelle ayant choisi l'anonymat conformément à l'art. 6 III-2).
+        public, l'éditeur complète ses coordonnées légales ou relève du régime non professionnel
+        via l'hébergeur (art. 6 III-2 LCEN).
       </p>
     </section>
 
@@ -40,25 +40,11 @@ const dict = getDict('fr');
     </section>
 
     <section class="pixel-frame prose-card">
-      <h2>3. Avertissement éditorial et juridique</h2>
+      <h2>3. Avertissement éditorial &amp; droit de rectification</h2>
+      <p>{dict.site.disclaimer}</p>
       <p>
-        {dict.site.disclaimer}
-      </p>
-      <p>
-        Date de référence des informations vérifiées : <strong>{dict.site.referenceDate}</strong>.
-        Les évolutions postérieures à cette date (notamment les décisions ou audiences annoncées en
-        novembre et décembre 2026) feront l'objet d'une mise à jour documentée dans{' '}
-        <code>CHANGELOG-DONNEES.md</code>.
-      </p>
-    </section>
-
-    <section class="pixel-frame prose-card">
-      <h2>4. Droit de réponse &amp; signalement d'erreur</h2>
-      <p>
-        Toute personne physique ou morale mentionnée, ou tout lecteur constatant une imprécision,
-        une évolution procédurale (relaxe, non-lieu, appel, pourvoi, décision définitive) ou un lien
-        source défectueux peut demander une rectification immédiate via le formulaire de signalement
-        GitHub :
+        Toute personne mentionnée ou tout lecteur peut signaler une erreur ou demander une mise à
+        jour procédurale :
       </p>
       <p>
         <a
@@ -67,28 +53,60 @@ const dict = getDict('fr');
           target="_blank"
           rel="noopener noreferrer"
         >
-          Signaler une erreur / Exercer un droit de rectification
+          Signaler une erreur / Droit de rectification
         </a>
       </p>
     </section>
 
     <section class="pixel-frame prose-card">
-      <h2>5. Données personnelles (RGPD) &amp; propriété intellectuelle</h2>
+      <h2>4. Crédits photographiques (Wikimedia Commons) &amp; droit à l'image</h2>
+      <p style="font-size: 0.85rem; color: var(--ink-muted);">
+        Les portraits présentés illustrent exclusivement des responsables politiques publics dans le
+        cadre du droit à l'information sur des procédures judiciaires d'intérêt général. Chaque
+        image provient de Wikimedia Commons sous licence libre (détourage local sans altération
+        dégradante).
+      </p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Personnalité</th>
+              <th>Camp</th>
+              <th>Auteur / Source</th>
+              <th>Licence</th>
+              <th>Fichier original</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              FIGHTERS_ROSTER.map((f) => (
+                <tr>
+                  <td>{f.name}</td>
+                  <td>{f.camp}</td>
+                  <td>{f.credit}</td>
+                  <td>{f.license}</td>
+                  <td>
+                    <a href={f.sourcePage} target="_blank" rel="noopener noreferrer">
+                      Wikimedia Commons
+                    </a>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pixel-frame prose-card">
+      <h2>5. Données personnelles (RGPD) &amp; polices</h2>
       <ul>
         <li>
-          <strong>Cookies et traceurs :</strong> ce site statique ne dépose aucun cookie publicitaire
-          ni traceur analytique tiers. Les préférences d'interface (son, CRT, vibration) restent
-          strictement locales en mémoire de session.
+          <strong>Cookies :</strong> aucun cookie publicitaire ni traceur analytique tiers.
         </li>
         <li>
-          <strong>Données publiques :</strong> les informations factuelles concernent exclusivement
-          des procédures publiques impliquant des partis politiques et des responsables ou élus
-          publics (intérêt général, art. 6.1.f et 9.2.e du RGPD).
-        </li>
-        <li>
-          <strong>Polices et visuels :</strong> polices libres sous licence SIL Open Font License
-          (Press Start 2P, IBM Plex Mono) auto-hébergées ; avatars géométriques et sons Web Audio
-          API 100 % originaux.
+          <strong>Polices &amp; audio :</strong> polices libres SIL OFL auto-hébergées (Press Start
+          2P, IBM Plex Mono) ; sons Web Audio API 100 % synthétisés localement.
         </li>
       </ul>
     </section>

@@ -1,358 +1,91 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PixelAvatar from '../components/PixelAvatar.astro';
-import BreakdownTable from '../components/BreakdownTable.astro';
-import CaseCard from '../components/CaseCard.astro';
-import { computeBreakdown, loadDataset, sortCasesByRecentDate } from '../lib/data';
-import { CATEGORIE_VALUES } from '../lib/schema';
+import VsArena from '../components/VsArena.astro';
+import RadarChart from '../components/RadarChart.astro';
+import TimelineChart from '../components/TimelineChart.astro';
+import CaseExplorer from '../components/CaseExplorer.astro';
+import CaseModal from '../components/CaseModal.astro';
+import {
+  FIGHTERS_ROSTER,
+  buildIssueReportUrl,
+  computeCampMetrics,
+  loadDataset,
+} from '../lib/data';
 import { formatDateFr, getDict } from '../i18n';
 
 const dataset = loadDataset();
 const dict = getDict('fr');
 
-const rnBreakdown = computeBreakdown(dataset.cases, 'RN');
-const lfiBreakdown = computeBreakdown(dataset.cases, 'LFI');
+const lfiMetrics = computeCampMetrics(dataset.cases, 'LFI');
+const rnMetrics = computeCampMetrics(dataset.cases, 'RN');
 
-const decisions = dataset.cases.filter((c) => c.section === 'decisions');
-const ongoing = dataset.cases.filter((c) => c.section === 'procedures_en_cours');
-const ongoingRN = ongoing.filter((c) => c.camp === 'RN');
-const ongoingLFI = ongoing.filter((c) => c.camp === 'LFI');
+// Prépare les données sérialisées pour l'interactivité client (HUD %, frise, modale)
+const clientCases = dataset.cases.map((c) => ({
+  ...c,
+  statutLabel: dict.statuts[c.statut].label,
+  statutGlyph: dict.statuts[c.statut].glyph,
+  statutTone: dict.statuts[c.statut].tone,
+  categorieLabel: dict.categories[c.categorie].label,
+  dateDisplay: formatDateFr(c.date_derniere_decision),
+  verifiedDisplay: formatDateFr(c.verified_at),
+  datesFormatted: c.dates_cles.map((d) => ({
+    date: formatDateFr(d.date),
+    libelle: d.libelle,
+  })),
+  sourcesFormatted: c.sources.map((s) => ({
+    ...s,
+    consulted: formatDateFr(s.date_consultation),
+  })),
+  reportUrl: buildIssueReportUrl(c, dict.site.repoIssuesUrl),
+}));
 
-const timelineCases = sortCasesByRecentDate(dataset.cases);
+const clientPayload = {
+  metrics: {
+    LFI: lfiMetrics,
+    RN: rnMetrics,
+  },
+  fighters: FIGHTERS_ROSTER,
+  cases: clientCases,
+};
 ---
 
 <BaseLayout currentPath="/">
-  <!-- 1. ÉCRAN TITRE -->
-  <section class="hero-screen" aria-labelledby="hero-heading">
-    <div class="container">
-      <div class="hero-badge">{dict.titleScreen.badge} · RÉF. {dict.site.referenceDate}</div>
-      <div style="display: flex; justify-content: center; margin-bottom: 0.75rem;">
-        <PixelAvatar variant="versus" size={72} label="Balance de justice VERSUS" />
-      </div>
-      <h1 id="hero-heading" class="hero-title">VERSUS</h1>
-      <p class="hero-sub">
-        Mise en regard factuelle, symétrique et sourcée des procédures judiciaires concernant le{' '}
-        <strong>Rassemblement National (RN, ex-FN)</strong> et{' '}
-        <strong>La France insoumise (LFI)</strong> — partis, dirigeants et élus nationaux ou européens.
-      </p>
+  <!-- 1. ARÈNE VS PLEIN CADRE (MÉLENCHON + DÉPUTÉS VS LE PEN + DÉPUTÉS + % HUD) -->
+  <VsArena lfiMetrics={lfiMetrics} rnMetrics={rnMetrics} cases={dataset.cases} />
 
-      <div class="hero-actions">
-        <button type="button" id="press-start-btn" class="arcade-btn arcade-btn--primary">
-          {dict.titleScreen.pressStart}
-        </button>
-        <a href="#round-financement_probite" class="arcade-btn">
-          {dict.titleScreen.skipToRounds}
-        </a>
-        <a href="#procedures-en-cours" class="arcade-btn">
-          Procédures en cours
-        </a>
-        <a href="#frise" class="arcade-btn">
-          Frise chronologique
-        </a>
-      </div>
-
-      <div class="disclaimer-banner" role="note" aria-label="Avertissement juridique">
-        <strong>Avertissement :</strong> {dict.site.disclaimer}
-      </div>
+  <!-- AVERTISSEMENT FACTUEL -->
+  <div class="container" style="padding-top: 1rem;">
+    <div class="disclaimer-banner" role="note" aria-label="Avertissement juridique">
+      <strong>Avertissement :</strong> {dict.site.disclaimer}
     </div>
-  </section>
+  </div>
 
-  <!-- 2. SÉLECTION DES CAMPS & RÉPARTITION VENTILÉE -->
-  <section id="selection-camps" class="section-block" aria-labelledby="select-heading">
+  <!-- 2. TABLEAU DE BORD DATAVIZ (RADAR + BARRES EMPILÉES + FRISE GRAPHIQUE 2010–2026) -->
+  <section id="dataviz-dashboard" class="section-block" aria-labelledby="dataviz-heading">
     <div class="container">
       <header class="section-header">
-        <span class="section-kicker">CHARACTER SELECT · LECTURE SYMÉTRIQUE</span>
-        <h2 id="select-heading" class="section-title">
-          DEUX CAMPS, MÊME SCHÉMA, ZÉRO SCORE GLOBAL
+        <span class="section-kicker">DATAVISUALISATION · PÉRIODE 2010–2026</span>
+        <h2 id="dataviz-heading" class="section-title">
+          PROFILS COMPARÉS &amp; CHRONOLOGIE VISUELLE
         </h2>
         <p class="section-desc">
-          Les données ci-dessous ne sont jamais additionnées dans un compteur unique de « gravité ».
-          Elles sont strictement ventilées par statut procédural et par catégorie d'infraction pénale.
+          Fenêtre symétrique 2010–2026 : présidence Marine Le Pen dès janvier 2011 côté FN→RN ;
+          Parti de Gauche / Front de Gauche (2010–2015) puis LFI (créée en 2016) côté Jean-Luc Mélenchon.
         </p>
       </header>
 
-      <div class="duel-grid">
-        <!-- Panneau RN -->
-        <section
-          class="pixel-frame pixel-frame--rn fighter-panel"
-          aria-labelledby="panel-rn-title"
-        >
-          <div class="fighter-head">
-            <PixelAvatar variant="RN" size={64} label="Emblème neutre RN" />
-            <div>
-              <div class="fighter-camp-tag fighter-camp-tag--rn">CAMP A · RN</div>
-              <h3 id="panel-rn-title" class="fighter-name">{dict.camps.RN.name}</h3>
-              <p class="fighter-former">{dict.camps.RN.former}</p>
-            </div>
-          </div>
-          <BreakdownTable breakdown={rnBreakdown} />
-        </section>
-
-        <!-- Panneau LFI -->
-        <section
-          class="pixel-frame pixel-frame--lfi fighter-panel"
-          aria-labelledby="panel-lfi-title"
-        >
-          <div class="fighter-head">
-            <PixelAvatar variant="LFI" size={64} label="Emblème neutre LFI" />
-            <div>
-              <div class="fighter-camp-tag fighter-camp-tag--lfi">CAMP B · LFI</div>
-              <h3 id="panel-lfi-title" class="fighter-name">{dict.camps.LFI.name}</h3>
-              <p class="fighter-former">{dict.camps.LFI.former}</p>
-            </div>
-          </div>
-          <BreakdownTable breakdown={lfiBreakdown} />
-        </section>
-      </div>
-
-      <!-- 3. BANDEAU VS -->
-      <div id="vs-banner" class="vs-strip" aria-label="Transition de comparaison">
-        <span class="fighter-camp-tag--rn" style="font-family: var(--font-pixel); font-size: 0.75rem;">
-          RN (ex-FN)
-        </span>
-        <span class="vs-pill" id="vs-pill">VS</span>
-        <span class="fighter-camp-tag--lfi" style="font-family: var(--font-pixel); font-size: 0.75rem;">
-          LFI
-        </span>
-      </div>
+      <RadarChart lfiMetrics={lfiMetrics} rnMetrics={rnMetrics} />
+      <TimelineChart cases={dataset.cases} />
     </div>
   </section>
 
-  <!-- 4. MANCHES PAR CATÉGORIE D'INFRACTION (DÉCISIONS RENDUES) -->
-  {
-    CATEGORIE_VALUES.map((catKey) => {
-      const cat = dict.categories[catKey];
-      const rnList = decisions.filter((c) => c.camp === 'RN' && c.categorie === catKey);
-      const lfiList = decisions.filter((c) => c.camp === 'LFI' && c.categorie === catKey);
+  <!-- 3. EXPLORATEUR PAR ROUNDS + SECTION SÉPARÉE PROCÉDURES EN COURS -->
+  <CaseExplorer cases={dataset.cases} />
 
-      return (
-        <section
-          id={`round-${catKey}`}
-          class="section-block"
-          aria-labelledby={`heading-${catKey}`}
-        >
-          <div class="container">
-            <header class="section-header">
-              <span class="section-kicker">{cat.round} · DÉCISIONS RENDUES</span>
-              <h2 id={`heading-${catKey}`} class="section-title">
-                {cat.label}
-              </h2>
-              <p class="section-desc">
-                <strong>Définition juridique :</strong> {cat.definition}
-              </p>
-            </header>
+  <!-- Ancre directe vers l'onglet Procédures en cours -->
+  <div id="procedures-en-cours" class="visually-hidden" aria-hidden="true"></div>
 
-            <div class="duel-grid">
-              <div>
-                <div class="camp-column-header camp-column-header--rn">
-                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN (ex-FN)</span>
-                  <span>{rnList.length} fiche(s)</span>
-                </div>
-                <div class="cases-stack">
-                  {rnList.length > 0 ? (
-                    rnList.map((item) => <CaseCard item={item} />)
-                  ) : (
-                    <div class="empty-slot">
-                      Aucune décision rendue recensée dans cette catégorie selon le périmètre
-                      retenu au {dict.site.referenceDate}.
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <div class="camp-column-header camp-column-header--lfi">
-                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI</span>
-                  <span>{lfiList.length} fiche(s)</span>
-                </div>
-                <div class="cases-stack">
-                  {lfiList.length > 0 ? (
-                    lfiList.map((item) => <CaseCard item={item} />)
-                  ) : (
-                    <div class="empty-slot">
-                      Aucune décision rendue recensée dans cette catégorie selon le périmètre
-                      retenu au {dict.site.referenceDate}.
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    })
-  }
-
-  <!-- 5. SECTION SÉPARÉE : PROCÉDURES EN COURS – PRÉSUMÉS INNOCENTS -->
-  <section
-    id="procedures-en-cours"
-    class="section-block"
-    aria-labelledby="ongoing-heading"
-  >
-    <div class="container">
-      <header class="section-header">
-        <span class="section-kicker">SECTION SÉPARÉE · ART. 9-1 CODE CIVIL</span>
-        <h2 id="ongoing-heading" class="section-title">
-          Procédures en cours – présumés innocents
-        </h2>
-      </header>
-
-      <div class="ongoing-banner" role="note">
-        <strong>Rappel impératif :</strong> Les enquêtes préliminaires, informations judiciaires,
-        mises en examen et dossiers en attente de jugement ou en délibéré ci-dessous ne constituent
-        en aucun cas des condamnations. Ils ne sont jamais mélangés ni additionnés aux décisions
-        rendues. Toute personne citée est présumée innocente.
-      </div>
-
-      <div class="duel-grid">
-        <div>
-          <div class="camp-column-header camp-column-header--rn">
-            <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN — EN COURS</span>
-            <span>{ongoingRN.length} procédure(s)</span>
-          </div>
-          <div class="cases-stack">
-            {ongoingRN.map((item) => <CaseCard item={item} />)}
-          </div>
-        </div>
-
-        <div>
-          <div class="camp-column-header camp-column-header--lfi">
-            <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI — EN COURS</span>
-            <span>{ongoingLFI.length} procédure(s)</span>
-          </div>
-          <div class="cases-stack">
-            {ongoingLFI.map((item) => <CaseCard item={item} />)}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. FRISE CHRONOLOGIQUE INTERACTIVE FILTRABLE -->
-  <section id="frise" class="section-block" aria-labelledby="timeline-heading">
-    <div class="container">
-      <header class="section-header">
-        <span class="section-kicker">TIMELINE · RECHERCHE &amp; FILTRES</span>
-        <h2 id="timeline-heading" class="section-title">
-          Frise chronologique filtrable
-        </h2>
-        <p class="section-desc">
-          Classement par date de dernière décision ou étape marquante connue au{' '}
-          {dict.site.referenceDate}.
-        </p>
-      </header>
-
-      <form class="pixel-frame timeline-controls" id="timeline-filters" aria-label="Filtres de la frise">
-        <label class="filter-field">
-          <span>Camp</span>
-          <select id="filter-camp" class="filter-input">
-            <option value="ALL">Tous (RN &amp; LFI)</option>
-            <option value="RN">RN (ex-FN)</option>
-            <option value="LFI">LFI</option>
-          </select>
-        </label>
-
-        <label class="filter-field">
-          <span>Statut</span>
-          <select id="filter-statut" class="filter-input">
-            <option value="ALL">Tous les statuts</option>
-            {
-              Object.entries(dict.statuts).map(([key, val]) => (
-                <option value={key}>{val.label}</option>
-              ))
-            }
-          </select>
-        </label>
-
-        <label class="filter-field">
-          <span>Catégorie pénale</span>
-          <select id="filter-categorie" class="filter-input">
-            <option value="ALL">Toutes les catégories</option>
-            {
-              CATEGORIE_VALUES.map((catKey) => (
-                <option value={catKey}>{dict.categories[catKey].label}</option>
-              ))
-            }
-          </select>
-        </label>
-
-        <label class="filter-field">
-          <span>Période</span>
-          <select id="filter-periode" class="filter-input">
-            <option value="ALL">Toutes (2019–2026)</option>
-            <option value="2026">2026 uniquement</option>
-            <option value="2025">2025 uniquement</option>
-            <option value="2019-2024">2019–2024</option>
-          </select>
-        </label>
-
-        <label class="filter-field">
-          <span>Recherche texte</span>
-          <input
-            id="filter-search"
-            class="filter-input"
-            type="search"
-            placeholder="Nom, infraction, juridiction…"
-          />
-        </label>
-      </form>
-
-      <p id="timeline-count" style="font-size: 0.85rem; color: var(--ink-muted); margin: 0 0 0.85rem;">
-        {timelineCases.length} fiche(s) affichée(s).
-      </p>
-
-      <ol class="timeline-list" id="timeline-list">
-        {
-          timelineCases.map((item) => {
-            const st = dict.statuts[item.statut];
-            const cat = dict.categories[item.categorie];
-            const year = item.date_derniere_decision.slice(0, 4);
-            const searchBlob =
-              `${item.titre} ${item.entite_principale} ${item.qualification_legale} ${item.juridiction}`.toLowerCase();
-
-            return (
-              <li
-                class="pixel-frame timeline-item"
-                data-camp={item.camp}
-                data-statut={item.statut}
-                data-categorie={item.categorie}
-                data-year={year}
-                data-search={searchBlob}
-              >
-                <div class="timeline-item__top">
-                  <strong>{formatDateFr(item.date_derniere_decision)}</strong>
-                  <span
-                    class={
-                      item.camp === 'RN' ? 'fighter-camp-tag--rn' : 'fighter-camp-tag--lfi'
-                    }
-                    style="font-family: var(--font-pixel); font-size: 0.65rem;"
-                  >
-                    {item.camp}
-                  </span>
-                  <span class={`status-badge status-badge--${st.tone}`}>
-                    <span aria-hidden="true">{st.glyph}</span>
-                    <span>{st.label}</span>
-                  </span>
-                  <span style="color: var(--ink-muted);">{cat.label}</span>
-                </div>
-                <div>
-                  <a href={`#${item.id}`} style="font-weight: 700;">
-                    {item.titre}
-                  </a>{' '}
-                  <span style="color: var(--ink-muted);">— {item.entite_principale}</span>
-                </div>
-                <div style="font-size: 0.8rem; color: var(--ink-muted);">
-                  {item.juridiction} · {item.qualification_legale}
-                </div>
-              </li>
-            );
-          })
-        }
-      </ol>
-    </div>
-  </section>
-
-  <!-- 7. ÉCRAN FINAL NEUTRE -->
+  <!-- 4. ÉCRAN FINAL NEUTRE -->
   <section class="section-block" aria-labelledby="ending-heading">
     <div class="container">
       <div class="pixel-frame ending-box">
@@ -368,100 +101,354 @@ const timelineCases = sortCasesByRecentDate(dataset.cases);
     </div>
   </section>
 
+  <CaseModal />
+
+  <script id="versus-payload" type="application/json" set:html={JSON.stringify(clientPayload)} />
+
   <script>
     import { arcadeSynth } from '../scripts/sound';
 
-    const pressStartBtn = document.getElementById('press-start-btn');
-    const vsPill = document.getElementById('vs-pill');
-    const selectSection = document.getElementById('selection-camps');
+    interface ClientCase {
+      id: string;
+      camp: 'LFI' | 'RN';
+      categorie: string;
+      categorieLabel: string;
+      section: string;
+      statut: string;
+      statutLabel: string;
+      statutGlyph: string;
+      statutTone: string;
+      entite_principale: string;
+      titre: string;
+      qualification_legale: string;
+      resume_factuel: string;
+      juridiction: string;
+      dateDisplay: string;
+      verifiedDisplay: string;
+      datesFormatted: { date: string; libelle: string }[];
+      peine?: {
+        prison?: string;
+        amende?: string;
+        ineligibilite?: string;
+        execution_provisoire?: string;
+        autres?: string;
+        note_recours: string;
+      } | null;
+      references_judiciaires: string[];
+      confirmation_primaire: string;
+      motif_absence_source_primaire?: string;
+      sourcesFormatted: {
+        url: string;
+        type: 'primaire' | 'presse';
+        titre: string;
+        editeur: string;
+        date_publication: string;
+        consulted: string;
+      }[];
+      fighter_slugs: string[];
+      reportUrl: string;
+    }
 
-    pressStartBtn?.addEventListener('click', () => {
+    interface CampMetric {
+      totalCases: number;
+      definitiveConvictions: number;
+      definitivePct: number;
+      pendingConvictions: number;
+      pendingPct: number;
+      clearedCount: number;
+      clearedPct: number;
+      ongoingCount: number;
+      ongoingPct: number;
+    }
+
+    interface Fighter {
+      slug: string;
+      camp: 'LFI' | 'RN';
+      name: string;
+      role: string;
+    }
+
+    const rawJson = document.getElementById('versus-payload')?.textContent ?? '{}';
+    const payload = JSON.parse(rawJson) as {
+      metrics: { LFI: CampMetric; RN: CampMetric };
+      fighters: Fighter[];
+      cases: ClientCase[];
+    };
+
+    function escapeHtml(text: string): string {
+      return text
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    // 1. HUD % switcher
+    const hudLfiPct = document.getElementById('hud-lfi-pct');
+    const hudRnPct = document.getElementById('hud-rn-pct');
+    const hudLfiBar = document.getElementById('hud-lfi-bar');
+    const hudRnBar = document.getElementById('hud-rn-bar');
+    const hudLfiRatio = document.getElementById('hud-lfi-ratio');
+    const hudRnRatio = document.getElementById('hud-rn-ratio');
+    const hudCaption = document.getElementById('hud-metric-caption');
+
+    const metricMeta: Record<
+      string,
+      { caption: string; pick: (m: CampMetric) => { count: number; pct: number } }
+    > = {
+      definitive: {
+        caption:
+          'Indicateur affiché : part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive. Aucun vainqueur ni score de gravité.',
+        pick: (m) => ({ count: m.definitiveConvictions, pct: m.definitivePct }),
+      },
+      pending: {
+        caption:
+          'Indicateur affiché : part des condamnations en 1re instance ou en appel faisant l’objet de recours ou non définitives (présumés innocents).',
+        pick: (m) => ({ count: m.pendingConvictions, pct: m.pendingPct }),
+      },
+      cleared: {
+        caption:
+          'Indicateur affiché : part des dossiers soldés par une relaxe, un non-lieu ou un classement sans suite.',
+        pick: (m) => ({ count: m.clearedCount, pct: m.clearedPct }),
+      },
+      ongoing: {
+        caption:
+          'Indicateur affiché : part des procédures en cours (enquêtes, informations judiciaires, mises en examen, renvois — présumés innocents).',
+        pick: (m) => ({ count: m.ongoingCount, pct: m.ongoingPct }),
+      },
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.metric ?? 'definitive';
+        const spec = metricMeta[key] ?? metricMeta.definitive;
+        const lfiVal = spec.pick(payload.metrics.LFI);
+        const rnVal = spec.pick(payload.metrics.RN);
+
+        document.querySelectorAll<HTMLButtonElement>('.hud-metric-btn').forEach((b) => {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+
+        if (hudLfiPct) hudLfiPct.textContent = `${lfiVal.pct}%`;
+        if (hudRnPct) hudRnPct.textContent = `${rnVal.pct}%`;
+        if (hudLfiBar) hudLfiBar.style.transform = `scaleX(${lfiVal.pct / 100})`;
+        if (hudRnBar) hudRnBar.style.transform = `scaleX(${rnVal.pct / 100})`;
+        if (hudLfiRatio)
+          hudLfiRatio.textContent = `${lfiVal.count} / ${payload.metrics.LFI.totalCases} dossiers recensés`;
+        if (hudRnRatio)
+          hudRnRatio.textContent = `${rnVal.count} / ${payload.metrics.RN.totalCases} dossiers recensés`;
+        if (hudCaption) hudCaption.textContent = spec.caption;
+
+        arcadeSynth.play('uiConfirm');
+        arcadeSynth.vibrate(10);
+      });
+    });
+
+    // 2. Modale dossier complet
+    const modal = document.getElementById('dossier-modal') as HTMLDialogElement | null;
+    const modalTitle = document.getElementById('modal-title');
+    const modalKicker = document.getElementById('modal-kicker');
+    const modalBody = document.getElementById('modal-body');
+    const modalClose = document.getElementById('modal-close-btn');
+
+    function renderCaseHtml(c: ClientCase): string {
+      const peineParts: string[] = [];
+      if (c.peine) {
+        if (c.peine.prison)
+          peineParts.push(`<p style="margin:0 0 0.3rem;"><strong>Emprisonnement :</strong> ${escapeHtml(c.peine.prison)}</p>`);
+        if (c.peine.amende)
+          peineParts.push(`<p style="margin:0 0 0.3rem;"><strong>Amende / confiscation :</strong> ${escapeHtml(c.peine.amende)}</p>`);
+        if (c.peine.ineligibilite)
+          peineParts.push(`<p style="margin:0 0 0.3rem;"><strong>Inéligibilité :</strong> ${escapeHtml(c.peine.ineligibilite)}</p>`);
+        if (c.peine.execution_provisoire)
+          peineParts.push(`<p style="margin:0 0 0.3rem;"><strong>Exécution provisoire :</strong> ${escapeHtml(c.peine.execution_provisoire)}</p>`);
+        if (c.peine.autres)
+          peineParts.push(`<p style="margin:0 0 0.3rem;"><strong>Autres :</strong> ${escapeHtml(c.peine.autres)}</p>`);
+        peineParts.push(`<p style="margin:0;"><strong>Voies de recours :</strong> ${escapeHtml(c.peine.note_recours)}</p>`);
+      }
+
+      const datesHtml = c.datesFormatted
+        .map((d) => `<li><strong>${escapeHtml(d.date)} :</strong> ${escapeHtml(d.libelle)}</li>`)
+        .join('');
+
+      const sourcesHtml = c.sourcesFormatted
+        .map(
+          (s) =>
+            `<li><span class="source-tag source-tag--${s.type}">${s.type === 'primaire' ? 'PRIMAIRE' : 'PRESSE'}</span>` +
+            `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.titre)}</a> ` +
+            `<span style="color:var(--ink-muted);">(${escapeHtml(s.editeur)}, ${escapeHtml(s.date_publication)} — consulté le ${escapeHtml(s.consulted)})</span></li>`,
+        )
+        .join('');
+
+      return `
+        <article class="modal-case-item" data-camp="${c.camp}">
+          <div class="case-card__top">
+            <span class="status-badge status-badge--${c.statutTone}">
+              <span aria-hidden="true">${escapeHtml(c.statutGlyph)}</span>
+              <span>${escapeHtml(c.statutLabel)}</span>
+            </span>
+            <span class="entity-pill">${escapeHtml(c.camp)} · ${escapeHtml(c.categorieLabel)}</span>
+          </div>
+          <h3 style="margin:0; font-size:1rem;">${escapeHtml(c.titre)}</h3>
+          <p style="margin:0; font-size:0.82rem; color:var(--ink-muted);">
+            <strong>Entité(s) :</strong> ${escapeHtml(c.entite_principale)}<br/>
+            <strong>Qualification :</strong> ${escapeHtml(c.qualification_legale)}<br/>
+            <strong>Juridiction :</strong> ${escapeHtml(c.juridiction)} · <strong>Dernière date :</strong> ${escapeHtml(c.dateDisplay)}
+          </p>
+          <p style="margin:0; font-size:0.86rem;">${escapeHtml(c.resume_factuel)}</p>
+          ${peineParts.length ? `<div class="modal-peine-box">${peineParts.join('')}</div>` : ''}
+          <div>
+            <strong style="font-size:0.78rem; color:var(--ink-muted);">CHRONOLOGIE</strong>
+            <ul class="timeline-mini">${datesHtml}</ul>
+          </div>
+          <div>
+            <strong style="font-size:0.78rem; color:var(--ink-muted);">SOURCES (${c.sourcesFormatted.length}) — ${c.confirmation_primaire === 'confirme' ? 'Source primaire directe vérifiée' : 'Presse / institution'}</strong>
+            ${c.motif_absence_source_primaire ? `<p style="margin:0.25rem 0; font-size:0.76rem; color:var(--ink-muted);">${escapeHtml(c.motif_absence_source_primaire)}</p>` : ''}
+            <ul class="sources-list">${sourcesHtml}</ul>
+          </div>
+          <div class="compact-case__actions">
+            <span style="font-size:0.74rem; color:var(--ink-muted);">Vérifié le ${escapeHtml(c.verifiedDisplay)}</span>
+            <a href="${escapeHtml(c.reportUrl)}" target="_blank" rel="noopener noreferrer" style="font-size:0.78rem;">Signaler une erreur</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function openCaseModal(caseId: string) {
+      const found = payload.cases.find((c) => c.id === caseId);
+      if (!found || !modal || !modalBody || !modalTitle || !modalKicker) return;
+      modalKicker.textContent = `${found.camp} · ${found.categorieLabel.toUpperCase()}`;
+      modalTitle.textContent = found.titre;
+      modalBody.innerHTML = renderCaseHtml(found);
+      arcadeSynth.play('roundTransition');
+      arcadeSynth.vibrate(12);
+      modal.showModal();
+    }
+
+    function openFighterModal(slug: string) {
+      const fighter = payload.fighters.find((f) => f.slug === slug);
+      if (!fighter || !modal || !modalBody || !modalTitle || !modalKicker) return;
+      const list = payload.cases.filter((c) => c.fighter_slugs.includes(slug));
+      modalKicker.textContent = `${fighter.camp} · ${fighter.role}`;
+      modalTitle.textContent = `${fighter.name} — ${list.length} dossier(s) recensé(s)`;
+      modalBody.innerHTML =
+        list.length > 0
+          ? list.map(renderCaseHtml).join('')
+          : '<p>Aucun dossier lié dans le périmètre retenu.</p>';
       arcadeSynth.play('roundTransition');
       arcadeSynth.vibrate(14);
-      if (vsPill) {
-        vsPill.classList.remove('vs-hit');
-        void vsPill.offsetWidth;
-        vsPill.classList.add('vs-hit');
-      }
-      selectSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      modal.showModal();
+    }
+
+    modalClose?.addEventListener('click', () => {
+      modal?.close();
+      arcadeSynth.play('uiSelect');
     });
 
-    // Compteurs animés discrets (uniquement hors prefers-reduced-motion)
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reducedMotion) {
-      document.querySelectorAll<HTMLElement>('[data-countup]').forEach((el) => {
-        const target = Number(el.getAttribute('data-countup') ?? '0');
-        if (target <= 0) return;
-        let current = 0;
-        const step = () => {
-          current += 1;
-          el.textContent = String(current);
-          if (current < target) {
-            window.setTimeout(step, 70);
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-open-case]').forEach((el) => {
+      const handler = () => {
+        const id = el.dataset.openCase;
+        if (id) openCaseModal(id);
+      };
+      el.addEventListener('click', handler);
+      if (el.tagName !== 'BUTTON') {
+        el.addEventListener('keydown', (ev: KeyboardEvent) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            handler();
           }
-        };
-        el.textContent = '0';
-        window.setTimeout(step, 120);
-      });
-    }
-
-    // Filtres frise chronologique
-    const campEl = document.getElementById('filter-camp') as HTMLSelectElement | null;
-    const statutEl = document.getElementById('filter-statut') as HTMLSelectElement | null;
-    const catEl = document.getElementById('filter-categorie') as HTMLSelectElement | null;
-    const periodEl = document.getElementById('filter-periode') as HTMLSelectElement | null;
-    const searchEl = document.getElementById('filter-search') as HTMLInputElement | null;
-    const countEl = document.getElementById('timeline-count');
-    const items = Array.from(document.querySelectorAll<HTMLLIElement>('#timeline-list > li'));
-
-    function applyFilters() {
-      const camp = campEl?.value ?? 'ALL';
-      const statut = statutEl?.value ?? 'ALL';
-      const cat = catEl?.value ?? 'ALL';
-      const period = periodEl?.value ?? 'ALL';
-      const q = (searchEl?.value ?? '').trim().toLowerCase();
-
-      let visible = 0;
-      for (const li of items) {
-        const iCamp = li.dataset.camp ?? '';
-        const iStatut = li.dataset.statut ?? '';
-        const iCat = li.dataset.categorie ?? '';
-        const iYear = Number(li.dataset.year ?? '0');
-        const iSearch = li.dataset.search ?? '';
-
-        const matchCamp = camp === 'ALL' || iCamp === camp;
-        const matchStatut = statut === 'ALL' || iStatut === statut;
-        const matchCat = cat === 'ALL' || iCat === cat;
-        const matchPeriod =
-          period === 'ALL' ||
-          (period === '2026' && iYear === 2026) ||
-          (period === '2025' && iYear === 2025) ||
-          (period === '2019-2024' && iYear >= 2019 && iYear <= 2024);
-        const matchSearch = !q || iSearch.includes(q);
-
-        const show = matchCamp && matchStatut && matchCat && matchPeriod && matchSearch;
-        li.hidden = !show;
-        if (show) visible += 1;
+        });
       }
+    });
 
-      if (countEl) {
-        countEl.textContent = `${visible} fiche(s) affichée(s).`;
-      }
-    }
-
-    [campEl, statutEl, catEl, periodEl].forEach((ctrl) => {
-      ctrl?.addEventListener('change', () => {
-        arcadeSynth.play('filterTick');
-        arcadeSynth.vibrate(8);
-        applyFilters();
+    document.querySelectorAll<HTMLButtonElement>('[data-open-fighter]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const slug = btn.dataset.openFighter;
+        if (slug) openFighterModal(slug);
       });
     });
 
-    searchEl?.addEventListener('input', applyFilters);
+    // 3. Frise SVG interactive : survol + filtres
+    const hoverBanner = document.getElementById('timeline-hover-banner');
+    const cCamp = document.getElementById('chart-filter-camp') as HTMLSelectElement | null;
+    const cStatut = document.getElementById('chart-filter-statut') as HTMLSelectElement | null;
+    const cCat = document.getElementById('chart-filter-cat') as HTMLSelectElement | null;
+    const cCount = document.getElementById('chart-visible-count');
+    const nodes = Array.from(document.querySelectorAll<SVGGElement>('.timeline-node'));
 
-    document.querySelectorAll('details.case-card__details').forEach((d) => {
-      d.addEventListener('toggle', () => {
+    nodes.forEach((node) => {
+      const showTip = () => {
+        if (hoverBanner && node.dataset.tip) {
+          hoverBanner.textContent = node.dataset.tip;
+        }
+      };
+      node.addEventListener('mouseenter', showTip);
+      node.addEventListener('focus', showTip);
+    });
+
+    function filterChart() {
+      const camp = cCamp?.value ?? 'ALL';
+      const st = cStatut?.value ?? 'ALL';
+      const cat = cCat?.value ?? 'ALL';
+      let visible = 0;
+
+      for (const n of nodes) {
+        const match =
+          (camp === 'ALL' || n.dataset.camp === camp) &&
+          (st === 'ALL' || n.dataset.statut === st) &&
+          (cat === 'ALL' || n.dataset.categorie === cat);
+        if (match) {
+          n.removeAttribute('hidden');
+          visible += 1;
+        } else {
+          n.setAttribute('hidden', 'true');
+        }
+      }
+      if (cCount) cCount.textContent = `${visible} / ${nodes.length} dossier(s)`;
+    }
+
+    [cCamp, cStatut, cCat].forEach((sel) => {
+      sel?.addEventListener('change', () => {
+        arcadeSynth.play('filterTick');
+        filterChart();
+      });
+    });
+
+    // 4. Onglets des Rounds
+    const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.round-tab-btn'));
+    const tabPanels = Array.from(document.querySelectorAll<HTMLElement>('.round-panel'));
+
+    function activateTab(targetKey: string) {
+      tabBtns.forEach((b) => {
+        const isTarget = b.dataset.tabTarget === targetKey;
+        b.setAttribute('aria-selected', String(isTarget));
+      });
+      tabPanels.forEach((p) => {
+        p.hidden = p.id !== `panel-${targetKey}`;
+      });
+    }
+
+    tabBtns.forEach((b) => {
+      b.addEventListener('click', () => {
+        const target = b.dataset.tabTarget;
+        if (!target) return;
+        activateTab(target);
         arcadeSynth.play('uiSelect');
+        arcadeSynth.vibrate(8);
+      });
+    });
+
+    // Ouvre l'onglet Procédures en cours si clic sur l'ancre #procedures-en-cours
+    document.querySelectorAll('a[href="#procedures-en-cours"]').forEach((link) => {
+      link.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        activateTab('procedures_en_cours');
+        document.getElementById('explorer-rounds')?.scrollIntoView({ behavior: 'smooth' });
       });
     });
   </script>

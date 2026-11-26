@@ -1,0 +1,187 @@
+---
+import type { JudicialCase } from '../lib/schema';
+import { CATEGORIE_VALUES } from '../lib/schema';
+import { formatDateFr, getDict } from '../i18n';
+
+interface Props {
+  cases: JudicialCase[];
+}
+
+const { cases } = Astro.props;
+const dict = getDict('fr');
+
+const tabs = [
+  ...CATEGORIE_VALUES.map((cat) => ({
+    id: `tab-${cat}`,
+    key: cat,
+    kicker: dict.categories[cat].round,
+    label: dict.categories[cat].label,
+    definition: dict.categories[cat].definition,
+    items: cases.filter((c) => c.section === 'decisions' && c.categorie === cat),
+  })),
+  {
+    id: 'tab-procedures_en_cours',
+    key: 'procedures_en_cours',
+    kicker: 'ART. 9-1 C. CIV.',
+    label: 'Procédures en cours (présumés innocents)',
+    definition:
+      'Enquêtes préliminaires, informations judiciaires, mises en examen et renvois sans décision sur le fond. Jamais mélangés aux condamnations.',
+    items: cases.filter((c) => c.section === 'procedures_en_cours'),
+  },
+];
+---
+
+<section id="explorer-rounds" class="section-block" aria-labelledby="explorer-heading">
+  <div class="container">
+    <header class="section-header">
+      <span class="section-kicker">DOSSIERS DÉTAILLÉS · PAR CATÉGORIE</span>
+      <h2 id="explorer-heading" class="section-title">
+        COMPARATEUR PAR ROUNDS &amp; PROCÉDURES EN COURS
+      </h2>
+      <p class="section-desc">
+        Sélectionnez une manche thématique (ou la section séparée des procédures en cours). Cliquez
+        sur n'importe quelle carte pour afficher la chronologie complète, les peines et les liens
+        sources primaires / presse.
+      </p>
+    </header>
+
+    <div class="round-tabs" role="tablist" aria-label="Manches thématiques">
+      {
+        tabs.map((t, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={t.id}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${t.key}`}
+            class="round-tab-btn"
+            data-tab-target={t.key}
+          >
+            <span class="round-tab-btn__kicker">{t.kicker}</span>
+            <span>{t.label}</span>
+            <span class="round-tab-btn__count">({t.items.length})</span>
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      tabs.map((t, index) => {
+        const lfiList = t.items.filter((c) => c.camp === 'LFI');
+        const rnList = t.items.filter((c) => c.camp === 'RN');
+
+        return (
+          <div
+            id={`panel-${t.key}`}
+            role="tabpanel"
+            aria-labelledby={t.id}
+            hidden={index !== 0}
+            class="round-panel"
+          >
+            <div class="round-def-banner" role="note">
+              <strong>Définition :</strong> {t.definition}
+            </div>
+
+            <div class="duel-grid">
+              <!-- GAUCHE : LFI -->
+              <div>
+                <div class="camp-column-header camp-column-header--lfi">
+                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">LFI / FDG</span>
+                  <span>{lfiList.length} dossier(s)</span>
+                </div>
+                <div class="cases-stack">
+                  {lfiList.length > 0 ? (
+                    lfiList.map((item) => {
+                      const st = dict.statuts[item.statut];
+                      return (
+                        <article class="pixel-frame pixel-frame--lfi compact-case">
+                          <div class="case-card__top">
+                            <span class={`status-badge status-badge--${st.tone}`}>
+                              <span aria-hidden="true">{st.glyph}</span>
+                              <span>{st.label}</span>
+                            </span>
+                            <span class="entity-pill">{formatDateFr(item.date_derniere_decision)}</span>
+                          </div>
+                          <h3 class="compact-case__title">{item.titre}</h3>
+                          <p class="compact-case__sub">
+                            <strong>{item.entite_principale}</strong> · {item.juridiction}
+                          </p>
+                          <div class="compact-case__actions">
+                            <span class="compact-case__src-pill">
+                              {item.confirmation_primaire === 'confirme'
+                                ? 'Source primaire directe'
+                                : `${item.sources.length} source(s) presse/inst.`}
+                            </span>
+                            <button
+                              type="button"
+                              class="arcade-btn arcade-btn--sm"
+                              data-open-case={item.id}
+                            >
+                              Dossier &amp; sources →
+                            </button>
+                          </div>
+                        </article>
+                      );
+                    })
+                  ) : (
+                    <div class="empty-slot">
+                      Aucun dossier recensé dans cette catégorie pour LFI / FdG au 26/11/2026.
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <!-- DROITE : RN -->
+              <div>
+                <div class="camp-column-header camp-column-header--rn">
+                  <span style="font-family: var(--font-pixel); font-size: 0.7rem;">RN (EX-FN)</span>
+                  <span>{rnList.length} dossier(s)</span>
+                </div>
+                <div class="cases-stack">
+                  {rnList.length > 0 ? (
+                    rnList.map((item) => {
+                      const st = dict.statuts[item.statut];
+                      return (
+                        <article class="pixel-frame pixel-frame--rn compact-case">
+                          <div class="case-card__top">
+                            <span class={`status-badge status-badge--${st.tone}`}>
+                              <span aria-hidden="true">{st.glyph}</span>
+                              <span>{st.label}</span>
+                            </span>
+                            <span class="entity-pill">{formatDateFr(item.date_derniere_decision)}</span>
+                          </div>
+                          <h3 class="compact-case__title">{item.titre}</h3>
+                          <p class="compact-case__sub">
+                            <strong>{item.entite_principale}</strong> · {item.juridiction}
+                          </p>
+                          <div class="compact-case__actions">
+                            <span class="compact-case__src-pill">
+                              {item.confirmation_primaire === 'confirme'
+                                ? 'Source primaire directe'
+                                : `${item.sources.length} source(s) presse/inst.`}
+                            </span>
+                            <button
+                              type="button"
+                              class="arcade-btn arcade-btn--sm"
+                              data-open-case={item.id}
+                            >
+                              Dossier &amp; sources →
+                            </button>
+                          </div>
+                        </article>
+                      );
+                    })
+                  ) : (
+                    <div class="empty-slot">
+                      Aucun dossier recensé dans cette catégorie pour le RN au 26/11/2026.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>

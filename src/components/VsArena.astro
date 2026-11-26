@@ -1,0 +1,252 @@
+---
+import type { CampMetrics } from '../lib/data';
+import { FIGHTERS_ROSTER } from '../lib/data';
+import type { JudicialCase } from '../lib/schema';
+
+interface Props {
+  lfiMetrics: CampMetrics;
+  rnMetrics: CampMetrics;
+  cases: JudicialCase[];
+}
+
+const { lfiMetrics, rnMetrics, cases } = Astro.props;
+
+const lfiFighters = FIGHTERS_ROSTER.filter((f) => f.camp === 'LFI');
+const lfiLeader = lfiFighters.find((f) => f.isLeader)!;
+const lfiAllies = lfiFighters.filter((f) => !f.isLeader);
+
+const rnFighters = FIGHTERS_ROSTER.filter((f) => f.camp === 'RN');
+const rnLeader = rnFighters.find((f) => f.isLeader)!;
+const rnAllies = rnFighters.filter((f) => !f.isLeader);
+
+function countFighterCases(slug: string): number {
+  return cases.filter((c) => c.fighter_slugs.includes(slug)).length;
+}
+---
+
+<section class="vs-arena" aria-labelledby="arena-heading">
+  <div class="vs-arena__backdrop" aria-hidden="true">
+    <div class="vs-arena__split"></div>
+    <div class="vs-arena__floor"></div>
+  </div>
+
+  <div class="container vs-arena__inner">
+    <div class="vs-arena__topmeta">
+      <span class="hero-badge">ARÈNE JUDICIAIRE 2010–2026 · RÉF. 26/11/2026</span>
+      <h1 id="arena-heading" class="visually-hidden">
+        VERSUS — La France insoumise face au Rassemblement National (2010–2026)
+      </h1>
+    </div>
+
+    <!-- HUD DE POURCENTAGE FACE-À-FACE -->
+    <div class="hud-panel" role="region" aria-label="Indicateurs en pourcentage">
+      <div class="hud-bars">
+        <!-- Côté LFI (Gauche) -->
+        <div class="hud-side hud-side--lfi">
+          <div class="hud-side__head">
+            <span class="hud-camp-tag hud-camp-tag--lfi">LFI / FDG</span>
+            <span class="hud-pct hud-pct--lfi" id="hud-lfi-pct">{lfiMetrics.definitivePct}%</span>
+          </div>
+          <div class="hud-track hud-track--left" aria-hidden="true">
+            <div
+              class="hud-fill hud-fill--lfi"
+              id="hud-lfi-bar"
+              style={`transform: scaleX(${lfiMetrics.definitivePct / 100})`}
+            ></div>
+          </div>
+          <div class="hud-ratio" id="hud-lfi-ratio">
+            {lfiMetrics.definitiveConvictions} / {lfiMetrics.totalCases} dossiers recensés
+          </div>
+        </div>
+
+        <!-- Horloge / Badge central -->
+        <div class="hud-center-badge" aria-hidden="true">
+          <span>2010</span>
+          <span class="hud-center-sep">—</span>
+          <span>2026</span>
+        </div>
+
+        <!-- Côté RN (Droite) -->
+        <div class="hud-side hud-side--rn">
+          <div class="hud-side__head hud-side__head--rn">
+            <span class="hud-pct hud-pct--rn" id="hud-rn-pct">{rnMetrics.definitivePct}%</span>
+            <span class="hud-camp-tag hud-camp-tag--rn">RN (ex-FN)</span>
+          </div>
+          <div class="hud-track hud-track--right" aria-hidden="true">
+            <div
+              class="hud-fill hud-fill--rn"
+              id="hud-rn-bar"
+              style={`transform: scaleX(${rnMetrics.definitivePct / 100})`}
+            ></div>
+          </div>
+          <div class="hud-ratio hud-ratio--rn" id="hud-rn-ratio">
+            {rnMetrics.definitiveConvictions} / {rnMetrics.totalCases} dossiers recensés
+          </div>
+        </div>
+      </div>
+
+      <!-- Sélecteur de métrique % -->
+      <div class="hud-switcher" role="group" aria-label="Choisir l'indicateur en pourcentage">
+        <button
+          type="button"
+          class="hud-metric-btn"
+          data-metric="definitive"
+          aria-pressed="true"
+        >
+          ■ Cond. définitives (%)
+        </button>
+        <button
+          type="button"
+          class="hud-metric-btn"
+          data-metric="pending"
+          aria-pressed="false"
+        >
+          ▲ Cond. sous recours (%)
+        </button>
+        <button
+          type="button"
+          class="hud-metric-btn"
+          data-metric="cleared"
+          aria-pressed="false"
+        >
+          ○ Relaxes / Classés (%)
+        </button>
+        <button
+          type="button"
+          class="hud-metric-btn"
+          data-metric="ongoing"
+          aria-pressed="false"
+        >
+          ◎ Procédures en cours (%)
+        </button>
+      </div>
+      <p class="hud-caption" id="hud-metric-caption">
+        Indicateur affiché : part des dossiers recensés (2010–2026) ayant abouti à une condamnation définitive.
+        Aucun vainqueur ni score de gravité — cliquez sur un portrait pour ouvrir ses dossiers.
+      </p>
+    </div>
+
+    <!-- SCÈNE VS AVEC PORTRAITS GÉANTS + DÉPUTÉS CLIQUABLES -->
+    <div class="arena-stage">
+      <!-- GAUCHE : LFI (Mélenchon + 3 députés derrière) -->
+      <div class="arena-corner arena-corner--lfi">
+        <div class="allies-row allies-row--lfi" aria-label="Députés LFI liés aux dossiers">
+          {
+            lfiAllies.map((ally) => (
+              <button
+                type="button"
+                class="ally-fighter ally-fighter--lfi"
+                data-open-fighter={ally.slug}
+                title={`Voir les dossiers concernant ${ally.name}`}
+              >
+                <img
+                  src={ally.image}
+                  alt={ally.name}
+                  width="180"
+                  height="220"
+                  loading="eager"
+                  decoding="async"
+                />
+                <span class="ally-fighter__plate">
+                  <strong>{ally.shortName}</strong>
+                  <span>{countFighterCases(ally.slug)} dossier(s)</span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
+
+        <button
+          type="button"
+          class="leader-fighter leader-fighter--lfi"
+          data-open-fighter={lfiLeader.slug}
+          title={`Voir les dossiers concernant ${lfiLeader.name}`}
+        >
+          <img
+            src={lfiLeader.image}
+            alt={`Portrait officiel de ${lfiLeader.name}`}
+            width="480"
+            height="615"
+            loading="eager"
+            decoding="sync"
+          />
+          <span class="leader-fighter__plate leader-fighter__plate--lfi">
+            <span class="leader-fighter__tag">GAUCHE · LFI / FDG</span>
+            <strong>{lfiLeader.name}</strong>
+            <small>{countFighterCases(lfiLeader.slug)} dossier(s) · Cliquer pour ouvrir</small>
+          </span>
+        </button>
+      </div>
+
+      <!-- CENTRE : MÉDAILLON VS CHROMÉ 90s -->
+      <div class="vs-medallion-wrap" aria-hidden="true">
+        <div class="vs-medallion" id="vs-medallion">
+          <span>VS</span>
+        </div>
+        <div class="vs-subpill">2010–2026</div>
+      </div>
+
+      <!-- DROITE : RN (Marine Le Pen + 3 élus derrière) -->
+      <div class="arena-corner arena-corner--rn">
+        <div class="allies-row allies-row--rn" aria-label="Élus RN liés aux dossiers">
+          {
+            rnAllies.map((ally) => (
+              <button
+                type="button"
+                class="ally-fighter ally-fighter--rn"
+                data-open-fighter={ally.slug}
+                title={`Voir les dossiers concernant ${ally.name}`}
+              >
+                <img
+                  src={ally.image}
+                  alt={ally.name}
+                  width="180"
+                  height="220"
+                  loading="eager"
+                  decoding="async"
+                />
+                <span class="ally-fighter__plate">
+                  <strong>{ally.shortName}</strong>
+                  <span>{countFighterCases(ally.slug)} dossier(s)</span>
+                </span>
+              </button>
+            ))
+          }
+        </div>
+
+        <button
+          type="button"
+          class="leader-fighter leader-fighter--rn"
+          data-open-fighter={rnLeader.slug}
+          title={`Voir les dossiers concernant ${rnLeader.name}`}
+        >
+          <img
+            src={rnLeader.image}
+            alt={`Portrait officiel de ${rnLeader.name}`}
+            width="480"
+            height="615"
+            loading="eager"
+            decoding="sync"
+          />
+          <span class="leader-fighter__plate leader-fighter__plate--rn">
+            <span class="leader-fighter__tag">DROITE · RN (EX-FN)</span>
+            <strong>{rnLeader.name}</strong>
+            <small>{countFighterCases(rnLeader.slug)} dossier(s) · Cliquer pour ouvrir</small>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="arena-cta-row">
+      <a href="#dataviz-dashboard" class="arcade-btn arcade-btn--primary">
+        EXPLORER LES GRAPHIQUES 2010–2026
+      </a>
+      <a href="#explorer-rounds" class="arcade-btn">
+        TOUS LES DOSSIERS ({cases.length})
+      </a>
+      <a href="#procedures-en-cours" class="arcade-btn">
+        PROCÉDURES EN COURS
+      </a>
+    </div>
+  </div>
+</section>
